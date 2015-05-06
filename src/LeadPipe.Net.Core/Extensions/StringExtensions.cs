@@ -587,12 +587,8 @@ namespace LeadPipe.Net.Core.Extensions
 		/// <summary>
 		/// Words the wrap.
 		/// </summary>
-		/// <param name="textToWrap">
-		/// The text to wrap.
-		/// </param>
-		/// <param name="charactersPerLine">
-		/// The characters per line.
-		/// </param>
+		/// <param name="textToWrap">The text to wrap.</param>
+		/// <param name="charactersPerLine">The characters per line.</param>
 		/// <returns>
 		/// The wrapped text.
 		/// </returns>
@@ -604,15 +600,9 @@ namespace LeadPipe.Net.Core.Extensions
 		/// <summary>
 		/// Word wraps text to fit in a specified number of characters per line.
 		/// </summary>
-		/// <param name="textToWrap">
-		/// The full title.
-		/// </param>
-		/// <param name="charactersPerLine">
-		/// The characters per line.
-		/// </param>
-		/// <param name="newLineString">
-		/// The new line string (ex: Environment.NewLine).
-		/// </param>
+		/// <param name="textToWrap">The full title.</param>
+		/// <param name="charactersPerLine">The characters per line.</param>
+		/// <param name="newLineString">The new line string (ex: Environment.NewLine).</param>
 		/// <returns>
 		/// The wrapped text.
 		/// </returns>
@@ -625,7 +615,6 @@ namespace LeadPipe.Net.Core.Extensions
 			int next;
 			var wrappedTextBuilder = new StringBuilder();
 
-			// Spit it back if there'value less than one character per line...
 			if (charactersPerLine < 1)
 			{
 				return textToWrap;
