@@ -1,0 +1,47 @@
+<StyleCopSettings Version="105">
+	<GlobalSettings>
+		<CollectionProperty Name="DictionaryFolders">
+			<Value>.\</Value>
+		</CollectionProperty>
+	</GlobalSettings>
+	<Analyzers>
+		<Analyzer AnalyzerId="StyleCop.CSharp.SpacingRules">
+			<Rules>
+				<Rule Name="TabsMustNotBeUsed">
+					<RuleSettings>
+						<BooleanProperty Name="Enabled">False</BooleanProperty>
+					</RuleSettings>
+				</Rule>
+			</Rules>
+			<AnalyzerSettings />
+		</Analyzer>
+		<Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
+			<AnalyzerSettings>
+				<StringProperty Name="CompanyName">Lead Pipe Software</StringProperty>
+				<StringProperty Name="Copyright">Copyright (c) Lead Pipe Software All rights reserved.</StringProperty>
+			</AnalyzerSettings>
+		</Analyzer>
+		<Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+			<Rules>
+				<Rule Name="FieldNamesMustNotUseHungarianNotation">
+					<RuleSettings>
+						<BooleanProperty Name="Enabled">False</BooleanProperty>
+					</RuleSettings>
+				</Rule>
+			</Rules>
+			<AnalyzerSettings />
+		</Analyzer>
+	</Analyzers>
+	<Parsers>
+		<Parser ParserId="StyleCop.CSharp.CsParser">
+			<ParserSettings>
+				<CollectionProperty Name="GeneratedFileFilters">
+					<Value>\.g\.cs$</Value>
+					<Value>\.generated\.cs$</Value>
+					<Value>\.g\.i\.cs$</Value>
+					<Value>TemporaryGeneratedFile_.+\.cs$</Value>
+				</CollectionProperty>
+			</ParserSettings>
+		</Parser>
+	</Parsers>
+</StyleCopSettings>

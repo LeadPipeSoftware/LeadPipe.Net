@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Core", "src\LeadPipe.Net.Core\LeadPipe.Net.Core.csproj", "{07EAABC8-D86D-4B6B-B153-77EE0E5526A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Core.Tests", "src\LeadPipe.Net.Core.Tests\LeadPipe.Net.Core.Tests.csproj", "{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07EAABC8-D86D-4B6B-B153-77EE0E5526A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07EAABC8-D86D-4B6B-B153-77EE0E5526A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07EAABC8-D86D-4B6B-B153-77EE0E5526A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07EAABC8-D86D-4B6B-B153-77EE0E5526A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
