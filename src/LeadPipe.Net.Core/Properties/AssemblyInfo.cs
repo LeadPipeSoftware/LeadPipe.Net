@@ -7,8 +7,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("LeadPipe.Net.TypeExtensions")]
-[assembly: AssemblyDescription("Lead Pipe Software .NET Type Extensions")]
+[assembly: AssemblyTitle("LeadPipe.Net.Core")]
+[assembly: AssemblyDescription("LeadPipe.Net Core Libraries")]
 [assembly: Guid("bcc76397-ec73-447c-9993-33a759e07593")]
-[assembly: AssemblyCopyright("Copyright © Lead Pipe Software 2015")]
-[assembly: AssemblyVersion("1.0.*")]
+
