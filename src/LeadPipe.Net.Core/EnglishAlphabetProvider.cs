@@ -20,9 +20,7 @@ namespace LeadPipeSoftware.Net.Core
 		/// <summary>
 		/// Creates a random string composed of English alphabet characters.
 		/// </summary>
-		/// <param name="size">
-		/// The size of the string to create.
-		/// </param>
+		/// <param name="size">The size of the string to create.</param>
 		/// <returns>
 		/// A random string of the specified length.
 		/// </returns>
@@ -58,9 +56,7 @@ namespace LeadPipeSoftware.Net.Core
 		/// <summary>
 		/// Gets all the characters in the the alphabet after a specified character.
 		/// </summary>
-		/// <param name="alphabetCharacter">
-		/// The alphabet character.
-		/// </param>
+		/// <param name="alphabetCharacter">The alphabet character.</param>
 		/// <returns>
 		/// The characters in the the alphabet after the specified character.
 		/// </returns>
@@ -72,9 +68,7 @@ namespace LeadPipeSoftware.Net.Core
 		/// <summary>
 		/// Gets all the characters in the the alphabet before a specified character.
 		/// </summary>
-		/// <param name="alphabetCharacter">
-		/// The alphabet character.
-		/// </param>
+		/// <param name="alphabetCharacter">The alphabet character.</param>
 		/// <returns>
 		/// The characters in the the alphabet before the specified character.
 		/// </returns>
@@ -86,9 +80,7 @@ namespace LeadPipeSoftware.Net.Core
 		/// <summary>
 		/// Gets the one-based index of a character in the alphabet.
 		/// </summary>
-		/// <param name="alphabetCharacter">
-		/// The alphabet character.
-		/// </param>
+		/// <param name="alphabetCharacter">The alphabet character.</param>
 		/// <returns>
 		/// The one-based index of the character in the alphabet.
 		/// </returns>
