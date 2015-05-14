@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
-{
-	using System;
-	using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
+namespace LeadPipe.Net.Extensions
+{
 	/// <summary>
 	/// The Exception type extensions.
 	/// </summary>

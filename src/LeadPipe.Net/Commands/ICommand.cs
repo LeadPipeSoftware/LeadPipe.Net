@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
-{
-	using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
+namespace LeadPipe.Net.Commands
+{
 	/// <summary>
 	/// The marker interface for commands.
 	/// </summary>

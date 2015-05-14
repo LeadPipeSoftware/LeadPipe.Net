@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
-{
-	using System;
-	using System.Diagnostics.CodeAnalysis;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
+namespace LeadPipe.Net.Commands
+{
 	/// <summary>
 	/// The command handler response.
 	/// </summary>

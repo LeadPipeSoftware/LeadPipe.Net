@@ -4,16 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.EnglishAlphabetProviderTests
+using System.Linq;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.EnglishAlphabetProviderTests
 {
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-
-	using LeadPipeSoftware.Net.Core;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// GetAlphabetAfter tests.
 	/// </summary>

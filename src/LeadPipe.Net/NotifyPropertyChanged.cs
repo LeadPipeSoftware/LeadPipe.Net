@@ -4,16 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+using System.Runtime.Serialization;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net
 {
-	using System;
-	using System.ComponentModel;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Linq.Expressions;
-	using System.Runtime.Serialization;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// A base class that implements the infrastructure for property change notification and automatically performs UI
 	/// thread marshalling.

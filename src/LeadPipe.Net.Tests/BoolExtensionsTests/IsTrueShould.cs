@@ -4,12 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.BoolExtensionsTests
+using LeadPipe.Net.Extensions;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.BoolExtensionsTests
 {
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// BoolExtensions IsTrue tests.
 	/// </summary>

@@ -4,13 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
+using System;
+using System.Reflection;
+using Microsoft.Practices.ServiceLocation;
+
+namespace LeadPipe.Net.Commands
 {
-	using System;
-	using System.Reflection;
-
-	using Microsoft.Practices.ServiceLocation;
-
 	/// <summary>
 	/// The CommandExecutingEventHandler delegate.
 	/// </summary>

@@ -4,15 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.CommandTests
+using System.Diagnostics;
+using LeadPipe.Net.Commands;
+
+namespace LeadPipe.Net.Tests.CommandTests
 {
-	using System.Diagnostics;
-
-	using LeadPipe.Net.Core.Commands;
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Handles execution of the debug write unit test command.
 	/// </summary>

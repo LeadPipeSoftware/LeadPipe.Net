@@ -4,12 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.EnglishAlphabetProviderTests
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.EnglishAlphabetProviderTests
 {
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// CreateRandomString tests.
 	/// </summary>

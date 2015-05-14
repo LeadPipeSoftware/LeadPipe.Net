@@ -4,16 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Linq;
-	using System.Reflection;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// The enumeration supertype.
 	/// </summary>

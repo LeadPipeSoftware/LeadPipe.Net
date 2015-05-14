@@ -4,12 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core
+using System;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net
 {
-	using System;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// A fluent guarding class.
 	/// </summary>

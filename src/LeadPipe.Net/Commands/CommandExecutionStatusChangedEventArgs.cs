@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
-{
-	using System;
+using System;
 
+namespace LeadPipe.Net.Commands
+{
 	/// <summary>
 	/// Holds information relating to the change of execution status for a command.
 	/// </summary>

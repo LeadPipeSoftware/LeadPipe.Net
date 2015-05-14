@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.FiniteStateMachine
-{
-	using System;
-	using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
+namespace LeadPipe.Net.FiniteStateMachine
+{
 	/// <summary>
 	/// The finite state machine interface.
 	/// </summary>

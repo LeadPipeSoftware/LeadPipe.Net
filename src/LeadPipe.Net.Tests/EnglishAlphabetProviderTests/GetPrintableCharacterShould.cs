@@ -4,18 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.EnglishAlphabetProviderTests
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.EnglishAlphabetProviderTests
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-
-	using LeadPipeSoftware.Net.Core;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// GetPrintableCharacters tests.
 	/// </summary>

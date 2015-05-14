@@ -4,15 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.ExceptionExtensionTests
+using System;
+using System.IO;
+using LeadPipe.Net.Extensions;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.ExceptionExtensionTests
 {
-	using System;
-	using System.IO;
-
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// ExceptionExtensions GetFirstExceptionOfType tests.
 	/// </summary>

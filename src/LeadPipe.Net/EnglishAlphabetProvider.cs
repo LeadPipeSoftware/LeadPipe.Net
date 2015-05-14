@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipeSoftware.Net.Core
-{
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace LeadPipe.Net
+{
 	/// <summary>
 	/// Provides English alphabet functions.
 	/// </summary>

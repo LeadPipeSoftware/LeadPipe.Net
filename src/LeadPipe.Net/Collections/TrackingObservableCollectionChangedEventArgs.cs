@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Collections
-{
-	using System;
+using System;
 
+namespace LeadPipe.Net.Collections
+{
 	/// <summary>
 	/// The tracking observable collection changed event args.
 	/// </summary>

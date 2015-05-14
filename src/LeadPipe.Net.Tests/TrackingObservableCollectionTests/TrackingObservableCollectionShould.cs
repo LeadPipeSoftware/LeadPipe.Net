@@ -4,15 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.TrackingObservableCollectionTests
+using System.Collections.Generic;
+using LeadPipe.Net.Collections;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.TrackingObservableCollectionTests
 {
-	using System.Collections.Generic;
-
-	using LeadPipe.Net.Core.Collections;
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Tests for the TrackingObservableCollection type.
 	/// </summary>

@@ -4,12 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.DecimalExtensionsTests
+using LeadPipe.Net.Extensions;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.DecimalExtensionsTests
 {
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// PercentageOf extension method tests.
 	/// </summary>

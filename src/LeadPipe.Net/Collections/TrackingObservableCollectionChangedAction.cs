@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Collections
+namespace LeadPipe.Net.Collections
 {
 	/// <summary>
 	/// Describes the action that took place when a TrackingObservableCollection changes.

@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
-{
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
+namespace LeadPipe.Net.Extensions
+{
 	/// <summary>
 	/// The object extensions.
 	/// </summary>

@@ -4,16 +4,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.LinqExtensionsTests
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using LeadPipe.Net.Extensions;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.LinqExtensionsTests
 {
-	using System.Collections.Generic;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// ToCommaDelimitedString LINQ extension method tests.
 	/// </summary>

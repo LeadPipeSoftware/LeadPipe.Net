@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
-{
-	using System;
+using System;
 
+namespace LeadPipe.Net.Extensions
+{
 	/// <summary>
 	/// DateTime extension methods.
 	/// </summary>

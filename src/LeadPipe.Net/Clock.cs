@@ -6,7 +6,7 @@
 
 using System;
 
-namespace LeadPipe.Net.Core
+namespace LeadPipe.Net
 {
 	/// <summary>
 	/// Represents system time.

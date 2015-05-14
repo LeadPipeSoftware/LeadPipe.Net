@@ -4,12 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.IntExtensionsTests
+using LeadPipe.Net.Extensions;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.IntExtensionsTests
 {
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// IntExtensions GetDigitCount tests.
 	/// </summary>

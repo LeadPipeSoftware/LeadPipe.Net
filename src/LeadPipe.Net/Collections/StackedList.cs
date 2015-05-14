@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Collections
-{
-	using System.Collections.ObjectModel;
-	using System.Linq;
+using System.Collections.ObjectModel;
+using System.Linq;
 
+namespace LeadPipe.Net.Collections
+{
 	/// <summary>
 	/// The stacked list.
 	/// </summary>

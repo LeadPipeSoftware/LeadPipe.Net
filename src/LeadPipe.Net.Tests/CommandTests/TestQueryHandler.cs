@@ -4,13 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.CommandTests
+using LeadPipe.Net.Commands;
+
+namespace LeadPipe.Net.Tests.CommandTests
 {
-	using LeadPipe.Net.Core.Commands;
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Handles test queries.
 	/// </summary>

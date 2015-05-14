@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core
-{
-	using System.ComponentModel;
+using System.ComponentModel;
 
+namespace LeadPipe.Net
+{
 	/// <summary>
 	/// Extends <see cref="INotifyPropertyChanged"/> such that the change event can be raised by external parties.
 	/// </summary>

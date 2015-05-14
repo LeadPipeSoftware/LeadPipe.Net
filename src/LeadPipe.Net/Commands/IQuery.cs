@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
+namespace LeadPipe.Net.Commands
 {
 	/// <summary>
 	/// The marker interface for a query.

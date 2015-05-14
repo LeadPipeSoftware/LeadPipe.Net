@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
+namespace LeadPipe.Net.Commands
 {
 	/// <summary>
 	/// An enumeration of command execution result values.

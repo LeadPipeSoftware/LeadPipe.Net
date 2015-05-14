@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
-{
-	using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
+namespace LeadPipe.Net.Commands
+{
 	/// <summary>
 	/// A base class for command handlers that do not have a return type.
 	/// </summary>

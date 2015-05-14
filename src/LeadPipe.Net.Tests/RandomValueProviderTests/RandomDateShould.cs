@@ -4,14 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.RandomValueProviderTests
+using System;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.RandomValueProviderTests
 {
-	using System;
-
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// The random date test.
 	/// </summary>

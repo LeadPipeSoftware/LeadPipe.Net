@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.FiniteStateMachine
-{
-	using System;
-	using System.Globalization;
+using System;
+using System.Globalization;
 
+namespace LeadPipe.Net.FiniteStateMachine
+{
 	/// <summary>
 	/// An base exception for the domain layer.
 	/// </summary>

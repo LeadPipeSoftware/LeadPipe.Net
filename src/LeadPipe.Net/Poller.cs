@@ -4,14 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core
+using System;
+using System.Diagnostics;
+using System.Threading;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net
 {
-	using System;
-	using System.Diagnostics;
-	using System.Threading;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// Provides polling capabilities.
 	/// </summary>

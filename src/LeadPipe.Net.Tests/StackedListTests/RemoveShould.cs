@@ -4,13 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.StackedListTests
+using LeadPipe.Net.Collections;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.StackedListTests
 {
-	using LeadPipe.Net.Core.Collections;
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Tests for the StackedList Remove method.
 	/// </summary>

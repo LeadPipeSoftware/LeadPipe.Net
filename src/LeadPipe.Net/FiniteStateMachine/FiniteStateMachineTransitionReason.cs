@@ -4,12 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.FiniteStateMachine
+using System;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net.FiniteStateMachine
 {
-	using System;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// The finite reason machine transition reason.
 	/// </summary>

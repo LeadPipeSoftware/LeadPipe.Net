@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
-{
-	using System.Collections.Generic;
-	using System.Dynamic;
+using System.Collections.Generic;
+using System.Dynamic;
 
+namespace LeadPipe.Net.Extensions
+{
 	/// <summary>
 	/// The Dictionary extensions.
 	/// </summary>

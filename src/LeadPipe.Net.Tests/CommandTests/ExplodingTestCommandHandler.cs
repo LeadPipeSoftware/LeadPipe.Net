@@ -4,15 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.CommandTests
+using System;
+using LeadPipe.Net.Commands;
+
+namespace LeadPipe.Net.Tests.CommandTests
 {
-	using System;
-
-	using LeadPipe.Net.Core.Commands;
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Handles execution of the test command by exploding.
 	/// </summary>

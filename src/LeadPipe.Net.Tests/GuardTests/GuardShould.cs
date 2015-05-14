@@ -4,15 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.GuardTests
+using System;
+using LeadPipe.Net.Extensions;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.GuardTests
 {
-	using System;
-
-	using LeadPipe.Net.Core.Extensions;
-
-	using NUnit.Framework;
-
-	using Guard = LeadPipe.Net.Core.Guard;
+	using Guard = Guard;
 
 	/// <summary>
 	/// Guard tests.

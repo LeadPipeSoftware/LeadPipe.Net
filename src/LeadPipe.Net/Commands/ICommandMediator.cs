@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Commands
+namespace LeadPipe.Net.Commands
 {
 	/// <summary>
 	/// Mediates command execution requests.

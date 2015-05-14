@@ -4,12 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.FiniteStateMachine
+using System;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net.FiniteStateMachine
 {
-	using System;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// An base exception for the domain layer.
 	/// </summary>

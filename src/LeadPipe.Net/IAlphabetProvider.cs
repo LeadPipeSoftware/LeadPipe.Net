@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipeSoftware.Net.Core
-{
-	using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace LeadPipe.Net
+{
 	/// <summary>
 	/// Provides alphabet functions.
 	/// </summary>

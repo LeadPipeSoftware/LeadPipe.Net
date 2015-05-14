@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
+namespace LeadPipe.Net.Extensions
 {
 	/// <summary>
 	/// Decimal extension methods.

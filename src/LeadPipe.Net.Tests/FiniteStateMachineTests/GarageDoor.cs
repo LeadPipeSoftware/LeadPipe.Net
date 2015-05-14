@@ -59,13 +59,12 @@
  * often just a read-only representation of a combination of State with other information.
  */
 
-namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests
+using System.Linq;
+using LeadPipe.Net.Extensions;
+using LeadPipe.Net.FiniteStateMachine;
+
+namespace LeadPipe.Net.Tests.FiniteStateMachineTests
 {
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-	using LeadPipe.Net.Core.FiniteStateMachine;
-
 	/// <summary>
 	/// The garage door.
 	/// </summary>
@@ -345,7 +344,7 @@ namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests
 			this.closedState.RegisterTransition(this.lockTransition);
 
 			// Create the garage door state machine...
-			this.stateMachine = new FiniteStateMachine(this.openState);
+			this.stateMachine = new FiniteStateMachine.FiniteStateMachine(this.openState);
 
 			// Register the garage door states with the garage door state machine...
 			this.stateMachine.RegisterState(this.openState);

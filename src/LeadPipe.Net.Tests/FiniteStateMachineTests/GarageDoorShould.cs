@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests
-{
-	using NUnit.Framework;
+using NUnit.Framework;
 
+namespace LeadPipe.Net.Tests.FiniteStateMachineTests
+{
 	/// <summary>
 	/// Tests using the sample GarageDoor and its states.
 	/// </summary>

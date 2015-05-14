@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
-{
-	using System.IO;
+using System.IO;
 
+namespace LeadPipe.Net.Extensions
+{
 	/// <summary>
 	/// The Stream type extensions.
 	/// </summary>

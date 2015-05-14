@@ -4,11 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Extensions
-{
-	using System.Linq;
-	using System.Text;
+using System.Linq;
+using System.Text;
 
+namespace LeadPipe.Net.Extensions
+{
 	/// <summary>
 	/// The LINQ extension methods.
 	/// </summary>

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Collections
+namespace LeadPipe.Net.Collections
 {
 	/// <summary>
 	/// The tracking state.

@@ -4,16 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.FiniteStateMachine
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net.FiniteStateMachine
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.CodeAnalysis;
-	using System.Globalization;
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// The finite state machine.
 	/// </summary>

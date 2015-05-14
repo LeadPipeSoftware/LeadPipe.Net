@@ -4,17 +4,16 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Collections
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using LeadPipe.Net.Extensions;
+
+namespace LeadPipe.Net.Collections
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using System.Collections.Specialized;
-	using System.ComponentModel;
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-
 	/// <summary>
 	/// The tracking observable collection changed event handler delegate.
 	/// </summary>

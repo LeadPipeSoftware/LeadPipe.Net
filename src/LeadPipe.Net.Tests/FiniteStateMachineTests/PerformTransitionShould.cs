@@ -4,18 +4,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests
+using System;
+using System.Diagnostics;
+using System.Linq;
+using LeadPipe.Net.FiniteStateMachine;
+using Moq;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.FiniteStateMachineTests
 {
-	using System;
-	using System.Diagnostics;
-	using System.Linq;
-
-	using LeadPipe.Net.Core.FiniteStateMachine;
-
-	using Moq;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// PerformTransition method tests.
 	/// </summary>
@@ -25,7 +22,7 @@ namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests
 		/// <summary>
 		/// The machine.
 		/// </summary>
-		private FiniteStateMachine machine;
+		private FiniteStateMachine.FiniteStateMachine machine;
 
 		/// <summary>
 		/// The start transition.
@@ -235,7 +232,7 @@ namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests
 			this.closedState.RegisterTransition(this.openTransition);
 
 			// Create our machine...
-			this.machine = new FiniteStateMachine(this.startTransition);
+			this.machine = new FiniteStateMachine.FiniteStateMachine(this.startTransition);
 
 			// Add our states...
 			this.machine.RegisterState(this.openState);

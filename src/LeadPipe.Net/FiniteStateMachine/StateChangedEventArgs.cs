@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.FiniteStateMachine
-{
-	using System;
+using System;
 
+namespace LeadPipe.Net.FiniteStateMachine
+{
 	/// <summary>
 	/// The state changed event args.
 	/// </summary>

@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Collections
-{
-	using System.Collections.Specialized;
+using System.Collections.Specialized;
 
+namespace LeadPipe.Net.Collections
+{
 	/// <summary>
 	/// The TrackingObservableCollection interface.
 	/// </summary>

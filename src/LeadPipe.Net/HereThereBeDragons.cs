@@ -4,10 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core
-{
-	using System;
+using System;
 
+namespace LeadPipe.Net
+{
 	/// <summary>
 	/// This attribute allows developers to decorate dangerous parts of the code.
 	/// </summary>

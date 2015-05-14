@@ -4,15 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests.FiniteStateTransitionTests
+using System.Linq;
+using LeadPipe.Net.Extensions;
+using LeadPipe.Net.FiniteStateMachine;
+using NUnit.Framework;
+
+namespace LeadPipe.Net.Tests.FiniteStateMachineTests.FiniteStateTransitionTests
 {
-	using System.Linq;
-
-	using LeadPipe.Net.Core.Extensions;
-	using LeadPipe.Net.Core.FiniteStateMachine;
-
-	using NUnit.Framework;
-
 	/// <summary>
 	/// Transition method tests.
 	/// </summary>
@@ -110,7 +108,7 @@ namespace LeadPipe.Net.Core.Tests.FiniteStateMachineTests.FiniteStateTransitionT
 			this.closedState.RegisterTransition(this.openTransition);
 
 			// Create our machine...
-			this.machine = new FiniteStateMachine(this.startTransition);
+			this.machine = new FiniteStateMachine.FiniteStateMachine(this.startTransition);
 		}
 	}
 }
