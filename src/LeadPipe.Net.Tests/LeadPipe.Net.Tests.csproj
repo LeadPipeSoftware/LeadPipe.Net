@@ -79,6 +79,7 @@
     <Compile Include="FiniteStateMachineTests\RegisterStateShould.cs" />
     <Compile Include="FiniteStateMachineTests\RemoveStateShould.cs" />
     <Compile Include="FiniteStateMachineTests\SimpleFiniteStateMachineTests\GarageDoor.cs" />
+    <Compile Include="FiniteStateMachineTests\SimpleFiniteStateMachineTests\GarageDoorShould.cs" />
     <Compile Include="FiniteStateMachineTests\StatesShould.cs" />
     <Compile Include="GuardTests\GuardShould.cs" />
     <Compile Include="IntExtensionsTests\GetDigitCountShould.cs" />

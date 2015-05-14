@@ -15,6 +15,14 @@ namespace LeadPipe.Net.FiniteStateMachine
 	/// <typeparam name="TState">The type of the state.</typeparam>
 	public abstract class SimpleFiniteStateMachine<TStateName, TState> where TState : SimpleFiniteState<TStateName>
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SimpleFiniteStateMachine{TStateName, TState}"/> class.
+		/// </summary>
+		public SimpleFiniteStateMachine()
+		{
+			InitializeStates();
+		}
+
 		protected Dictionary<TStateName, TState> states = new Dictionary<TStateName, TState>();
 
 		public TStateName Status { get; protected set; }
