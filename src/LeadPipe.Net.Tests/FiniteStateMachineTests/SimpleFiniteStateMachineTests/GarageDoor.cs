@@ -59,6 +59,7 @@
  * often just a read-only representation of a combination of State with other information.
  */
 
+using System.Linq;
 using LeadPipe.Net.FiniteStateMachine;
 
 namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTests
@@ -75,6 +76,11 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTes
 	/// </summary>
 	public class GarageDoor : SimpleFiniteStateMachine<GarageDoorStatus, SimpleFiniteState<GarageDoorStatus>>
 	{
+		public GarageDoor()
+			: base(GarageDoorStatus.Open)
+		{
+		}
+
 		/// <summary>
 		/// Gets a value indicating whether the garage door can close.
 		/// </summary>
@@ -157,7 +163,7 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTes
 		/// </summary>
 		public void Close()
 		{
-			PerformTransition(GarageDoorStatus.ClosedAndUnlocked);
+			PerformTransition(GarageDoorStatus.ClosedAndUnlocked, "Closed");
 		}
 
 		/// <summary>
@@ -171,7 +177,7 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTes
 				Close();
 			}
 
-			PerformTransition(GarageDoorStatus.ClosedAndLocked);
+			PerformTransition(GarageDoorStatus.ClosedAndLocked, "Locked");
 		}
 
 		/// <summary>
@@ -179,7 +185,7 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTes
 		/// </summary>
 		public void Open()
 		{
-			PerformTransition(GarageDoorStatus.Open);
+			PerformTransition(GarageDoorStatus.Open, "Opened");
 		}
 
 		/// <summary>
@@ -187,7 +193,7 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTes
 		/// </summary>
 		public void Unlock()
 		{
-			PerformTransition(GarageDoorStatus.ClosedAndUnlocked);
+			PerformTransition(GarageDoorStatus.ClosedAndUnlocked, "Unlocked");
 		}
 
 		/// <summary>
@@ -209,6 +215,20 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTes
 			states.Add(GarageDoorStatus.Open, open);
 			states.Add(GarageDoorStatus.ClosedAndLocked, closedAndLocked);
 			states.Add(GarageDoorStatus.ClosedAndUnlocked, closedAndUnlocked);
+		}
+
+		protected override SimpleFiniteStateMachineHistoryEntry<GarageDoorStatus> BuildHistoryEntry(GarageDoorStatus newStateName, string reason, string comments)
+		{
+			var entryNumber = 1;
+
+			if (History.Entries.Any())
+			{
+				entryNumber = History.Entries.Max(x => x.EntryNumber) + 1;
+			}
+
+			var historyEntry = new SimpleFiniteStateMachineHistoryEntry<GarageDoorStatus>(entryNumber, newStateName, reason, comments);
+
+			return historyEntry;
 		}
 	}
 }

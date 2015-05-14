@@ -74,6 +74,7 @@
     <Compile Include="FiniteStateMachine\CurrentStateNotRegisteredException.cs" />
     <Compile Include="FiniteStateMachine\DuplicateStateCodeException.cs" />
     <Compile Include="FiniteStateMachine\DuplicateTransitionCodeException.cs" />
+    <Compile Include="FiniteStateMachine\SimpleFiniteStateMachineHistoryEntry.cs" />
     <Compile Include="FiniteStateMachine\InvalidStartTransitionException.cs" />
     <Compile Include="FiniteStateMachine\SimpleFiniteStateMachine.cs" />
     <Compile Include="FiniteStateMachine\SimpleFiniteState.cs" />

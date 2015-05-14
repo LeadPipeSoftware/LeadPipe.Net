@@ -15,6 +15,12 @@ namespace LeadPipe.Net.FiniteStateMachine
 	public class SimpleFiniteState<TStateName>
 	{
 		/// <summary>
+		/// Gets or sets the code.
+		/// </summary>
+		/// <value>The code.</value>
+		public virtual int Code { get; set; }
+
+		/// <summary>
 		/// Gets or sets the name of the state.
 		/// </summary>
 		/// <value>
