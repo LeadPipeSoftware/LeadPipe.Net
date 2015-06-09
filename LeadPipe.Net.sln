@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{7A8F53
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Domain", "src\LeadPipe.Net.Domain\LeadPipe.Net.Domain.csproj", "{FD1810FF-7864-43B0-B8CA-BD3AD5C2E683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Domain.Tests", "src\LeadPipe.Net.Domain.Tests\LeadPipe.Net.Domain.Tests.csproj", "{76344047-8D99-457E-AB52-D959377E2740}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,14 @@ Global
 		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD1810FF-7864-43B0-B8CA-BD3AD5C2E683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD1810FF-7864-43B0-B8CA-BD3AD5C2E683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD1810FF-7864-43B0-B8CA-BD3AD5C2E683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD1810FF-7864-43B0-B8CA-BD3AD5C2E683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76344047-8D99-457E-AB52-D959377E2740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76344047-8D99-457E-AB52-D959377E2740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76344047-8D99-457E-AB52-D959377E2740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76344047-8D99-457E-AB52-D959377E2740}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

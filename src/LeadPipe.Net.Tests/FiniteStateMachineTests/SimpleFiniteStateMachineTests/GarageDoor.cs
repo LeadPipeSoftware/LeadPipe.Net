@@ -43,20 +43,6 @@
  * open, we might like to know why. The simplest form is to simply say that the reason it transitioned from closed to
  * open is because it was opened. On the other hand, if our door were perhaps the door to a bank vault, we might want
  * more explicit reasons such as "Depositing Money", "Withdrawing Money", and "Security Check".
- * 
- * Events
- * --------------------------------------------------------------------------------------------------------------------
- * When something important happens to an object, it is considered an Event. For example, when someone encounters a
- * door (object) that is closed (State), they may choose to open it (object.Method) which causes the door to be opened
- * (Event) which, in turn, causes it to change (Transition) from closed (State) to open (State).
- * 
- * A Note About Status Versus State
- * --------------------------------------------------------------------------------------------------------------------
- * It's far too common for novices to confuse State with Status. In some cases, a literal one-to-one translation is
- * just fine. For example, it may be enough to say that a door's Status is the same as its State (open or closed). More
- * often than not, however, Status is actually more than just State. For example, while a door's State is either open
- * or closed, it's Status might be open, closed and unlocked, closed and locked, and so on. In other words, Status is
- * often just a read-only representation of a combination of State with other information.
  */
 
 using System.Linq;

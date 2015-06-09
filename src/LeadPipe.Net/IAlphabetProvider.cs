@@ -2,9 +2,6 @@
 // <copyright file="IAlphabetProvider.cs" company="Lead Pipe Software">
 //   Copyright (c) Lead Pipe Software All rights reserved.
 // </copyright>
-// <summary>
-//   Provides alphabet functions.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
