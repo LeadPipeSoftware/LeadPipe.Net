@@ -7,6 +7,6 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("LeadPipe.Net.Domain")]
-[assembly: AssemblyDescription("LeadPipe.Net Domain Driven Design Libraries")]
-[assembly: Guid("f54119eb-7bcc-40df-a0a4-fc97275d068c")]
+[assembly: AssemblyTitle("LeadPipe.Net.Data")]
+[assembly: AssemblyDescription("LeadPipe.Net Data Libraries")]
+[assembly: Guid("39ef71f1-4567-42c3-ae45-d61386ddedbd")]
