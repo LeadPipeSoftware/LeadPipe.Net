@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace LeadPipe.Net.Domain.Tests.DomainEventing
+namespace LeadPipe.Net.Domain.Tests.DomainEventingTests
 {
 	/// <summary>
 	/// The DomainEvents Clear method tests.

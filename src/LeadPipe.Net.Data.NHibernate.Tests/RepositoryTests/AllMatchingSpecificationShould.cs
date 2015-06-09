@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TotalResultsShould.cs" company="Lead Pipe Software">
+// <copyright file="AllMatchingSpecificationShould.cs" company="Lead Pipe Software">
 //   Copyright (c) Lead Pipe Software All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,22 +8,21 @@ using System.Linq;
 using NUnit.Framework;
 using StructureMap;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.Repository
+namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
 	/// <summary>
-	/// The Repository TotalResults property tests.
+	/// The Repository AllMatchingSpecification method tests.
 	/// </summary>
 	[TestFixture]
-	public class TotalResultsShould
+	public class AllMatchingSpecificationShould
 	{
 		#region Public Methods and Operators
 
 		/// <summary>
-		/// Tests that TotalResults is the same as the number of returned objects.
+		/// Tests that AllMatchingSpecification returns all matching objects.
 		/// </summary>
 		[Test]
-		[Ignore("The TotalResults property is not supported at this time.")]
-		public void ReturnCountEqualToLastQueryResultCount()
+		public void ReturnAllMatchingObjects()
 		{
 			// Arrange
 			Bootstrapper.Start();
@@ -51,16 +50,51 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.Repository
 			{
 				var foundModel = repository.Find.AllMatchingSpecification(TestModelSpecifications.TestPropertyStartsWithABC()).ToList();
 
-				Assert.That(repository.Find.TotalResults.Equals(foundModel.Count));
+				Assert.That(foundModel.Count.Equals(2));
 			}
 		}
 
 		/// <summary>
-		/// Tests that TotalResults returns zero if no objects matched.
+		/// Tests that AllMatchingSpecification does not return objects that do not match.
 		/// </summary>
 		[Test]
-		[Ignore("The TotalResults property is not supported at this time.")]
-		public void ReturnTotalNumberOfObjectsGivenNoMatchingObjects()
+		public void NotReturnNonMatchingObjects()
+		{
+			// Arrange
+			Bootstrapper.Start();
+
+			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+			var testModel01 = new TestModel("ABCDEF");
+			var testModel02 = new TestModel("HIJKLM");
+			var testModel03 = new TestModel("ABCZZZ");
+
+			// Act
+			using (unitOfWork.Start())
+			{
+				repository.Create(testModel01);
+				repository.Create(testModel02);
+				repository.Create(testModel03);
+
+				unitOfWork.Commit();
+			}
+
+			// Assert
+			using (unitOfWork.Start())
+			{
+				var foundModel = repository.Find.AllMatchingSpecification(TestModelSpecifications.TestPropertyStartsWithABC()).ToList();
+
+				Assert.That(!foundModel.Contains(testModel02));
+			}
+		}
+
+		/// <summary>
+		/// Tests that AllMatchingSpecification returns an empty enumeration when no matching objects are found.
+		/// </summary>
+		[Test]
+		public void ReturnsEmptyEnumerationGivenNoMatchingObjects()
 		{
 			// Arrange
 			Bootstrapper.Start();
@@ -88,44 +122,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.Repository
 			{
 				var foundModel = repository.Find.AllMatchingSpecification(TestModelSpecifications.TestPropertyStartsWithABC());
 
-				Assert.That(repository.Find.TotalResults.Equals(0));
-			}
-		}
-
-		/// <summary>
-		/// Tests that TotalResults is the same as the number of qualifying objects when skip and take are used.
-		/// </summary>
-		[Test]
-		[Ignore("The TotalResults property is not supported at this time.")]
-		public void ReturnCountOfAllObjectsGivenSkipAndTake()
-		{
-			// Arrange
-			Bootstrapper.Start();
-
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
-			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-			var testModel01 = new TestModel("ABCDEF");
-			var testModel02 = new TestModel("HIJKLM");
-			var testModel03 = new TestModel("ABCZZZ");
-
-			// Act
-			using (unitOfWork.Start())
-			{
-				repository.Create(testModel01);
-				repository.Create(testModel02);
-				repository.Create(testModel03);
-
-				unitOfWork.Commit();
-			}
-
-			// Assert
-			using (unitOfWork.Start())
-			{
-				var foundModel = repository.Find.AllMatchingSpecification(TestModelSpecifications.TestPropertyStartsWithABC()).Skip(1).Take(1).ToList();
-
-				Assert.That(repository.Find.TotalResults.Equals(2));
+				Assert.That(!foundModel.Any());
 			}
 		}
 

@@ -37,6 +37,7 @@
       <HintPath>$(SolutionDir)packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,6 +59,12 @@
     <Compile Include="CommandTests\SendShould.cs" />
     <Compile Include="CommandTests\TestQuery.cs" />
     <Compile Include="CommandTests\TestQueryHandler.cs" />
+    <Compile Include="ConfigurationTests\ConfigurationSettingShould.cs" />
+    <Compile Include="ConfigurationTests\ExampleConfiguration.cs" />
+    <Compile Include="ConfigurationTests\ExampleConfigurationSetting.cs" />
+    <Compile Include="ConfigurationTests\ExampleContextAwareConfigurationSetting.cs" />
+    <Compile Include="ConfigurationTests\ExampleParsedConfigurationSetting.cs" />
+    <Compile Include="ConfigurationTests\GetConnectionStringSettingsShould.cs" />
     <Compile Include="DecimalExtensionsTests\PercentageOfShould.cs" />
     <Compile Include="DecimalExtensionsTests\PercentOfShould.cs" />
     <Compile Include="EnglishAlphabetProviderTests\CreateRandomStringShould.cs" />
@@ -129,6 +136,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.Domain.Tests.DomainEventing
+namespace LeadPipe.Net.Domain.Tests.DomainEventingTests
 {
 	/// <summary>
 	/// A test domain event class.

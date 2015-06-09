@@ -6,7 +6,7 @@
 
 using NUnit.Framework;
 
-namespace LeadPipe.Net.Domain.Tests.DomainEventing
+namespace LeadPipe.Net.Domain.Tests.DomainEventingTests
 {
 	/// <summary>
 	/// The DomainEvents Raise method tests.

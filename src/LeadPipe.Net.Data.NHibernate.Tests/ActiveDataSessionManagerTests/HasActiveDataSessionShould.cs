@@ -6,9 +6,9 @@
 
 using NUnit.Framework;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.ActiveDataSessionManager
+namespace LeadPipe.Net.Data.NHibernate.Tests.ActiveDataSessionManagerTests
 {
-	using ActiveDataSessionManager = LeadPipe.Net.Data.NHibernate.ActiveDataSessionManager;
+	using ActiveDataSessionManager = NHibernate.ActiveDataSessionManager;
 
 	/// <summary>
 	/// The ActiveDataSessionManager HasActiveDataSession property tests.

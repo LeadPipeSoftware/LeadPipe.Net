@@ -6,7 +6,7 @@
 
 using System;
 
-namespace LeadPipe.Net.Domain.Tests.DomainEventing
+namespace LeadPipe.Net.Domain.Tests.DomainEventingTests
 {
 	public class TestEntity : PersistableObject<Guid>, IEntity
 	{

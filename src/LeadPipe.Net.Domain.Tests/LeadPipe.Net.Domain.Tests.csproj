@@ -53,11 +53,11 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DomainEventing\ClearShould.cs" />
-    <Compile Include="DomainEventing\RaiseShould.cs" />
-    <Compile Include="DomainEventing\RegisterShould.cs" />
-    <Compile Include="DomainEventing\TestDomainEvent.cs" />
-    <Compile Include="DomainEventing\TestEntity.cs" />
+    <Compile Include="DomainEventingTests\ClearShould.cs" />
+    <Compile Include="DomainEventingTests\RaiseShould.cs" />
+    <Compile Include="DomainEventingTests\RegisterShould.cs" />
+    <Compile Include="DomainEventingTests\TestDomainEvent.cs" />
+    <Compile Include="DomainEventingTests\TestEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,4 +82,3 @@
   </Target>
   -->
 </Project>
-

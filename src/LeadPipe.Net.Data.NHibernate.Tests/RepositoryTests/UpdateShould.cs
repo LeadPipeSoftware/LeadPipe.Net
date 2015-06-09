@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using StructureMap;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.Repository
+namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
 	/// <summary>
 	/// The Repository Update method tests.

@@ -6,9 +6,9 @@
 
 using NUnit.Framework;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.DataSessionProvider
+namespace LeadPipe.Net.Data.NHibernate.Tests.DataSessionProviderTests
 {
-	using DataSessionProvider = LeadPipe.Net.Data.NHibernate.DataSessionProvider;
+	using DataSessionProvider = NHibernate.DataSessionProvider;
 
 	/// <summary>
 	/// The DataSessionProvider Create method tests.
