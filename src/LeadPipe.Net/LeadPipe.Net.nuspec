@@ -10,6 +10,8 @@
     <summary>LeadPipe.Net is an open source collection of useful tools for .NET development.</summary>
     <description>
       LeadPipe.Net is an open source collection of useful tools for .NET development. This is the core package and is used by most other LeadPipe.Net packages. You may also be interested in LeadPipe.Net.Domain, LeadPipe.Net.Data, or one of the pre-built data implementations such as LeadPipe.Net.Data.NHibernate.
+      
+      More information and source code available at https://github.com/LeadPipeSoftware/LeadPipe.Net!
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
     <tags>DDD Domain Driven Design Lead Pipe entity entities repository repositories aggregate</tags>
