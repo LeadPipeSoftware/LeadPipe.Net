@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace LeadPipe.Net
 {
 	using System;
@@ -198,9 +200,9 @@ namespace LeadPipe.Net
 		public override int GetHashCode()
 		{
 			// If we have a surrogate id then return its hash...
-			if (this.Sid.Equals(default(TSurrogateIdentity)) == false)
+            if (EqualityComparer<TSurrogateIdentity>.Default.Equals(Sid, default(TSurrogateIdentity)) == false)
 			{
-				return this.Sid.GetHashCode();
+				return Sid.GetHashCode();
 			}
 
 			// Cast ourselves as a keyed object...

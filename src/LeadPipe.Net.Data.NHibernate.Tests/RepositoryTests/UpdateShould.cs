@@ -33,18 +33,21 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
+            var modelList = new List<TestModel>();
+
+            using (unitOfWork.Start())
+            {
+                modelList.Add(new TestModel(KeyA) { MutableTestProperty = "FOO" });
+                modelList.Add(new TestModel(KeyB) { MutableTestProperty = "FOO" });
+
+                repository.Create(modelList);
+
+                unitOfWork.Commit();
+            }
+
 			// Act
 			using (unitOfWork.Start())
 			{
-				var modelList = new List<TestModel>();
-
-				modelList.Add(new TestModel(KeyA) { MutableTestProperty = "FOO" });
-				modelList.Add(new TestModel(KeyB) { MutableTestProperty = "FOO" });
-
-				repository.Create(modelList);
-
-				unitOfWork.Commit();
-
 				foreach (TestModel testModel in modelList)
 				{
 					testModel.MutableTestProperty = "BAR";

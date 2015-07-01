@@ -94,47 +94,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 		}
 
 		/// <summary>
-		/// Tests that Create persists an object.
-		/// </summary>
-		[Test]
-		public void AllowMultipleCommits()
-		{
-			//// TODO: This probably doesn't belong here.
-			
-			// Arrange
-			Bootstrapper.Start();
-			const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
-			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-			var testModel = new TestModel(Key);
-
-			// Act
-			using (unitOfWork.Start())
-			{
-				repository.Create(testModel);
-
-				unitOfWork.Commit();
-
-				var foundModel = repository.Find.One(x => x.Key.Equals(Key));
-
-				Assert.That(foundModel != null);
-
-				foundModel.CreatedBy = "FOO";
-
-				repository.Update(foundModel);
-
-				unitOfWork.Commit();
-
-				foundModel = repository.Find.One(x => x.Key.Equals(Key));
-
-				Assert.That(foundModel.CreatedBy.Equals("FOO"));
-			}
-		}
-
-		/// <summary>
 		/// Tests that Create does persist an object if the unit of work is not committed.
 		/// </summary>
 		[Test]

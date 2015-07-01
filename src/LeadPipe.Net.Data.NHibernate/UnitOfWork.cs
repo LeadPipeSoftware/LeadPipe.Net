@@ -36,7 +36,12 @@ namespace LeadPipe.Net.Data.NHibernate
 		/// <summary>
 		/// The data session provider.
 		/// </summary>
-		private IDataSessionProvider<ISession> dataSessionProvider;
+		private IDataSessionProvider<ISession> dataSessionProvider;	    
+
+	    /// <summary>
+        /// The isolation level.
+        /// </summary>
+        private IsolationLevel isoLevel = IsolationLevel.ReadCommitted;
 
 		#endregion
 
@@ -54,6 +59,11 @@ namespace LeadPipe.Net.Data.NHibernate
 		}
 
 		#region Public Properties
+
+        /// <summary>
+        /// The current transaction.
+        /// </summary>
+        public ITransaction CurrentTransaction { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether the unit of work is started.
@@ -99,7 +109,7 @@ namespace LeadPipe.Net.Data.NHibernate
 			 * Chaos           - Only the highest priority of writes use locks.
 			 */
 
-			this.Commit(IsolationLevel.ReadCommitted);
+			this.Commit(isoLevel);
 		}
 
 		/// <summary>
@@ -112,20 +122,19 @@ namespace LeadPipe.Net.Data.NHibernate
 		{
 			Guard.Will.ThrowException("There is no NHibernate session. Did you start a Unit of Work?").When(this.CurrentSession == null);
 
-			var tx = this.CurrentSession.BeginTransaction(isolationLevel);
-
 			try
 			{
-				tx.Commit();
+                this.CurrentSession.Flush();
+				this.CurrentTransaction.Commit();
 			}
 			catch (Exception ex)
 			{
-				tx.Rollback();
+                this.CurrentTransaction.Rollback();
 				throw new LeadPipeNetDataException("Unable to commit the transaction. See inner exception for details.", ex);
 			}
 			finally
 			{
-				tx.Dispose();
+                this.CurrentSession.Dispose();
 			}
 		}
 
@@ -175,6 +184,8 @@ namespace LeadPipe.Net.Data.NHibernate
 
 			// Set the session flush mode...
 			this.CurrentSession.FlushMode = FlushMode.Commit;
+
+            this.CurrentTransaction = this.CurrentSession.BeginTransaction(isoLevel);
 
 			return this;
 		}
