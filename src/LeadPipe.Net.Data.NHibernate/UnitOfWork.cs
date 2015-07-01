@@ -31,22 +31,22 @@ namespace LeadPipe.Net.Data.NHibernate
 		/// <summary>
 		/// The active data session manager.
 		/// </summary>
-		private IActiveDataSessionManager<ISession> activeDataSessionManager;
+		private readonly IActiveDataSessionManager<ISession> activeDataSessionManager;
 
 		/// <summary>
 		/// The data session provider.
 		/// </summary>
-		private IDataSessionProvider<ISession> dataSessionProvider;	    
+		private readonly IDataSessionProvider<ISession> dataSessionProvider;	    
 
 	    /// <summary>
         /// The isolation level.
         /// </summary>
-        private IsolationLevel isoLevel = IsolationLevel.ReadCommitted;
+        private readonly IsolationLevel isoLevel;
 
         /// <summary>
         /// The flush mode.
         /// </summary>
-        private FlushMode flushMode;
+        private readonly FlushMode flushMode;
 
 		#endregion
 
@@ -56,14 +56,17 @@ namespace LeadPipe.Net.Data.NHibernate
         /// <param name="dataSessionProvider">The data session provider.</param>
         /// <param name="activeDataSessionManager">The active data session manager.</param>
         /// <param name="flushMode">The flush mode.</param>
+        /// <param name="isolationLevel">The isolation level.</param>
 		public UnitOfWork(
 			IDataSessionProvider<ISession> dataSessionProvider,
 			IActiveDataSessionManager<ISession> activeDataSessionManager,
-            FlushMode flushMode = FlushMode.Auto)
+            FlushMode flushMode = FlushMode.Auto,
+            IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
 			this.dataSessionProvider = dataSessionProvider;
 			this.activeDataSessionManager = activeDataSessionManager;
 		    this.flushMode = flushMode;
+            this.isoLevel = isolationLevel;
 		}
 
 		#region Public Properties
@@ -141,7 +144,7 @@ namespace LeadPipe.Net.Data.NHibernate
 			}
 			finally
 			{
-                this.CurrentSession.Dispose();
+			    if (this.CurrentSession != null) CurrentSession.Dispose();
 			}
 		}
 
@@ -189,7 +192,6 @@ namespace LeadPipe.Net.Data.NHibernate
 				throw new LeadPipeNetDataException("Unable to create an NHibernate session. Check your ISessionFactoryBuilder implementation.");
 			}
 
-			// Set the session flush mode...
 			this.CurrentSession.FlushMode = this.flushMode;
 
             this.CurrentTransaction = this.CurrentSession.BeginTransaction(isoLevel);
