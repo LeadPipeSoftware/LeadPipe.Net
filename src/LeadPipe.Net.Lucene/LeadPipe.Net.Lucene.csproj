@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{76344047-8D99-457E-AB52-D959377E2740}</ProjectGuid>
+    <ProjectGuid>{1F0561F2-4D1E-4DCC-BD02-5C39CC06E6DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LeadPipe.Net.Domain.Tests</RootNamespace>
-    <AssemblyName>LeadPipe.Net.Domain.Tests</AssemblyName>
+    <RootNamespace>LeadPipe.Net.Lucene</RootNamespace>
+    <AssemblyName>LeadPipe.Net.Lucene</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,22 +23,27 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\LeadPipe.Net.Lucene.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,27 +58,35 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DomainEventingTests\ClearShould.cs" />
-    <Compile Include="DomainEventingTests\RaiseShould.cs" />
-    <Compile Include="DomainEventingTests\RegisterShould.cs" />
-    <Compile Include="DomainEventingTests\TestDomainEvent.cs" />
-    <Compile Include="DomainEventingTests\TestEntity.cs" />
+    <Compile Include="DocumentToSearchDataTypeConverter.cs" />
+    <Compile Include="IDocumentToSearchDataTypeConverter.cs" />
+    <Compile Include="ISearchData.cs" />
+    <Compile Include="ISearchDataToDocumentTypeConverter.cs" />
+    <Compile Include="ISearcher.cs" />
+    <Compile Include="ISearchIndexClearer.cs" />
+    <Compile Include="ISearchIndexOptimizer.cs" />
+    <Compile Include="ISearchIndexUpdater.cs" />
+    <Compile Include="ISearchQueryParser.cs" />
+    <Compile Include="ISearchScoreExplainer.cs" />
+    <Compile Include="ISearchService.cs" />
+    <Compile Include="IEntityToSearchDataTypeConverter.cs" />
+    <Compile Include="Searcher.cs" />
+    <Compile Include="SearchResult.cs" />
+    <Compile Include="SearchIndexClearer.cs" />
+    <Compile Include="SearchIndexOptimizer.cs" />
+    <Compile Include="SearchIndexUpdater.cs" />
+    <Compile Include="SearchQueryParser.cs" />
+    <Compile Include="SearchScoreExplainer.cs" />
+    <Compile Include="SearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LeadPipe.Net.Domain\LeadPipe.Net.Domain.csproj">
-      <Project>{fd1810ff-7864-43b0-b8ca-bd3ad5c2e683}</Project>
-      <Name>LeadPipe.Net.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LeadPipe.Net\LeadPipe.Net.csproj">
-      <Project>{07eaabc8-d86d-4b6b-b153-77ee0e5526a5}</Project>
-      <Name>LeadPipe.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)deploy\BuildNugetPackage.bat $(ProjectDir) $(TargetDir) $(TargetName) $(SolutionDir)release</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
