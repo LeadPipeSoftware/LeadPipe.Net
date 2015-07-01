@@ -46,6 +46,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 					x.For<IDataCommandProvider>().Use<DataCommandProvider>();
 					x.For(typeof(IObjectFinder<>)).Use(typeof(ObjectFinder<>));
 					x.For<IUnitOfWorkFactory>().Use<UnitOfWorkFactory>();
+                    x.For(typeof(IQueryRunner<>)).Use(typeof(QueryRunner<>));
 				});
 
 			return bootstrapper;
