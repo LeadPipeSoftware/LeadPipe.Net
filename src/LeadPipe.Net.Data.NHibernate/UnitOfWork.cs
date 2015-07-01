@@ -43,19 +43,27 @@ namespace LeadPipe.Net.Data.NHibernate
         /// </summary>
         private IsolationLevel isoLevel = IsolationLevel.ReadCommitted;
 
+        /// <summary>
+        /// The flush mode.
+        /// </summary>
+        private FlushMode flushMode;
+
 		#endregion
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="UnitOfWork" /> class.
-		/// </summary>
-		/// <param name="dataSessionProvider">The data session provider.</param>
-		/// <param name="activeDataSessionManager">The active data session manager.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork" /> class.
+        /// </summary>
+        /// <param name="dataSessionProvider">The data session provider.</param>
+        /// <param name="activeDataSessionManager">The active data session manager.</param>
+        /// <param name="flushMode">The flush mode.</param>
 		public UnitOfWork(
 			IDataSessionProvider<ISession> dataSessionProvider,
-			IActiveDataSessionManager<ISession> activeDataSessionManager)
+			IActiveDataSessionManager<ISession> activeDataSessionManager,
+            FlushMode flushMode = FlushMode.Auto)
 		{
 			this.dataSessionProvider = dataSessionProvider;
 			this.activeDataSessionManager = activeDataSessionManager;
+		    this.flushMode = flushMode;
 		}
 
 		#region Public Properties
@@ -124,7 +132,6 @@ namespace LeadPipe.Net.Data.NHibernate
 
 			try
 			{
-                this.CurrentSession.Flush();
 				this.CurrentTransaction.Commit();
 			}
 			catch (Exception ex)
@@ -183,7 +190,7 @@ namespace LeadPipe.Net.Data.NHibernate
 			}
 
 			// Set the session flush mode...
-			this.CurrentSession.FlushMode = FlushMode.Commit;
+			this.CurrentSession.FlushMode = this.flushMode;
 
             this.CurrentTransaction = this.CurrentSession.BeginTransaction(isoLevel);
 
