@@ -41,12 +41,12 @@ namespace LeadPipe.Net.Data.NHibernate
 	    /// <summary>
         /// The isolation level.
         /// </summary>
-        private readonly IsolationLevel isoLevel;
+        private readonly IsolationLevel defaultIsolationLevel;
 
         /// <summary>
         /// The flush mode.
         /// </summary>
-        private readonly FlushMode flushMode;
+        private readonly FlushMode defaultFlushMode;
 
 		#endregion
 
@@ -65,8 +65,8 @@ namespace LeadPipe.Net.Data.NHibernate
 		{
 			this.dataSessionProvider = dataSessionProvider;
 			this.activeDataSessionManager = activeDataSessionManager;
-		    this.flushMode = flushMode;
-            this.isoLevel = isolationLevel;
+		    this.defaultFlushMode = flushMode;
+            this.defaultIsolationLevel = isolationLevel;
 		}
 
 		#region Public Properties
@@ -120,7 +120,7 @@ namespace LeadPipe.Net.Data.NHibernate
 			 * Chaos           - Only the highest priority of writes use locks.
 			 */
 
-			this.Commit(isoLevel);
+			this.Commit(defaultIsolationLevel);
 		}
 
 		/// <summary>
@@ -164,21 +164,30 @@ namespace LeadPipe.Net.Data.NHibernate
 			this.Dispose();
 		}
 
-		/// <summary>
-		/// Starts the unit of work.
-		/// </summary>
-		/// <remarks>
-		/// <para>
-		/// This method creates and returns an instance of a unit of work. The IUnitOfWork interface implements
-		/// IDisposable which means that a business transaction has ended when the UnitOfWork is disposed. It's
-		/// important to remember that if we simply dispose of the unit of work then nothing will happen. If we want to
-		/// propagate changes to the database, we have to call the Commit method on the unit of work.
-		/// </para>
-		/// </remarks>
-		/// <returns>
-		/// A unit of work.
-		/// </returns>
-		public IUnitOfWork Start()
+	    public IUnitOfWork Start()
+	    {
+	        return this.Start(this.defaultFlushMode);
+	    }
+
+        /// <summary>
+        /// Starts the unit of work.
+        /// </summary>
+        /// <param name="flushMode">The flush mode.</param>
+        /// <returns>
+        /// A unit of work.
+        /// </returns>
+        /// <exception cref="LeadPipeNetDataException">
+        /// The Unit of Work has already been started.
+        /// or
+        /// Unable to create an NHibernate session. Check your ISessionFactoryBuilder implementation.
+        /// </exception>
+        /// <remarks>
+        /// This method creates and returns an instance of a unit of work. The IUnitOfWork interface implements
+        /// IDisposable which means that a business transaction has ended when the UnitOfWork is disposed. It's
+        /// important to remember that if we simply dispose of the unit of work then nothing will happen. If we want to
+        /// propagate changes to the database, we have to call the Commit method on the unit of work.
+        /// </remarks>
+		public IUnitOfWork Start(FlushMode flushMode)
 		{
 			if (this.IsStarted)
 			{
@@ -192,9 +201,10 @@ namespace LeadPipe.Net.Data.NHibernate
 				throw new LeadPipeNetDataException("Unable to create an NHibernate session. Check your ISessionFactoryBuilder implementation.");
 			}
 
-			this.CurrentSession.FlushMode = this.flushMode;
+            // Use the default flush mode if the caller didn't supply one...
+            this.CurrentSession.FlushMode = flushMode == this.defaultFlushMode ? this.defaultFlushMode : flushMode;
 
-            this.CurrentTransaction = this.CurrentSession.BeginTransaction(isoLevel);
+            this.CurrentTransaction = this.CurrentSession.BeginTransaction(defaultIsolationLevel);
 
 			return this;
 		}
