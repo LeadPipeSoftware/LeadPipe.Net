@@ -6,14 +6,16 @@
     <title>LeadPipe.Net.Domain</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>LeadPipe.Net is an open source collection of useful tools for .NET development.</summary>
+    <summary>LeadPipe.Net.Domain provides implementations of core Domain Driven Design types including entity, repository, value object, domain events, aggregate roots, and more.</summary>
     <description>
-      LeadPipe.Net is an open source collection of useful tools for .NET development. This is the domain package which provides implementations of Domain Driven Design types. You may also be interested in LeadPipe.Net, LeadPipe.Net.Data, or one of the pre-built data implementations such as LeadPipe.Net.Data.NHibernate.
+      LeadPipe.Net.Domain provides implementations of core Domain Driven Design types including entity, repository, value object, domain events, aggregate roots, and more.
       
-      More information and source code available at https://github.com/LeadPipeSoftware/LeadPipe.Net!
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
-    <tags>DDD Domain Driven Design Lead Pipe entity entities repository repositories aggregate</tags>
+    <tags>DDD domain driven design entity entities repository repositories aggregate</tags>
   </metadata>
 </package>

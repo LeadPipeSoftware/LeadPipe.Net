@@ -6,14 +6,14 @@
     <title>LeadPipe.Net.Lucene</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net/tree/master/src/LeadPipe.Net.Lucene</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>LeadPipe.Net is an open source collection of useful tools for .NET development.</summary>
+    <summary>LeadPipe.Net.Lucene provides a set of base types that make implementing the powerful, open source Lucene search engine as straight-foward as possible.</summary>
     <description>
-      LeadPipe.Net is an open source collection of useful tools for .NET development. This is the Lucene search library that provides a straight-forward way to implement the powerful, open source Lucene.Net search engine. You may also be interested in LeadPipe.Net, LeadPipe.Net.Data, or one of the pre-built data implementations such as LeadPipe.Net.Data.NHibernate.
+      LeadPipe.Net.Lucene provides a set of base types that make implementing the powerful, open source Lucene search engine as straight-foward as possible.
       
-      Read more about the LeadPipe.Net.Lucene library at https://github.com/LeadPipeSoftware/LeadPipe.Net/tree/master/src/LeadPipe.Net.Lucene
-      
-      More information and source code available at https://github.com/LeadPipeSoftware/LeadPipe.Net!
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
     <tags>Lead Pipe search lucene lucene.net</tags>

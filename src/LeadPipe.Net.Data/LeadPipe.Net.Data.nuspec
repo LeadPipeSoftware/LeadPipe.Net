@@ -6,14 +6,16 @@
     <title>LeadPipe.Net.Data</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>LeadPipe.Net is an open source collection of useful tools for .NET development.</summary>
+    <summary>LeadPipe.Net.Data provides essential data tier objects including an implementation of a repository, the query object pattern, and unit of work pattern.</summary>
     <description>
-      LeadPipe.Net is an open source collection of useful tools for .NET development. This is the LeadPipe.Net data package and provides essential data tier objects. You can use this package to build your own data implementation. You may also be interested in LeadPipe.Net.Domain, or one of the pre-built data implementations such as LeadPipe.Net.Data.NHibernate.
+      LeadPipe.Net.Data provides essential data tier objects including an implementation of a repository, the query object pattern, and unit of work pattern. You can use this package to build your own data implementation, but you might also be interested in the pre-built data implementations such as LeadPipe.Net.Data.NHibernate.
       
-      More information and source code available at https://github.com/LeadPipeSoftware/LeadPipe.Net!
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
-    <tags>DDD Domain Driven Design Lead Pipe entity entities repository repositories aggregate</tags>
+    <tags>data framework repository query object pattern unit of work finder</tags>
   </metadata>
 </package>

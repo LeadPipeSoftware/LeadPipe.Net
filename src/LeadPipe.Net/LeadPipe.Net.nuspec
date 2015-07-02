@@ -6,14 +6,16 @@
     <title>LeadPipe.Net</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>LeadPipe.Net is an open source collection of useful tools for .NET development.</summary>
+    <summary>LeadPipe.Net is a collection of useful types, patterns, and extensions. These include a guarding type, tracking observable collection, command mediator, poller, and finite state machine.</summary>
     <description>
-      LeadPipe.Net is an open source collection of useful tools for .NET development. This is the core package and is used by most other LeadPipe.Net packages. You may also be interested in LeadPipe.Net.Domain, LeadPipe.Net.Data, or one of the pre-built data implementations such as LeadPipe.Net.Data.NHibernate.
+      LeadPipe.Net is a collection of useful types, patterns, and extensions. These include a guarding type, tracking observable collection, command mediator, poller, and finite state machine.
       
-      More information and source code available at https://github.com/LeadPipeSoftware/LeadPipe.Net!
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
-    <tags>DDD Domain Driven Design Lead Pipe entity entities repository repositories aggregate</tags>
+    <tags>library framework command mediator poller finite state machine observable collection guard extensions patterns</tags>
   </metadata>
 </package>
