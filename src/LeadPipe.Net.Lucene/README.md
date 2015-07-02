@@ -2,8 +2,8 @@
 
 LeadPipe.Net.Lucene provides a set of base types that make implementing the powerful, open source Lucene search engine straight-foward. The goal is to make using Lucene as simple as this:
 
-```c-sharp
-	var results = searchService.Search("123");
+```csharp
+var results = searchService.Search("123");
 ```
 
 ## Getting Started
@@ -14,7 +14,7 @@ LeadPipe.Net.Lucene is based on the notion that you have entities (POCO's) that 
 
 First, we'll create an EntityToSearchDataTypeConverter. Here we're taking whatever object we want to put in Lucene's search index and converting it into search data. This search data type is what we'll convert into a Lucene document and also what we'll get back from a Lucene search.
 
-```c-sharp
+```csharp
 public class FooToFooSearchDataTypeConverter : IEntityToSearchDataTypeConverter<Foo, FooSearchData>
 {
 	public FooSearchData Convert(Foo foo)
@@ -37,7 +37,7 @@ Think of search data types as search and result optimized data transfer objects.
 
 Next, we need to convert our search data into a Lucene document. This is our opportunity to tell Lucene exactly how to handle our data.
 
-```c-sharp
+```csharp
 public Document Convert(FooSearchData searchData)
 {
 	var document = new Document();
@@ -54,7 +54,7 @@ public Document Convert(FooSearchData searchData)
 
 When we perform a search, we want to get our search data back. To do that, we need to convert a Lucene document into search data.
 
-```c-sharp
+```csharp
 public override FooSearchData Convert(int documentId, Document document, float score, float topScore)
 {
 	var normalizedScore = NormalizeScore(score, topScore);
@@ -81,7 +81,7 @@ public override FooSearchData Convert(int documentId, Document document, float s
 
 Finally, we just need to configure our search service. This will depend on your environment, but the simplest way is like this:
 
-```c-sharp
+```csharp
 var config = new SearchServiceConfiguration(Version.LUCENE_30, IndexWriter.MaxFieldLength.UNLIMITED, @"C:\SearchIndex\", "write.lock", 1000);
             
             var parser = new SearchQueryParser();
@@ -96,7 +96,7 @@ var config = new SearchServiceConfiguration(Version.LUCENE_30, IndexWriter.MaxFi
 
 Of course, a good dependency injection framework can make all that go away. For example, with StructureMap we might do this:
 
-```c-sharp
+```csharp
 Container = new Container(c =>
 {
     c.For<ISearchServiceConfiguration>().Use(() => new SearchServiceConfiguration(
@@ -127,7 +127,7 @@ Of course, each framework is different. Do what make the most sense for you.
 
 One thing that is optional, but recommended is to create a simple class that keeps magic strings out of your code. Everywhere you see a usage of FooSearchFields in the example above comes from this class:
 
-```c-sharp
+```csharp
 public class FooSearchFields
 {
 	public static readonly string Key;
