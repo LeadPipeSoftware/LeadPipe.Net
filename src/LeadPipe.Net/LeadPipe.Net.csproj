@@ -113,12 +113,15 @@
     <Compile Include="Collections\ITrackingObservableCollection.cs" />
     <Compile Include="IAuditable.cs" />
     <Compile Include="IClock.cs" />
+    <Compile Include="IEncryptable.cs" />
     <Compile Include="IInfrastructureService.cs" />
     <Compile Include="IKeyed.cs" />
     <Compile Include="ILocalData.cs" />
     <Compile Include="INotifyPropertyChangedEx.cs" />
     <Compile Include="IParse.cs" />
     <Compile Include="IPersistable.cs" />
+    <Compile Include="IUserContext.cs" />
+    <Compile Include="LeadPipeNetSecurityException.cs" />
     <Compile Include="Local.cs" />
     <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="PaginatedList.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="Collections\TrackingState.cs" />
     <Compile Include="LeadPipeNetException.cs" />
     <Compile Include="LeadPipeNetExceptionType.cs" />
+    <Compile Include="SaltedHash.cs" />
     <Compile Include="Specifications\AdHocSpecification.cs" />
     <Compile Include="Specifications\AndSpecification.cs" />
     <Compile Include="Specifications\CompositeSpecification.cs" />
@@ -148,6 +152,7 @@
     <Compile Include="Specifications\Specification.cs" />
     <Compile Include="Specifications\TrueSpecification.cs" />
     <Compile Include="UnitType.cs" />
+    <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

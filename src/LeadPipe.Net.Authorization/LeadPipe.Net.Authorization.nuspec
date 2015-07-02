@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LeadPipe.Net.Authorization</id>
+    <version>$version$</version>
+    <title>LeadPipe.Net.Authorization</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net/tree/master/src/LeadPipe.Net.Authorization</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>LeadPipe.Net.Authorization provides a power and easy-to-use authorization framework for your application. It supports activity and role-based authorization and works with any authentication provider.</summary>
+    <description>
+      LeadPipe.Net.Authorization provides a power and easy-to-use authorization framework for your application. It supports activity and role-based authorization and works with any authentication provider.
+      
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
+    </description>
+    <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
+    <tags>authorization security role activity authentication</tags>
+  </metadata>
+</package>

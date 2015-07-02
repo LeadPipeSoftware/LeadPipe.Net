@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LeadPipe.Net.Validation</id>
+    <version>$version$</version>
+    <title>LeadPipe.Net.Validation</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net/tree/master/src/LeadPipe.Net.Validation</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>LeadPipe.Net.Validation an easy-to-use validation attribute library and extension methods that build on Microsoft's data validation framework.</summary>
+    <description>
+      LeadPipe.Net.Validation an easy-to-use validation attribute library and extension methods that build on Microsoft's data validation framework. It includes attributes you can place on class properties such as Required, NoTrailingWhitespace, Alpha, Alphanumeric, Minimum, MinimumLength, and lots more.
+      
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
+    </description>
+    <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
+    <tags>authorization security role activity authentication</tags>
+  </metadata>
+</package>

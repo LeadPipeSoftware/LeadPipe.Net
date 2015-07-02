@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Lucene", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Lucene.Tests", "src\LeadPipe.Net.Lucene.Tests\LeadPipe.Net.Lucene.Tests.csproj", "{2AC2DC2B-DDA1-42D7-9C1D-2BBCDE797004}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Authorization", "src\LeadPipe.Net.Authorization\LeadPipe.Net.Authorization.csproj", "{1F0521F3-441E-1DCC-BDF2-000000000000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Validation", "src\LeadPipe.Net.Validation\LeadPipe.Net.Validation.csproj", "{A0FEAE9B-F1EA-43E3-BB14-ED131E2DF322}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +74,14 @@ Global
 		{2AC2DC2B-DDA1-42D7-9C1D-2BBCDE797004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AC2DC2B-DDA1-42D7-9C1D-2BBCDE797004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AC2DC2B-DDA1-42D7-9C1D-2BBCDE797004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F0521F3-441E-1DCC-BDF2-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0521F3-441E-1DCC-BDF2-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0521F3-441E-1DCC-BDF2-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0521F3-441E-1DCC-BDF2-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0FEAE9B-F1EA-43E3-BB14-ED131E2DF322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0FEAE9B-F1EA-43E3-BB14-ED131E2DF322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0FEAE9B-F1EA-43E3-BB14-ED131E2DF322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0FEAE9B-F1EA-43E3-BB14-ED131E2DF322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
