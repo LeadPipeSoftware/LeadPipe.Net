@@ -11,7 +11,7 @@ namespace LeadPipe.Net.Lucene.Tests
 	/// </summary>
 	public class FooSearchFields
 	{
-		public static readonly string Id;
+		public static readonly string Key;
 
 		public static readonly string Parrot;
 
@@ -19,7 +19,7 @@ namespace LeadPipe.Net.Lucene.Tests
 
 		static FooSearchFields()
 		{
-			Id = "Id".ToLowerInvariant();
+			Key = "Key".ToLowerInvariant();
 			Parrot = "Parrot".ToLowerInvariant();
 			Bar = "Bar".ToLowerInvariant();
 		}

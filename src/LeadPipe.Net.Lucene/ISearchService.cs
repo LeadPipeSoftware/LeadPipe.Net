@@ -11,7 +11,7 @@ namespace LeadPipe.Net.Lucene
 	/// <summary>
 	/// Provides searching services.
 	/// </summary>
-	public interface ISearchService<TEntity, TSearchData> where TSearchData : new()
+	public interface ISearchService<TEntity, TSearchData> where TSearchData : IKeyed, new()
 	{
         /// <summary>
         /// Gets or sets the hit limit.
@@ -26,15 +26,18 @@ namespace LeadPipe.Net.Lucene
         /// </summary>
 		void ClearIndex();
 
-		////void ClearIndex(string id);
+        /// <summary>
+        /// Clears the index.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+		void ClearIndex(string id);
 
         /// <summary>
-        /// Explains the specified input.
+        /// Explains the score for a result.
         /// </summary>
-        /// <param name="input">The input.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-		string Explain(string input, int resultId);
+		string Explain(int resultId);
 
         /// <summary>
         /// Optimizes this instance.

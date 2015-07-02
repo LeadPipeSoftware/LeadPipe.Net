@@ -23,7 +23,7 @@ namespace LeadPipe.Net.Lucene
 		public virtual Query ParseQuery(string searchQuery, QueryParser parser)
 		{
 			/*
-			 * NOTE: This is where you'd change to something like FuzzyQuery if desired.
+			 * NOTE: Override this to something like FuzzyQuery if desired.
 			 */
 
 			Query query;

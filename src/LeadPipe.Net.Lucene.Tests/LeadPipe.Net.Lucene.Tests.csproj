@@ -81,6 +81,10 @@
       <Project>{1f0561f2-4d1e-4dcc-bd02-5c39cc06e6da}</Project>
       <Name>LeadPipe.LuceneSearch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LeadPipe.Net\LeadPipe.Net.csproj">
+      <Project>{07eaabc8-d86d-4b6b-b153-77ee0e5526a5}</Project>
+      <Name>LeadPipe.Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

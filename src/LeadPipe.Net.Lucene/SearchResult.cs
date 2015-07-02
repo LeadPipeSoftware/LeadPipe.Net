@@ -11,7 +11,7 @@ namespace LeadPipe.Net.Lucene
 	/// <summary>
 	/// The search result.
 	/// </summary>
-	public class SearchResult<TSearchData>
+	public class SearchResult<TSearchData> where TSearchData : IKeyed
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchResult{TSearchData}"/> class.

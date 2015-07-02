@@ -4,6 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Lucene.Net.Index;
+using Lucene.Net.Util;
 using StructureMap;
 
 namespace LeadPipe.Net.Lucene.Tests
@@ -38,8 +40,15 @@ namespace LeadPipe.Net.Lucene.Tests
 
 			Container = new Container(c =>
 			{
+                c.For<ISearchServiceConfiguration>().Use(() => new SearchServiceConfiguration(
+                    Version.LUCENE_30,
+                    IndexWriter.MaxFieldLength.UNLIMITED,
+                    @"C:\SearchIndex\",
+                    "write.lock",
+                    1000));
+
 				c.For<ISearchIndexClearer>().Use<SearchIndexClearer>();
-				c.For<ISearchIndexOptimizer>().Use<SearchIndexOptimizer>();
+                c.For<ISearchIndexOptimizer>().Use<SearchIndexOptimizer>();
 				c.For<ISearchQueryParser>().Use<SearchQueryParser>();
 				c.For<ISearchScoreExplainer>().Use<SearchScoreExplainer>();
 

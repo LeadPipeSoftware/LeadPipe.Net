@@ -29,7 +29,7 @@ namespace LeadPipe.Net.Lucene
 		}
 
         /// <summary>
-        /// Explains the search score.
+        /// Explains the search score for a result.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
         /// <param name="fsDirectory">The fs directory.</param>
@@ -49,7 +49,7 @@ namespace LeadPipe.Net.Lucene
         /// <param name="searchQuery">The search query.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-		private string PerformExplain(Version luceneVersion, FSDirectory fsDirectory, string searchQuery, int resultId)
+        protected virtual string PerformExplain(Version luceneVersion, FSDirectory fsDirectory, string searchQuery, int resultId)
 		{
 			/*
 			 * The obvious problem here is that we're not using the exact same search as the real one.

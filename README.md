@@ -92,6 +92,10 @@ LeadPipe.Net.Data.NHibernate provides an easily-integrated solution for using NH
 
 ## LeadPipe.Net.Lucene (Lucene Searching)
 
-LeadPipe.Net.Lucene provides a set of base types that make implementing the powerful, open source Lucene search engine straight-foward.
+LeadPipe.Net.Lucene provides a set of base types that make implementing the powerful, open source Lucene search engine straight-foward. The goal is to make using Lucene as simple as this:
 
-(more info coming soon)
+```c-sharp
+var results = searchService.Search("123");
+```
+
+View the README in the source folder for more information!

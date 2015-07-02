@@ -14,7 +14,7 @@ namespace LeadPipe.Net.Lucene
 	/// <summary>
 	/// Updates the search index.
 	/// </summary>
-	public interface ISearchIndexUpdater<TEntity, TSearchData> where TSearchData : new()
+	public interface ISearchIndexUpdater<TEntity, TSearchData> where TSearchData : IKeyed, new()
 	{
 
         /// <summary>

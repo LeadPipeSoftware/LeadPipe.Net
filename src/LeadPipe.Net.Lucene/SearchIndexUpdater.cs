@@ -5,8 +5,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
+using Lucene.Net.Search;
 using Lucene.Net.Store;
 
 namespace LeadPipe.Net.Lucene
@@ -16,7 +18,7 @@ namespace LeadPipe.Net.Lucene
     /// <summary>
     /// Updates the search index.
     /// </summary>
-    public class SearchIndexUpdater<TEntity, TSearchData> : ISearchIndexUpdater<TEntity, TSearchData> where TSearchData : new()
+    public class SearchIndexUpdater<TEntity, TSearchData> : ISearchIndexUpdater<TEntity, TSearchData> where TSearchData : IKeyed, new()
     {
         private readonly ISearchDataToDocumentTypeConverter<TSearchData> searchDataToDocumentTypeConverter;
 
@@ -43,15 +45,10 @@ namespace LeadPipe.Net.Lucene
         /// <param name="maxFieldLength">Maximum length of the field.</param>
         public virtual void UpdateIndex(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength)
         {
-            var searchData = new List<TSearchData>();
-
             /*
-                 * Here is where you would fetch your entities and project them into SearchData. Maybe
-                 * a SQL query off a view. Whatever works for you. The following line is commented out
-                 * so that the solution will compile.
-                 */
-
-            ////this.UpdateIndex(luceneVersion, fsDirectory, maxFieldLength, searchData);
+             * You can override this method in your own updater to go fetch your search data and
+             * update the index.
+             */
         }
 
         /// <summary>
@@ -86,37 +83,37 @@ namespace LeadPipe.Net.Lucene
         public virtual void UpdateIndex(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength,
             IEnumerable<TEntity> entities)
         {
-            var searchDatas = new List<TSearchData>();
-
-            foreach (var entity in entities)
-            {
-                var searchData = this.entityToSearchDataTypeConverter.Convert(entity);
-
-                searchDatas.Add(searchData);
-            }
+            var searchDatas = entities.Select(entity => this.entityToSearchDataTypeConverter.Convert(entity)).ToList();
 
             this.UpdateIndex(luceneVersion, fsDirectory, maxFieldLength, searchDatas);
         }
 
         /// <summary>
-        /// Adds the index of the entity to.
+        /// Adds an entity to the index.
         /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id">The identifier.</param>
         /// <param name="searchData">The search data.</param>
         /// <param name="indexWriter">The index writer.</param>
         private void AddEntityToIndex(TSearchData searchData, IndexWriter indexWriter)
         {
-            //this.DeleteEntityFromIndex(searchData, indexWriter);
+            DeleteEntityFromIndex(searchData, indexWriter);
 
             var document = this.searchDataToDocumentTypeConverter.Convert(searchData);
 
             indexWriter.AddDocument(document);
         }
 
-        //private void DeleteEntityFromIndex(TSearchData searchData, IndexWriter indexWriter)
-        //{
-        //    var searchQuery = new TermQuery(new Term(SearchFields.Id, searchData.Id));
+        /// <summary>
+        /// Deletes a single entity from the index.
+        /// </summary>
+        /// <param name="searchData">The search data.</param>
+        /// <param name="indexWriter">The index writer.</param>
+        private static void DeleteEntityFromIndex(TSearchData searchData, IndexWriter indexWriter)
+        {
+            var searchQuery = new TermQuery(new Term("Key", searchData.Key));
 
-        //    indexWriter.DeleteDocuments(searchQuery);
-        //}
+            indexWriter.DeleteDocuments(searchQuery);
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace LeadPipe.Net.Lucene.Tests
 		{
 			var fooSearchData = new FooSearchData
 			{
-				Id = foo.Id,
+				Key = foo.Key,
 				Parrot = foo.Parrot,
 				Bar = foo.Bar,
 			};

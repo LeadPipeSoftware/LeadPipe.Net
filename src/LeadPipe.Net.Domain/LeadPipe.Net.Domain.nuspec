@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>LeadPipe.Net</id>
+    <id>LeadPipe.Net.Domain</id>
     <version>$version$</version>
-    <title>LeadPipe.Net</title>
+    <title>LeadPipe.Net.Domain</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

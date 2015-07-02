@@ -17,7 +17,7 @@ namespace LeadPipe.Net.Lucene
 	/// <summary>
 	/// Performs searches.
 	/// </summary>
-	public class Searcher<TSearchData> : ISearcher<TSearchData> where TSearchData : new()
+	public class Searcher<TSearchData> : ISearcher<TSearchData> where TSearchData : IKeyed, new()
 	{
 		private readonly IDocumentToSearchDataTypeConverter<TSearchData> documentToSearchDataTypeConverter;
 
@@ -54,12 +54,12 @@ namespace LeadPipe.Net.Lucene
         /// <summary>
         /// Sets the default search fields.
         /// </summary>
-        /// <param name="defaultSearchFields">The default search fields.</param>
-		public virtual void SetDefaultSearchFields(IEnumerable<string> defaultSearchFields)
+        /// <param name="searchFields">The default search fields.</param>
+		public virtual void SetDefaultSearchFields(IEnumerable<string> searchFields)
 		{
 			this.defaultSearchFields.Clear();
 
-			this.defaultSearchFields = defaultSearchFields as List<string>;
+			this.defaultSearchFields = searchFields as List<string>;
 		}
 
         /// <summary>
@@ -103,19 +103,15 @@ namespace LeadPipe.Net.Lucene
         /// <returns></returns>
 		private IEnumerable<TSearchData> MapDocumentsToSearchData(IEnumerable<ScoreDoc> scoreDocuments, IndexSearcher indexSearcher)
 		{
-			if (scoreDocuments != null)
-			{
-				var scoreDocs = scoreDocuments as IList<ScoreDoc> ?? scoreDocuments.ToList();
+            if (scoreDocuments == null) return new List<TSearchData>();
 
-				if (scoreDocs.Any())
-				{
-					var topScore = scoreDocs.First().Score;
+            var scoreDocs = scoreDocuments as IList<ScoreDoc> ?? scoreDocuments.ToList();
+
+            if (!scoreDocs.Any()) return new List<TSearchData>();
+
+            var topScore = scoreDocs.First().Score;
 					
-					return scoreDocs.Select(scoreDocument => this.documentToSearchDataTypeConverter.Convert(scoreDocument.Doc, indexSearcher.Doc(scoreDocument.Doc), scoreDocument.Score, topScore)).ToList();
-				}
-			}
-
-			return new List<TSearchData>();
+            return scoreDocs.Select(scoreDocument => this.documentToSearchDataTypeConverter.Convert(scoreDocument.Doc, indexSearcher.Doc(scoreDocument.Doc), scoreDocument.Score, topScore)).ToList();
 		}
 
         /// <summary>
@@ -137,14 +133,7 @@ namespace LeadPipe.Net.Lucene
 				return result;
 			}
 
-			if (searchQuery.Contains(':'))
-			{
-				fields = this.allSearchFields.ToArray();
-			}
-			else
-			{
-				fields = this.defaultSearchFields.ToArray();
-			}
+			fields = searchQuery.Contains(':') ? this.allSearchFields.ToArray() : this.defaultSearchFields.ToArray();
 
 			using (var indexSearcher = new IndexSearcher(fsDirectory, false))
 			{

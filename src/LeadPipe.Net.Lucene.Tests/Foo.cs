@@ -8,7 +8,7 @@ namespace LeadPipe.Net.Lucene.Tests
 {
     public class Foo
     {
-        public string Id { get; set; }
+        public string Key { get; set; }
 
         public string Parrot { get; set; }
 

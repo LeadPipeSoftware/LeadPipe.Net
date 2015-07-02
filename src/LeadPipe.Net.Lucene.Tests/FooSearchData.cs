@@ -6,9 +6,9 @@
 
 namespace LeadPipe.Net.Lucene.Tests
 {
-    public class FooSearchData : ISearchData<string>
+    public class FooSearchData : IKeyed
     {
-        public string Id { get; set; }
+        public string Key { get; set; }
 
         public string Parrot { get; set; }
 

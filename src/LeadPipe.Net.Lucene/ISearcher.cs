@@ -13,7 +13,7 @@ namespace LeadPipe.Net.Lucene
 	/// <summary>
 	/// Searches the index.
 	/// </summary>
-	public interface ISearcher<TSearchData> where TSearchData : new()
+	public interface ISearcher<TSearchData> where TSearchData : IKeyed, new()
 	{
         /// <summary>
         /// Searches Lucene.
@@ -28,8 +28,8 @@ namespace LeadPipe.Net.Lucene
         /// <summary>
         /// Sets the default search fields.
         /// </summary>
-        /// <param name="defaultSearchFields">The default search fields.</param>
-	    void SetDefaultSearchFields(IEnumerable<string> defaultSearchFields);
+        /// <param name="searchFields">The default search fields.</param>
+	    void SetDefaultSearchFields(IEnumerable<string> searchFields);
 
         /// <summary>
         /// Sets the search fields.

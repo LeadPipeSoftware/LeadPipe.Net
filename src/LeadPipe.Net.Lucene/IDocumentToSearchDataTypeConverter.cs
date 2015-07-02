@@ -11,7 +11,7 @@ namespace LeadPipe.Net.Lucene
 	/// <summary>
 	/// Converts Lucene Document types to SearchData types.
 	/// </summary>
-	public interface IDocumentToSearchDataTypeConverter<TSearchData> where TSearchData : new()
+	public interface IDocumentToSearchDataTypeConverter<TSearchData> where TSearchData : IKeyed, new()
 	{
         /// <summary>
         /// Converts the specified document to search data.

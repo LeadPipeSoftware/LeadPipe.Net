@@ -52,7 +52,7 @@ namespace LeadPipe.Net.Lucene.Tests
 
 			var document = new Document();
 
-			document.Add(new Field(FooSearchFields.Id, searchData.Id, Field.Store.YES, Field.Index.ANALYZED));
+			document.Add(new Field(FooSearchFields.Key, searchData.Key, Field.Store.YES, Field.Index.ANALYZED));
 			document.Add(new Field(FooSearchFields.Parrot, searchData.Parrot, Field.Store.YES, Field.Index.ANALYZED));
 			document.Add(new Field(FooSearchFields.Bar, searchData.Bar, Field.Store.YES, Field.Index.NO));
 

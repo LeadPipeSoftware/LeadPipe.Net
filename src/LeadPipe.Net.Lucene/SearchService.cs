@@ -5,27 +5,21 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.IO;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
 
 namespace LeadPipe.Net.Lucene
 {
-	using Directory = System.IO.Directory;
 	using Version = global::Lucene.Net.Util.Version;
 
 	/// <summary>
 	/// The search service.
 	/// </summary>
-	public class SearchService<TEntity, TSearchData> : ISearchService<TEntity, TSearchData> where TSearchData : new()
+	public class SearchService<TEntity, TSearchData> : ISearchService<TEntity, TSearchData> where TSearchData : IKeyed, new()
 	{
-		private readonly string indexFolder;
-
-		private readonly Version luceneVersion;
-
-		private readonly global::Lucene.Net.Index.IndexWriter.MaxFieldLength maxFieldLength;
-
-		private readonly ISearchIndexClearer searchIndexClearer;
+	    private readonly ISearchServiceConfiguration configuration;
+	    
+        private readonly ISearchIndexClearer searchIndexClearer;
 
 		private readonly ISearchIndexOptimizer searchIndexOptimizer;
 
@@ -38,67 +32,82 @@ namespace LeadPipe.Net.Lucene
 		private readonly string writeLockSemaphoreFile;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SearchService{TEntity, TSearchData}"/> class.
+        /// Initializes a new instance of the <see cref="SearchService{TEntity, TSearchData}" /> class.
         /// </summary>
+        /// <param name="configuration">The configuration.</param>
         /// <param name="searchIndexClearer">The search index clearer.</param>
         /// <param name="searchIndexOptimizer">The search index optimizer.</param>
         /// <param name="searcher">The searcher.</param>
         /// <param name="searchIndexUpdater">The search index updater.</param>
         /// <param name="searchScoreExplainer">The search score explainer.</param>
 		public SearchService(
+            ISearchServiceConfiguration configuration,
 			ISearchIndexClearer searchIndexClearer, 
 			ISearchIndexOptimizer searchIndexOptimizer, 
 			ISearcher<TSearchData> searcher, 
 			ISearchIndexUpdater<TEntity, TSearchData> searchIndexUpdater, 
 			ISearchScoreExplainer searchScoreExplainer)
 		{
-			this.searchIndexClearer = searchIndexClearer;
+            this.configuration = configuration;
+            this.searchIndexClearer = searchIndexClearer;
 			this.searchIndexOptimizer = searchIndexOptimizer;
 			this.searcher = searcher;
 			this.searchIndexUpdater = searchIndexUpdater;
 			this.searchScoreExplainer = searchScoreExplainer;
-
-			this.luceneVersion = Version.LUCENE_30;
-			this.maxFieldLength = global::Lucene.Net.Index.IndexWriter.MaxFieldLength.UNLIMITED;
-
-			this.indexFolder = @"C:\SearchIndex\";
-
-			this.FsDirectory = this.GetDirectory();
-
-			this.writeLockSemaphoreFile = Path.Combine(this.IndexFolder, "write.lock");
-
-			this.HitLimit = 1000;
 		}
 
-        /// <summary>
-        /// Gets or sets the fs directory.
-        /// </summary>
-        /// <value>
-        /// The fs directory.
-        /// </value>
-		public virtual FSDirectory FsDirectory { get; protected set; }
+	    /// <summary>
+	    /// Gets or sets the Lucene file system directory.
+	    /// </summary>
+	    /// <value>
+	    /// The Lucene file system directory.
+	    /// </value>
+	    public virtual FSDirectory FsDirectory
+	    {
+	        get { return this.configuration.FsDirectory; }
+	    }
 
-        /// <summary>
-        /// Gets or sets the hit limit.
-        /// </summary>
-        /// <value>
-        /// The hit limit.
-        /// </value>
-		public virtual int HitLimit { get; set; }
+	    /// <summary>
+	    /// Gets or sets the hit limit.
+	    /// </summary>
+	    /// <value>
+	    /// The hit limit.
+	    /// </value>
+	    public virtual int HitLimit
+	    {
+	        get { return this.configuration.HitLimit; }
+	        set { this.configuration.HitLimit = value; }
+	    }
 
-        /// <summary>
-        /// Gets the index folder.
-        /// </summary>
-        /// <value>
-        /// The index folder.
-        /// </value>
-		public virtual string IndexFolder
+	    /// <summary>
+	    /// Gets the index folder.
+	    /// </summary>
+	    /// <value>
+	    /// The index folder.
+	    /// </value>
+	    public virtual string IndexFolder
 		{
 			get
 			{
-				return this.indexFolder;
+				return this.configuration.IndexFolder;
 			}
 		}
+
+        /// <summary>
+        /// Gets or sets the last query input.
+        /// </summary>
+        /// <value>
+        /// The last query input.
+        /// </value>
+        public virtual string LastInput { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the last search result.
+        /// </summary>
+        /// <value>
+        /// The last search result.
+        /// </value>
+        public virtual SearchResult<TSearchData> LastSearchResult { get; protected set; }
 
         /// <summary>
         /// Gets the lucene version.
@@ -110,7 +119,7 @@ namespace LeadPipe.Net.Lucene
 		{
 			get
 			{
-				return this.luceneVersion;
+				return this.configuration.LuceneVersion;
 			}
 		}
 
@@ -120,11 +129,11 @@ namespace LeadPipe.Net.Lucene
         /// <value>
         /// The maximum length of the field.
         /// </value>
-		public virtual global::Lucene.Net.Index.IndexWriter.MaxFieldLength MaxFieldLength
+		public virtual IndexWriter.MaxFieldLength MaxFieldLength
 		{
 			get
 			{
-				return this.maxFieldLength;
+				return this.configuration.MaxFieldLength;
 			}
 		}
 
@@ -136,20 +145,23 @@ namespace LeadPipe.Net.Lucene
 			this.searchIndexClearer.ClearIndex(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
 		}
 
-		////public void ClearIndex(string id)
-		////{
-		////    this.searchIndexClearer.ClearIndex(id, this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
-		////}
+        /// <summary>
+        /// Clears the index.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        public virtual void ClearIndex(string key)
+        {
+            this.searchIndexClearer.ClearIndex(key, this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
+        }
 
         /// <summary>
         /// Explains the specified input.
         /// </summary>
-        /// <param name="input">The input.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-		public virtual string Explain(string input, int resultId)
+		public virtual string Explain(int resultId)
 		{
-			return this.searchScoreExplainer.Explain(this.LuceneVersion, this.FsDirectory, input, resultId);
+			return this.searchScoreExplainer.Explain(this.LuceneVersion, this.FsDirectory, this.LastInput, resultId);
 		}
 
         /// <summary>
@@ -166,15 +178,19 @@ namespace LeadPipe.Net.Lucene
         /// <param name="input">The input.</param>
         /// <returns></returns>
 		public virtual SearchResult<TSearchData> Search(string input)
-		{
-			return this.searcher.Search(this.LuceneVersion, this.FsDirectory, this.HitLimit, input);
-		}
+        {
+            this.LastInput = input;
+
+			this.LastSearchResult = this.searcher.Search(this.LuceneVersion, this.FsDirectory, this.HitLimit, input);
+
+            return this.LastSearchResult;
+        }
 
         /// <summary>
         /// Sets the default search fields.
         /// </summary>
         /// <param name="defaultSearchFields">The default search fields.</param>
-	    public void SetDefaultSearchFields(IEnumerable<string> defaultSearchFields)
+        public virtual void SetDefaultSearchFields(IEnumerable<string> defaultSearchFields)
 	    {
 	        this.searcher.SetDefaultSearchFields(defaultSearchFields);
 	    }
@@ -183,7 +199,7 @@ namespace LeadPipe.Net.Lucene
         /// Sets the search fields.
         /// </summary>
         /// <param name="searchFields">The search fields.</param>
-	    public void SetSearchFields(IEnumerable<string> searchFields)
+	    public virtual void SetSearchFields(IEnumerable<string> searchFields)
 	    {
 	        this.searcher.SetSearchFields(searchFields);
 	    }
@@ -194,9 +210,13 @@ namespace LeadPipe.Net.Lucene
         /// <param name="input">The input.</param>
         /// <returns></returns>
 	    public virtual SearchResult<TSearchData> SimpleSearch(string input)
-		{
-			return this.searcher.SimpleSearch(this.LuceneVersion, this.FsDirectory, this.HitLimit, input);
-		}
+        {
+            this.LastInput = input;
+
+			this.LastSearchResult = this.searcher.SimpleSearch(this.LuceneVersion, this.FsDirectory, this.HitLimit, input);
+
+            return this.LastSearchResult;
+        }
 
         /// <summary>
         /// Updates the index.
@@ -222,35 +242,6 @@ namespace LeadPipe.Net.Lucene
 		public virtual void UpdateIndex(IEnumerable<TEntity> entities)
 		{
 			this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength, entities);
-		}
-
-        /// <summary>
-        /// Gets the directory.
-        /// </summary>
-        /// <returns></returns>
-		private FSDirectory GetDirectory()
-		{
-			if (!Directory.Exists(this.IndexFolder))
-			{
-				Directory.CreateDirectory(this.IndexFolder);
-			}
-
-			if (this.FsDirectory == null)
-			{
-				this.FsDirectory = FSDirectory.Open(new DirectoryInfo(this.IndexFolder));
-			}
-
-			if (IndexWriter.IsLocked(this.FsDirectory))
-			{
-				IndexWriter.Unlock(this.FsDirectory);
-			}
-
-			if (File.Exists(this.writeLockSemaphoreFile))
-			{
-				File.Delete(this.writeLockSemaphoreFile);
-			}
-
-			return this.FsDirectory;
 		}
 	}
 }

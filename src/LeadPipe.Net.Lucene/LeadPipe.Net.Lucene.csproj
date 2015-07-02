@@ -60,7 +60,6 @@
     </Compile>
     <Compile Include="DocumentToSearchDataTypeConverter.cs" />
     <Compile Include="IDocumentToSearchDataTypeConverter.cs" />
-    <Compile Include="ISearchData.cs" />
     <Compile Include="ISearchDataToDocumentTypeConverter.cs" />
     <Compile Include="ISearcher.cs" />
     <Compile Include="ISearchIndexClearer.cs" />
@@ -70,7 +69,9 @@
     <Compile Include="ISearchScoreExplainer.cs" />
     <Compile Include="ISearchService.cs" />
     <Compile Include="IEntityToSearchDataTypeConverter.cs" />
+    <Compile Include="ISearchServiceConfiguration.cs" />
     <Compile Include="Searcher.cs" />
+    <Compile Include="SearchServiceConfiguration.cs" />
     <Compile Include="SearchResult.cs" />
     <Compile Include="SearchIndexClearer.cs" />
     <Compile Include="SearchIndexOptimizer.cs" />
@@ -82,6 +83,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeadPipe.Net\LeadPipe.Net.csproj">
+      <Project>{07eaabc8-d86d-4b6b-b153-77ee0e5526a5}</Project>
+      <Name>LeadPipe.Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
