@@ -1,6 +1,6 @@
 # LeadPipe.Net
 
-LeadPipe.Net is a core library that provides quite a few useful cross-cutting goodies that are handy for almost any project.
+LeadPipe.Net is the core library that provides quite a few useful cross-cutting goodies that are handy for almost any project. Even if you don't want or need any other LeadPipe.Net libraries, there's almost certainly something in this library you'll find useful.
 
 ### Collections
 
