@@ -10,7 +10,7 @@ using LeadPipe.Net.Extensions;
 namespace LeadPipe.Net.Validation
 {
     /// <summary>
-	/// A custom data validation attribute that ensures string length is as long as the Maximum.
+    /// A custom data validation attribute that ensures string length is no longer than a maximum value.
 	/// </summary>
 	public class MaximumLengthAttribute : LeadPipeValidationAttribute
 	{

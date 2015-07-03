@@ -10,7 +10,7 @@ using LeadPipe.Net.Extensions;
 namespace LeadPipe.Net.Validation
 {
     /// <summary>
-	/// A custom data validation attribute that ensures string length is as long as the minimum.
+    /// A custom data validation attribute that ensures string length is no shorter than a minimum value.
 	/// </summary>
 	public class MinimumLengthAttribute : LeadPipeValidationAttribute
 	{
