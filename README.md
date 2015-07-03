@@ -1,96 +1,26 @@
 # LeadPipe.Net
 
-LeadPipe.Net not a heavy framework. It's an a'la carte collection of helpful types, attributes, extension methods, and other neat stuff. LeadPipe.Net contains all sorts of cross-cutting types such as a Tracking Observable Collection, lots of extension methods, a Guard class, and much more.
+LeadPipe.Net is an a'la carte open source application framework for .NET programmers. The goal is to provide proven, well-tested, and well-documented libraries that programmers can rely on to help make their jobs a little easier. LeadPipe.Net doesn't try to force a particular application style or heavy-handed conventions. Instead, it takes a "take what you want and leave the rest" approach that provides solutions without a mess of tightly coupled dependencies.
 
-Digging in further, there's LeadPipe.Net.Domain which is a set of Domain Driven Design types intended to help you get going with DDD. There's also LeadPipe.Net.Data and LeadPipe.Net.Data.NHibernate which provide Repository and UnitOfWork implementations along with implementations of the Specification pattern, Query Object pattern and much more.
+## LeadPipe.Net
 
-Finally, there's a base library intended to help make implementing Lucene.Net easier for beginners. It provides base types and interfaces that make turning your objects into searchable Lucene documents easy.
+LeadPipe.Net is the core library that provides quite a few useful cross-cutting goodies that are handy for almost any project. Even if you don't want or need any other LeadPipe.Net libraries, there's almost certainly something in this library you'll find useful.
 
-## LeadPipe.Net (Cross-Cutting Goodies)
+Head [over here](src/LeadPipe.Net/README.md) for more information!
 
-LeadPipe.Net provides quite a few useful cross-cutting goodies that are handy for almost any project.
+## LeadPipe.Net.Domain
 
-### Collections
+LeadPipe.Net.Domain provides implementations of core Domain Driven Design types including Entity, Repository, Value Object, domain events, Aggregate Roots, and more. These carefully crafted implementations are well documented and try to hold true to the spirit of Eric Evan's outstanding work.
 
-#### Tracking Observable Collection
-
-The tracking observable collection is a collection that maintains a record of events. For example, if an item is added to the collection, it is recorded. This makes it easy to determine what changes have occurred and react accordingly.
-
-#### Stacked List
-
-The stacked list is an observable collection that acts like a stack. You can peek, pop, push and so forth.
-
-### Commands
-
-Here you'll find an implementation of the command mediator pattern.
-
-### Extensions
-
-There are tons of useful extension methods here. You'll find handy extension for these types:
-
-- Bool
-- DateTime
-- Decimal
-- Dictionary
-- Enumerable
-- Enum
-- Exception
-- Int
-- Linq
-- List
-- Object
-- Stream
-- String
-- Type
-- Version
-
-### Finite State Machine
-
-A Finite State Machine (FSM) is the mechanism by which we can model an abstract machine by defining a finite number of States as well as the Transitions between those States. For example, a door may be considered an FSM in that it has States (open and closed) as well as Transitions (open and close) that are triggered by Events (opened and closed) that are invoked by object methods (door.Open and door.Close).
-
-There are two implementations; a simple FSM and an expanded FSM. Use the one that suits your needs.
- 
-### Clock
-
-Use Clock instead of DateTime.Now to make writing unit tests easier.
-
-### Enumeration
-
-A straight-up copy of Jimmy Bogard's excellent Enumeration supertype.
-
-### Guard
-
-A fluent guarding class that lets you do things like:
-
-```
-Guard.AgainstNullArgument(() => foo);
-```
-
-### Poller
-
-A poller that will retry an operation until criteria is met.
-
-### Random Value Provider
-
-Provides random strings, integers, lorem ipsum, booleans, and much more. Great for unit testing.
-
-### Unit Type
-
-An implementation of F#'s UnitType that represents void so that you can still return a value. This implementation lets us do things like define a type that *conceptually* has void as a generic argument.
-
-## LeadPipe.Net.Domain (Domain Driven Design)
-
-LeadPipe.Net.Domain provides great base implementations of common Domain Driven Design types.
-
-(more info coming soon)
+Head [over here](src/LeadPipe.Net.Domain/README.md) for more information!
 
 ## LeadPipe.Net.Data.NHibernate
 
-LeadPipe.Net.Data.NHibernate provides an easily-integrated solution for using NHibernate.
+LeadPipe.Net.Data.NHibernate is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a Repository, the Query Object pattern, and Unit of Work pattern. This library is built in such a way that if you don't want to abstract NHibernate's ISession object with a Unit of Work or use the Repository pattern, you can still take advantage of other offerings such as the Query Object pattern and Object Finder.
 
-(more info coming soon)
+Head [over here](src/LeadPipe.Net.Data.NHibernate/README.md) for more information!
 
-## LeadPipe.Net.Lucene (Lucene Searching)
+## LeadPipe.Net.Lucene
 
 LeadPipe.Net.Lucene provides a set of base types that make implementing the powerful, open source Lucene search engine straight-foward. The goal is to make using Lucene as simple as this:
 
@@ -98,4 +28,33 @@ LeadPipe.Net.Lucene provides a set of base types that make implementing the powe
 var results = searchService.Search("123");
 ```
 
-View the README in the source folder for more information!
+Head [over here](src/LeadPipe.Net.Lucene/README.md) for more information!
+
+## LeadPipe.Net.Authorization
+
+The LeadPipe.Net Authorization library provides a flexible, easy-to-use authorization mechanism for your applications. With it, your authorization looks like this:
+
+```csharp
+var isAuthorized = authorizer
+	.Will.Assert
+	.User(user)
+	.Can.ExecuteAnyOfTheseActivities(new[] { activity })
+	.In(application);
+```
+
+If you prefer exceptions:
+
+```csharp
+authorizer
+	.Will.ThrowAccessDeniedException()
+	.When.User(user)
+	.Can.Not.ExecuteAnyOfTheseActivities(new[] { activity })
+	.In(application);
+```
+Head [over here](src/LeadPipe.Net.Authorization/README.md) for more information!
+
+## LeadPipe.Net.Validation
+
+The validation library provides a suite of attributes that extend Microsoft's own System.ComponentModel.DataAnnotations library. In addition, there are handy extension methods and a stand-alone validator.
+
+Head [over here](src/LeadPipe.Net.Validation/README.md) for more information!
