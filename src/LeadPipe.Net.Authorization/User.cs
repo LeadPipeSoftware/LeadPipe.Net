@@ -40,13 +40,11 @@ namespace LeadPipe.Net.Authorization
 		/// <param name="userName">Name of the user.</param>
 		/// <param name="firstName">The first name.</param>
 		/// <param name="lastName">The last name.</param>
-		/// <param name="locationCode">The location code.</param>
-		public User(string userName, string firstName, string lastName, int locationCode)
+		public User(string userName, string firstName, string lastName)
 		{
 			this.Name = userName;
 			this.FirstName = firstName;
 			this.LastName = lastName;
-			this.LocationCode = locationCode;
 			this.UserGrants = new List<UserGrant>();
 		}
 
@@ -199,18 +197,6 @@ namespace LeadPipe.Net.Authorization
         public virtual string LastName { get; set; }
 
 		/// <summary>
-		/// Gets or sets the user's Location code (ex: 4).
-		/// </summary>
-		/// <value>The location code.</value>
-		public virtual int LocationCode { get; set; }
-
-		/// <summary>
-		/// Gets or sets the name of the location.
-		/// </summary>
-		/// <value>The name of the location.</value>
-		public virtual string LocationName { get; set; }
-
-		/// <summary>
 		/// Gets or sets the user's name (ex: AMERICAS\majorgb).
 		/// </summary>
 		/// <value>The name.</value>
@@ -236,20 +222,6 @@ namespace LeadPipe.Net.Authorization
 		/// </summary>
 		/// <value>The user grants.</value>
 		public virtual IList<UserGrant> UserGrants { get; protected set; }
-
-		/// <summary>
-		/// Gets or sets the user work space path.
-		/// This will be set when the user is authenticated
-		/// </summary>
-		/// <value>The user work space path.</value>
-		public virtual string UserWorkSpaceRootPath { get; set; }
-
-		/// <summary>
-		/// Gets or sets the users work space temp path.
-		/// This will be set when the user is authenticated
-		/// </summary>
-		/// <value>The users work space temp path.</value>
-		public virtual string UsersWorkSpaceTempPath { get; set; }
 
 		/// <summary>
 		/// Gets the effective permissions.

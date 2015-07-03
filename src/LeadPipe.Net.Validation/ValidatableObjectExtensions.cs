@@ -68,20 +68,9 @@ namespace LeadPipe.Net.Validation
 		{
 			List<object> validationAttributes = (from property in t.GetProperties()
 												 from attribute in property.GetCustomAttributes(false)
-												 where attribute.GetType().IsSubclassOf(typeof(LeadPipeValidationAttribute))
+												 where attribute.GetType().IsSubclassOf(typeof(ValidationAttribute))
+                                                    || attribute.GetType().IsSubclassOf(typeof(LeadPipeValidationAttribute))
 												 select attribute).ToList();
-
-			validationAttributes.AddRange(
-				from method in t.GetMethods()
-				from attribute in method.GetCustomAttributes(false)
-				where attribute.GetType().IsSubclassOf(typeof(LeadPipeValidationAttribute))
-				select attribute);
-
-			validationAttributes.AddRange(
-				from field in t.GetFields()
-				from attribute in field.GetCustomAttributes(false)
-				where attribute.GetType().IsSubclassOf(typeof(LeadPipeValidationAttribute))
-				select attribute);
 
 			return validationAttributes;
 		}
