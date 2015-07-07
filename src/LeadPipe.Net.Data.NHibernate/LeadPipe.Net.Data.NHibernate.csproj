@@ -72,6 +72,10 @@
       <Project>{6af62025-b963-4941-b6b5-b2455fd6e226}</Project>
       <Name>LeadPipe.Net.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LeadPipe.Net.Domain\LeadPipe.Net.Domain.csproj">
+      <Project>{fd1810ff-7864-43b0-b8ca-bd3ad5c2e683}</Project>
+      <Name>LeadPipe.Net.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LeadPipe.Net\LeadPipe.Net.csproj">
       <Project>{07eaabc8-d86d-4b6b-b153-77ee0e5526a5}</Project>
       <Name>LeadPipe.Net</Name>

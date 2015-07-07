@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Linq;
+using NHibernate.Linq;
 using NUnit.Framework;
 using StructureMap;
 

@@ -43,7 +43,7 @@ namespace LeadPipe.Net.Data.NHibernate
 		/// <summary>
 		/// Gets the session.
 		/// </summary>
-		protected ISession Session
+		public ISession Session
 		{
 			get
 			{
