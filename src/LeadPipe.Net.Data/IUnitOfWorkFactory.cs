@@ -14,13 +14,22 @@ namespace LeadPipe.Net.Data
 		#region Public Methods
 
 		/// <summary>
-		/// Creates a unit of work.
+		/// Creates a new Unit of Work.
 		/// </summary>
 		/// <returns>
-		/// A unit of work.
+		/// A Unit of Work.
 		/// </returns>
 		IUnitOfWork CreateUnitOfWork();
 
-		#endregion
+	    /// <summary>
+	    /// Creates a new Unit of Work.
+	    /// </summary>
+	    /// <param name="unitOfWorkBatchMode">The Unit of Work batch mode.</param>
+	    /// <returns>
+	    /// A new Unit of Work.
+	    /// </returns>
+	    IUnitOfWork CreateUnitOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode);
+
+	    #endregion
 	}
 }

@@ -8,15 +8,29 @@ using LeadPipe.Net.Domain;
 
 namespace LeadPipe.Net.Data
 {
+    /// <summary>
+    /// A query object.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the result.</typeparam>
     public abstract class Query<TResult> : IQuery<TResult>
     {
         protected readonly IDataCommandProvider dataCommandProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Query{TResult}"/> class.
+        /// </summary>
+        /// <param name="dataCommandProvider">The data command provider.</param>
         protected Query(IDataCommandProvider dataCommandProvider)
         {
             this.dataCommandProvider = dataCommandProvider;
         }
 
+        /// <summary>
+        /// Gets the result of the query.
+        /// </summary>
+        /// <returns>
+        /// The result of the query.
+        /// </returns>
         public abstract TResult GetResult();
     }
 }

@@ -46,15 +46,27 @@ namespace LeadPipe.Net.Data.NHibernate
 
 		#region Public Methods and Operators
 
-		/// <summary>
-		/// The create unit of work.
-		/// </summary>
-		/// <returns>
-		/// A new unit of work.
-		/// </returns>
-		public IUnitOfWork CreateUnitOfWork()
+        /// <summary>
+        /// Creates a new Unit of Work.
+        /// </summary>
+        /// <returns>
+        /// A new Unit of Work.
+        /// </returns>
+        public IUnitOfWork CreateUnitOfWork()
+	    {
+	        return this.CreateUnitOfWork(UnitOfWorkBatchMode.Singular);
+	    }
+
+        /// <summary>
+        /// Creates a new Unit of Work.
+        /// </summary>
+        /// <param name="unitOfWorkBatchMode">The Unit of Work batch mode.</param>
+        /// <returns>
+        /// A new Unit of Work.
+        /// </returns>
+		public IUnitOfWork CreateUnitOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode)
 		{
-			return new UnitOfWork(this.dataSessionProvider, this.activeDataSessionManager);
+			return new UnitOfWork(this.dataSessionProvider, this.activeDataSessionManager, unitOfWorkBatchMode: unitOfWorkBatchMode);
 		}
 
 		#endregion

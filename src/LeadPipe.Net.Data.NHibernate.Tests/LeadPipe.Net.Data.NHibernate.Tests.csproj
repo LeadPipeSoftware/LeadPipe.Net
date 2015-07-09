@@ -108,6 +108,8 @@
     <Compile Include="TestModelMap.cs" />
     <Compile Include="TestModelQueries.cs" />
     <Compile Include="TestModelSpecifications.cs" />
+    <Compile Include="UnitOfWorkTests\CommitShould.cs" />
+    <Compile Include="UnitOfWorkTests\StartShould.cs" />
     <Compile Include="UnitTestSessionFactoryBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

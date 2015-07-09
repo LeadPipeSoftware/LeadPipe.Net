@@ -6,6 +6,7 @@
 
 using LeadPipe.Net.Domain;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests
 {
@@ -40,12 +41,12 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 			ObjectFactory.Initialize(
 				x =>
 				{
-					x.For<ISessionFactoryBuilder>().Use<UnitTestSessionFactoryBuilder>();
+					x.For<ISessionFactoryBuilder>().Singleton().Use<UnitTestSessionFactoryBuilder>();
 					x.For(typeof(IDataSessionProvider<>)).Use(typeof(NHibernate.DataSessionProvider));
 					x.For(typeof(IActiveDataSessionManager<>)).Use(typeof(NHibernate.ActiveDataSessionManager));
 					x.For<IDataCommandProvider>().Use<DataCommandProvider>();
 					x.For(typeof(IObjectFinder<>)).Use(typeof(ObjectFinder<>));
-					x.For<IUnitOfWorkFactory>().Use<UnitOfWorkFactory>();
+					x.For<IUnitOfWorkFactory>().Singleton().Use<UnitOfWorkFactory>();
                     x.For(typeof(IQueryRunner<>)).Use(typeof(QueryRunner<>));
 				});
 

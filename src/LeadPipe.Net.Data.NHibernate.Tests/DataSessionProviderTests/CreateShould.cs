@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CreateShould.cs" company="Lead Pipe Software">
+// <copyright file="CommitShould.cs" company="Lead Pipe Software">
 //   Copyright (c) Lead Pipe Software All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------

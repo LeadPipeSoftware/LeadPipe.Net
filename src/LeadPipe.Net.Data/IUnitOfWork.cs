@@ -26,10 +26,29 @@ namespace LeadPipe.Net.Data
 
 		#region Public Properties
 
-		/// <summary>
-		/// Gets a value indicating whether the unit of work is started.
-		/// </summary>
+        /// <summary>
+        /// Gets a value indicating whether the unit of work is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
 		bool IsStarted { get; }
+
+        /// <summary>
+        /// Gets the nest level.
+        /// </summary>
+        /// <value>
+        /// The nest level.
+        /// </value>
+        int NestLevel { get; }
+
+        /// <summary>
+        /// Gets the Unit of Work batch mode.
+        /// </summary>
+        /// <value>
+        /// The Unit of Work batch mode.
+        /// </value>
+        UnitOfWorkBatchMode UnitOfWorkBatchMode { get; }
 
 		#endregion
 

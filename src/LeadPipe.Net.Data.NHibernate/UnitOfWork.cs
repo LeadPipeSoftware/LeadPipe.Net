@@ -6,6 +6,7 @@
 
 using System;
 using System.Data;
+using LeadPipe.Net.Extensions;
 using NHibernate;
 
 namespace LeadPipe.Net.Data.NHibernate
@@ -48,7 +49,18 @@ namespace LeadPipe.Net.Data.NHibernate
         /// </summary>
         private readonly FlushMode defaultFlushMode;
 
-		#endregion
+        /// <summary>
+        /// The nest level key.
+        /// </summary>
+	    private string nestLevelKey = "LeadPipe.Net.Data.NHibernate.NestLevelKey";
+
+
+        /// <summary>
+        /// The unit of work batch mode key.
+        /// </summary>
+	    private string unitOfWorkBatchModeKey = "LeadPipe.Net.Data.NHibernate.UnitOfWorkBatchModeKey";
+
+	    #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork" /> class.
@@ -57,37 +69,73 @@ namespace LeadPipe.Net.Data.NHibernate
         /// <param name="activeDataSessionManager">The active data session manager.</param>
         /// <param name="flushMode">The flush mode.</param>
         /// <param name="isolationLevel">The isolation level.</param>
+        /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
 		public UnitOfWork(
 			IDataSessionProvider<ISession> dataSessionProvider,
 			IActiveDataSessionManager<ISession> activeDataSessionManager,
             FlushMode flushMode = FlushMode.Auto,
-            IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+            IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,
+            UnitOfWorkBatchMode unitOfWorkBatchMode = UnitOfWorkBatchMode.Singular)
 		{
 			this.dataSessionProvider = dataSessionProvider;
 			this.activeDataSessionManager = activeDataSessionManager;
 		    this.defaultFlushMode = flushMode;
             this.defaultIsolationLevel = isolationLevel;
+
+            this.UnitOfWorkBatchMode = unitOfWorkBatchMode;
 		}
 
 		#region Public Properties
 
+	    /// <summary>
+	    /// The current transaction.
+	    /// </summary>
+	    public ITransaction CurrentTransaction { get; private set; }
+
+	    /// <summary>
+	    /// Gets a value indicating whether the unit of work is started.
+	    /// </summary>
+	    public bool IsStarted
+	    {
+	        get { return this.CurrentSession != null; }
+	    }
+
         /// <summary>
-        /// The current transaction.
+        /// Gets or sets the nest level.
         /// </summary>
-        public ITransaction CurrentTransaction { get; private set; }
+        public int NestLevel
+        {
+            get
+            {
+                return (int)Local.Data[this.nestLevelKey];
+            }
 
-		/// <summary>
-		/// Gets a value indicating whether the unit of work is started.
-		/// </summary>
-		public bool IsStarted
-		{
-			get
-			{
-				return this.CurrentSession != null;
-			}
-		}
+            private set
+            {
+                Local.Data[this.nestLevelKey] = value;
+            }
+        }
 
-		#endregion
+        /// <summary>
+        /// Gets or sets the Unit of Work batch mode.
+        /// </summary>
+        /// <value>
+        /// The Unit of Work batch mode.
+        /// </value>
+	    public UnitOfWorkBatchMode UnitOfWorkBatchMode
+	    {
+            get
+            {
+                return (UnitOfWorkBatchMode)Local.Data[this.unitOfWorkBatchModeKey];
+            }
+
+            private set
+            {
+                Local.Data[this.unitOfWorkBatchModeKey] = value;
+            }
+	    }
+
+	    #endregion
 
 		#region Properties
 
@@ -131,21 +179,25 @@ namespace LeadPipe.Net.Data.NHibernate
 		/// </param>
 		public void Commit(IsolationLevel isolationLevel)
 		{
-			Guard.Will.ThrowException("There is no NHibernate session. Did you start a Unit of Work?").When(this.CurrentSession == null);
+			Guard.Will.ThrowException("There is no NHibernate session. Did you start the Unit of Work?").When(this.CurrentSession == null);
 
-			try
-			{
-				this.CurrentTransaction.Commit();
-			}
-			catch (Exception ex)
-			{
-                this.CurrentTransaction.Rollback();
-				throw new LeadPipeNetDataException("Unable to commit the transaction. See inner exception for details.", ex);
-			}
-			finally
-			{
-			    if (this.CurrentSession != null) CurrentSession.Dispose();
-			}
+            // If we're using a singular transaction and we're not at the root then bail...
+            if (this.UnitOfWorkBatchMode.Equals(UnitOfWorkBatchMode.Singular) && this.NestLevel > 0) return;
+
+            try
+		    {
+		        this.CurrentTransaction.Commit();
+		    }
+		    catch (Exception ex)
+		    {
+		        this.CurrentTransaction.Rollback();
+		        
+                throw new LeadPipeNetDataException("Unable to commit the transaction. See inner exception for details.", ex);
+		    }
+            ////finally
+            ////{
+            ////    if (this.CurrentSession != null) CurrentSession.Dispose();
+            ////}
 		}
 
 		/// <summary>
@@ -153,6 +205,13 @@ namespace LeadPipe.Net.Data.NHibernate
 		/// </summary>
 		public void Dispose()
 		{
+		    // If someone is trying to dispose but we're nested then decrement the nest level and bail (we can only dispose once everyone is done)...
+            if (this.NestLevel > 0)
+		    {
+		        this.NestLevel--;
+		        return;
+		    }
+
 			this.activeDataSessionManager.ClearActiveDataSession();
 		}
 
@@ -189,22 +248,28 @@ namespace LeadPipe.Net.Data.NHibernate
         /// </remarks>
 		public IUnitOfWork Start(FlushMode flushMode)
 		{
-			if (this.IsStarted)
-			{
-				throw new LeadPipeNetDataException("The Unit of Work has already been started.");
-			}
+            // If we don't have a session then create one...
+            if (this.CurrentSession.IsNull())
+            {
+                this.activeDataSessionManager.SetActiveDataSession(this.dataSessionProvider.Create());
 
-			this.activeDataSessionManager.SetActiveDataSession(this.dataSessionProvider.Create());
+                if (this.CurrentSession == null)
+                {
+                    throw new LeadPipeNetDataException("Unable to create an NHibernate session. Check your ISessionFactoryBuilder implementation.");
+                }
 
-			if (this.CurrentSession == null)
-			{
-				throw new LeadPipeNetDataException("Unable to create an NHibernate session. Check your ISessionFactoryBuilder implementation.");
-			}
+                // Use the default flush mode if the caller didn't supply one...
+                this.CurrentSession.FlushMode = flushMode == this.defaultFlushMode ? this.defaultFlushMode : flushMode;
 
-            // Use the default flush mode if the caller didn't supply one...
-            this.CurrentSession.FlushMode = flushMode == this.defaultFlushMode ? this.defaultFlushMode : flushMode;
+                this.NestLevel = 0;
+            }
+            else // Otherwise, we already have a session so increment the nest level...
+            {
+                this.NestLevel++;
+            }
 
-            this.CurrentTransaction = this.CurrentSession.BeginTransaction(defaultIsolationLevel);
+            // If this is the first time we've been started or we've been instructed to create nested transactions then begin a transaction...
+            if (this.NestLevel == 0 || this.UnitOfWorkBatchMode.Equals(UnitOfWorkBatchMode.Nested)) this.CurrentTransaction = this.CurrentSession.BeginTransaction(defaultIsolationLevel);
 
 			return this;
 		}

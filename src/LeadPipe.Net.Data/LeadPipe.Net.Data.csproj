@@ -52,11 +52,10 @@
     <Compile Include="IDataCommandProvider.cs" />
     <Compile Include="IDataSessionProvider.cs" />
     <Compile Include="IDataTransaction.cs" />
-    <Compile Include="IFetchingProvider.cs" />
-    <Compile Include="IFetchRequest.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUnitOfWorkFactory.cs" />
     <Compile Include="IUseSchema.cs" />
+    <Compile Include="UnitOfWorkBatchMode.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="QueryRunner.cs" />
     <Compile Include="ObjectFinder.cs" />
