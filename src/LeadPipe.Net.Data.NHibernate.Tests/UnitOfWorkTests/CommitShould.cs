@@ -32,7 +32,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             Bootstrapper.Start();
 
             var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork(unitOfWorkBatchMode);
+            unitOfWorkFactory.UnitOfWorkBatchMode = unitOfWorkBatchMode;
+            
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
             var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
 
             const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

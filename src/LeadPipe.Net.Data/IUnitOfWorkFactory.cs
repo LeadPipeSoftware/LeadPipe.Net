@@ -10,26 +10,29 @@ namespace LeadPipe.Net.Data
 	/// Defines a unit of work factory.
 	/// </summary>
 	public interface IUnitOfWorkFactory
-	{
-		#region Public Methods
+    {
+        #region Public Properties
 
-		/// <summary>
+        /// <summary>
+        /// Gets or sets the Unit of Work batch mode.
+        /// </summary>
+        /// <value>
+        /// The Unit of Work batch mode.
+        /// </value>
+        UnitOfWorkBatchMode UnitOfWorkBatchMode { get; set; }
+        
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
 		/// Creates a new Unit of Work.
 		/// </summary>
 		/// <returns>
 		/// A Unit of Work.
 		/// </returns>
 		IUnitOfWork CreateUnitOfWork();
-
-	    /// <summary>
-	    /// Creates a new Unit of Work.
-	    /// </summary>
-	    /// <param name="unitOfWorkBatchMode">The Unit of Work batch mode.</param>
-	    /// <returns>
-	    /// A new Unit of Work.
-	    /// </returns>
-	    IUnitOfWork CreateUnitOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode);
-
-	    #endregion
+	    
+        #endregion
 	}
 }

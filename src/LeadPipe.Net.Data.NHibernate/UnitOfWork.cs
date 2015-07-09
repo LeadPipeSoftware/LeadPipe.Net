@@ -54,12 +54,6 @@ namespace LeadPipe.Net.Data.NHibernate
         /// </summary>
 	    private string nestLevelKey = "LeadPipe.Net.Data.NHibernate.NestLevelKey";
 
-
-        /// <summary>
-        /// The unit of work batch mode key.
-        /// </summary>
-	    private string unitOfWorkBatchModeKey = "LeadPipe.Net.Data.NHibernate.UnitOfWorkBatchModeKey";
-
 	    #endregion
 
         /// <summary>
@@ -85,7 +79,7 @@ namespace LeadPipe.Net.Data.NHibernate
             this.UnitOfWorkBatchMode = unitOfWorkBatchMode;
 		}
 
-		#region Public Properties
+	    #region Public Properties
 
 	    /// <summary>
 	    /// The current transaction.
@@ -117,23 +111,12 @@ namespace LeadPipe.Net.Data.NHibernate
         }
 
         /// <summary>
-        /// Gets or sets the Unit of Work batch mode.
+        /// Gets the Unit of Work batch mode.
         /// </summary>
         /// <value>
         /// The Unit of Work batch mode.
         /// </value>
-	    public UnitOfWorkBatchMode UnitOfWorkBatchMode
-	    {
-            get
-            {
-                return (UnitOfWorkBatchMode)Local.Data[this.unitOfWorkBatchModeKey];
-            }
-
-            private set
-            {
-                Local.Data[this.unitOfWorkBatchModeKey] = value;
-            }
-	    }
+        public UnitOfWorkBatchMode UnitOfWorkBatchMode { get; private set; }
 
 	    #endregion
 
