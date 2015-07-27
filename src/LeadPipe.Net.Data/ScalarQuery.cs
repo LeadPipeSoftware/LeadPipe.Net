@@ -1,27 +1,26 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Query.cs" company="Lead Pipe Software">
+// <copyright file="ScalarQuery.cs" company="Lead Pipe Software">
 //   Copyright (c) Lead Pipe Software All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using LeadPipe.Net.Domain;
 
 namespace LeadPipe.Net.Data
 {
     /// <summary>
-    /// A query object.
+    /// A scalar query object.
     /// </summary>
     /// <typeparam name="TResultType">The type of the result.</typeparam>
-    public abstract class Query<TResultType> : IQuery<IEnumerable<TResultType>>
+    public abstract class ScalarQuery<TResultType> : IQuery<TResultType>
     {
         protected readonly IDataCommandProvider dataCommandProvider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Query{TResult}"/> class.
+        /// Initializes a new instance of the <see cref="ScalarQuery{TResult}"/> class.
         /// </summary>
         /// <param name="dataCommandProvider">The data command provider.</param>
-        protected Query(IDataCommandProvider dataCommandProvider)
+        protected ScalarQuery(IDataCommandProvider dataCommandProvider)
         {
             this.dataCommandProvider = dataCommandProvider;
         }
@@ -32,6 +31,6 @@ namespace LeadPipe.Net.Data
         /// <returns>
         /// The result of the query.
         /// </returns>
-        public abstract IEnumerable<TResultType> GetResult();
+        public abstract TResultType GetResult();
     }
 }
