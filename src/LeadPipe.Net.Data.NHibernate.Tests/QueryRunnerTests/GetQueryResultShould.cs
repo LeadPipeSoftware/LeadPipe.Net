@@ -30,6 +30,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.QueryRunnerTests
 			Bootstrapper.Start();
 
 		    var queryRunner = ObjectFactory.GetInstance<IQueryRunner<IEnumerable<TestModel>>>();
+            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
             var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
 		    var dataCommandProvider = ObjectFactory.GetInstance<IDataCommandProvider>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
@@ -41,9 +42,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.QueryRunnerTests
             // Act
             using (unitOfWork.Start())
             {
-                unitOfWork.Create(testModel01);
-                unitOfWork.Create(testModel02);
-                unitOfWork.Create(testModel03);
+                repository.Create(testModel01);
+                repository.Create(testModel02);
+                repository.Create(testModel03);
 
                 unitOfWork.Commit();
             }

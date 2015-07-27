@@ -20,12 +20,7 @@ namespace LeadPipe.Net.Data.NHibernate
 		/// </summary>
 		private readonly IActiveDataSessionManager<ISession> activeDataSessionManager;
 
-        /// <summary>
-        /// The data command provider.
-        /// </summary>
-	    private readonly IDataCommandProvider dataCommandProvider;
-
-	    /// <summary>
+		/// <summary>
 		/// The data session provider.
 		/// </summary>
 		private readonly IDataSessionProvider<ISession> dataSessionProvider;
@@ -39,20 +34,17 @@ namespace LeadPipe.Net.Data.NHibernate
 
 		#region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnitOfWorkFactory" /> class.
-        /// </summary>
-        /// <param name="dataSessionProvider">The data session provider.</param>
-        /// <param name="activeDataSessionManager">The active data session manager.</param>
-        /// <param name="dataCommandProvider">The data command provider.</param>
+		/// <summary>
+		/// Initializes a new instance of the <see cref="UnitOfWorkFactory" /> class.
+		/// </summary>
+		/// <param name="dataSessionProvider">The data session provider.</param>
+		/// <param name="activeDataSessionManager">The active data session manager.</param>
 		public UnitOfWorkFactory(
 			IDataSessionProvider<ISession> dataSessionProvider,
-			IActiveDataSessionManager<ISession> activeDataSessionManager,
-            IDataCommandProvider dataCommandProvider)
+			IActiveDataSessionManager<ISession> activeDataSessionManager)
 		{
 			this.dataSessionProvider = dataSessionProvider;
 			this.activeDataSessionManager = activeDataSessionManager;
-            this.dataCommandProvider = dataCommandProvider;
 
             this.UnitOfWorkBatchMode = UnitOfWorkBatchMode.Singular;
 		}
@@ -92,7 +84,7 @@ namespace LeadPipe.Net.Data.NHibernate
         /// </returns>
 		public IUnitOfWork CreateUnitOfWork()
 		{
-			return new UnitOfWork(this.dataSessionProvider, this.activeDataSessionManager, this.dataCommandProvider, unitOfWorkBatchMode: this.UnitOfWorkBatchMode);
+			return new UnitOfWork(this.dataSessionProvider, this.activeDataSessionManager, unitOfWorkBatchMode: this.UnitOfWorkBatchMode);
 		}
 
 		#endregion

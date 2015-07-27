@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using StructureMap;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
+namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
 	/// <summary>
 	/// The Repository Update method tests.
@@ -29,6 +29,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 			const string KeyA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			const string KeyB = "ZKJWDFLKJLSKDJFLKJLSKJSLDK";
 
+			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
 			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
@@ -39,7 +40,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
                 modelList.Add(new TestModel(KeyA) { MutableTestProperty = "FOO" });
                 modelList.Add(new TestModel(KeyB) { MutableTestProperty = "FOO" });
 
-                unitOfWork.Create(modelList);
+                repository.Create(modelList);
 
                 unitOfWork.Commit();
             }
@@ -52,7 +53,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 					testModel.MutableTestProperty = "BAR";
 				}
 
-                unitOfWork.Update(modelList);
+				repository.Update(modelList);
 
 				unitOfWork.Commit();
 			}

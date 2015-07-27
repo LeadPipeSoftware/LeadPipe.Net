@@ -46,7 +46,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-                unitOfWork.Create(testModel);
+				repository.Create(testModel);
 
 				unitOfWork.Commit();
 			}
