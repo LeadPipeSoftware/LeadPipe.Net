@@ -38,9 +38,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-				repository.Create(testModel01);
-				repository.Create(testModel02);
-				repository.Create(testModel03);
+                unitOfWork.Create(testModel01);
+                unitOfWork.Create(testModel02);
+                unitOfWork.Create(testModel03);
 
 				unitOfWork.Commit();
 			}
@@ -74,9 +74,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             // Act
             using (unitOfWork.Start())
             {
-                repository.Create(testModel01);
-                repository.Create(testModel02);
-                repository.Create(testModel03);
+                unitOfWork.Create(testModel01);
+                unitOfWork.Create(testModel02);
+                unitOfWork.Create(testModel03);
 
                 unitOfWork.Commit();
             }
@@ -110,9 +110,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             // Act
             using (unitOfWork.Start())
             {
-                repository.Create(testModel01);
-                repository.Create(testModel02);
-                repository.Create(testModel03);
+                unitOfWork.Create(testModel01);
+                unitOfWork.Create(testModel02);
+                unitOfWork.Create(testModel03);
 
                 unitOfWork.Commit();
             }
@@ -146,9 +146,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             // Act
             using (unitOfWork.Start())
             {
-                repository.Create(testModel01);
-                repository.Create(testModel02);
-                repository.Create(testModel03);
+                unitOfWork.Create(testModel01);
+                unitOfWork.Create(testModel02);
+                unitOfWork.Create(testModel03);
 
                 unitOfWork.Commit();
             }
@@ -182,9 +182,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-				repository.Create(testModel01);
-				repository.Create(testModel02);
-				repository.Create(testModel03);
+                unitOfWork.Create(testModel01);
+                unitOfWork.Create(testModel02);
+                unitOfWork.Create(testModel03);
 
 				unitOfWork.Commit();
 			}
@@ -218,9 +218,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-				repository.Create(testModel01);
-				repository.Create(testModel02);
-				repository.Create(testModel03);
+                unitOfWork.Create(testModel01);
+                unitOfWork.Create(testModel02);
+                unitOfWork.Create(testModel03);
 
 				unitOfWork.Commit();
 			}

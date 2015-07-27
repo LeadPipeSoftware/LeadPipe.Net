@@ -98,9 +98,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryRunnerTests\GetQueryResultShould.cs" />
     <Compile Include="RepositoryTests\AllShould.cs" />
-    <Compile Include="RepositoryTests\TotalResultsShould.cs" />
-    <Compile Include="RepositoryTests\UpdateShould.cs" />
-    <Compile Include="RepositoryTests\CreateShould.cs" />
+    <Compile Include="UnitOfWorkTests\UpdateShould.cs" />
+    <Compile Include="UnitOfWorkTests\CreateShould.cs" />
     <Compile Include="RepositoryTests\AllMatchingSpecificationShould.cs" />
     <Compile Include="TestChildMap.cs" />
     <Compile Include="TestChildModel.cs" />

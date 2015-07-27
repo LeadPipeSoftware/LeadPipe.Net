@@ -50,7 +50,6 @@
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IHandleDomainEvent.cs" />
-    <Compile Include="IObjectFinder.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IQueryRunner.cs" />
     <Compile Include="IRepository.cs" />

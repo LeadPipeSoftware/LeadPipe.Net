@@ -58,7 +58,6 @@
     <Compile Include="UnitOfWorkBatchMode.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="QueryRunner.cs" />
-    <Compile Include="ObjectFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="LeadPipeNetDataException.cs" />

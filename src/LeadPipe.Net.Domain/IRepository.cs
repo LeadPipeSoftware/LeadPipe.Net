@@ -4,6 +4,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using LeadPipe.Net.Specifications;
+
 namespace LeadPipe.Net.Domain
 {
 	using System.Collections.Generic;
@@ -14,8 +19,8 @@ namespace LeadPipe.Net.Domain
 	/// <typeparam name="T">
 	/// The type that the repository serves.
 	/// </typeparam>
-	public interface IRepository<T> : IWithFinder<IObjectFinder<T>>
-		where T : class
+	public interface IRepository<T>
+        where T : class
 	{
 		/*
 		 * Anyone paying attention would likely notice that I've been careful to use the term 'object' rather than
@@ -25,84 +30,64 @@ namespace LeadPipe.Net.Domain
 		 * beyond CRUD.
 		 */
 
-		#region Public Methods
+        /// <summary>
+        /// Gets or sets the data source.
+        /// </summary>
+        IQueryable<T> DataSource { get; set; }
 
-		/// <summary>
-		/// Creates an object in the repository.
-		/// </summary>
-		/// <param name="obj">The object to create.</param>
-		void Create(T obj);
+        /// <summary>
+        /// Gets all objects.
+        /// </summary>
+        IQueryable<T> All { get; }
 
-		/// <summary>
-		/// Creates multiple objects in the repository.
-		/// </summary>
-		/// <param name="objects">The objects to create.</param>
-		void Create(IEnumerable<T> objects);
+	    /// <summary>
+	    /// Returns the repository (syntax sugar).
+	    /// </summary>
+	    IRepository<T> Find { get; }
 
-		/// <summary>
-		/// Delete an object from the repository.
-		/// </summary>
-		/// <param name="obj">The object to delete.</param>
-		void Delete(T obj);
+        /// <summary>
+        /// Returns an <see cref="IQueryable"/> list of objects that match a LINQ expression.
+        /// </summary>
+        /// <param name="expression">
+        /// The LINQ expression.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IQueryable"/> list of matching objects.
+        /// </returns>
+        IQueryable<T> AllMatchingExpression(Expression<Func<T, bool>> expression);
 
-		/// <summary>
-		/// Delete multiple objects from the repository.
-		/// </summary>
-		/// <param name="objects">The objects to delete.</param>
-		void Delete(IEnumerable<T> objects);
+        /// <summary>
+        /// Returns an <see cref="IEnumerable{T}"/> list of objects that match the supplied specification.
+        /// </summary>
+        /// <param name="specification">
+        /// The specification.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IEnumerable{T}"/> list of matching objects.
+        /// </returns>
+        IEnumerable<T> AllMatchingSpecification(ISpecification<T> specification);
 
-		/// <summary>
-		/// Loads the object with the specified id or throws an exception.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Load(object id);
+        /// <summary>
+        /// Returns a single result that matches the supplied specification.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>
+        /// The matching entity or default value if no match was found.
+        /// </returns>
+        T One(string key);
 
-		/// <summary>
-		/// Loads the object with the specified id or throws an exception.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Load(string id);
+        /// <summary>
+        /// Returns a single result that matches the supplied specification.
+        /// </summary>
+        /// <param name="specification">The specification.</param>
+        /// <returns>The matching entity or default value if no match was found.</returns>
+        T One(ISpecification<T> specification);
 
-		/// <summary>
-		/// Gets the object with the specified id or returns null.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Get(object id);
-
-		/// <summary>
-		/// Gets the object with the specified id or returns null.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Get(string id);
-
-		/// <summary>
-		/// Saves an object to the repository.
-		/// </summary>
-		/// <param name="obj">The object to save.</param>
-		void Save(T obj);
-
-		/// <summary>
-		/// Saves multiple objects to the repository.
-		/// </summary>
-		/// <param name="objects">The objects to save.</param>
-		void Save(IEnumerable<T> objects);
-
-		/// <summary>
-		/// Updates an object in the repository.
-		/// </summary>
-		/// <param name="obj">The object to update.</param>
-		void Update(T obj);
-
-		/// <summary>
-		/// Updates multiple objects in the repository.
-		/// </summary>
-		/// <param name="objects">The objects to update.</param>
-		void Update(IEnumerable<T> objects);
-
-		#endregion
+        /// <summary>
+        /// Returns a single result that matches the LINQ expression.
+        /// </summary>
+        /// <param name="expression">The LINQ expression.</param>
+        /// <returns>The matching entity or default value if no match was found.</returns>
+        T One(Expression<Func<T, bool>> expression);
 	}
 }

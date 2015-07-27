@@ -45,7 +45,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 					x.For(typeof(IDataSessionProvider<>)).Use(typeof(NHibernate.DataSessionProvider));
 					x.For(typeof(IActiveDataSessionManager<>)).Use(typeof(NHibernate.ActiveDataSessionManager));
 					x.For<IDataCommandProvider>().Use<DataCommandProvider>();
-					x.For(typeof(IObjectFinder<>)).Use(typeof(ObjectFinder<>));
 					x.For<IUnitOfWorkFactory>().Singleton().Use<UnitOfWorkFactory>();
                     x.For(typeof(IQueryRunner<>)).Use(typeof(QueryRunner<>));
 				});

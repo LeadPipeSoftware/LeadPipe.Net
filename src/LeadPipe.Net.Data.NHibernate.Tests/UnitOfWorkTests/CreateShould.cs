@@ -8,7 +8,7 @@ using System.Diagnostics;
 using NUnit.Framework;
 using StructureMap;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
+namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 {
 	/// <summary>
 	/// The Repository Create method tests.
@@ -37,7 +37,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-				repository.Create(testModel);
+				unitOfWork.Create(testModel);
 
 				unitOfWork.Commit();
 			}
@@ -73,7 +73,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			{
 				Debug.WriteLine(string.Format("A UnitTest in Local.Data exists: {0}", Local.Data["UnitTest"] == null));
 
-				repository.Create(testModel);
+				unitOfWork.Create(testModel);
 
 				unitOfWork.Commit();
 
@@ -112,7 +112,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-				repository.Create(testModel);
+                unitOfWork.Create(testModel);
 
 				//// NOTE: We would normally commit here.
 			}
@@ -145,7 +145,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Act
 			using (unitOfWork.Start())
 			{
-				repository.Create(testModel);
+                unitOfWork.Create(testModel);
 
 				unitOfWork.Rollback();
 			}
@@ -157,25 +157,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 
 				Assert.That(foundModel == null);
 			}
-		}
-
-		/// <summary>
-		/// Tests that Create throws an exception if not in a Unit of Work.
-		/// </summary>
-		[Test]
-		[ExpectedException(typeof(LeadPipeNetDataException), ExpectedMessage = "There is no NHibernate session. Did you start a Unit of Work?")]
-		public void ThrowExceptionGivenNoUnitOfWork()
-		{
-			// Arrange
-			Bootstrapper.Start();
-			const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-
-			var testModel = new TestModel(Key);
-
-			// Assert
-			repository.Create(testModel);
 		}
 
 		#endregion

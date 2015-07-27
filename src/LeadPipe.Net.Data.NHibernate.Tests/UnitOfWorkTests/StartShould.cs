@@ -71,7 +71,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 
             var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
 
             const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -87,7 +86,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 
             using (unitOfWork.Start())
             {
-                repository.Create(testModel);
+                unitOfWork.Create(testModel);
 
                 unitOfWork.Commit();
             }
