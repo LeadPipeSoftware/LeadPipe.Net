@@ -67,13 +67,6 @@ namespace LeadPipe.Net.Domain
         /// </returns>
         IEnumerable<T> AllMatchingSpecification(ISpecification<T> specification);
 
-	    /// <summary>
-	    /// Returns all objects that match the supplied query.
-	    /// </summary>
-	    /// <param name="query">The query.</param>
-	    /// <returns>All objects matching the supplied query.</returns>
-	    IEnumerable<T> AllMatchingQuery(IQuery<IEnumerable<T>> query);
-
         /// <summary>
         /// Returns a single result that matches the supplied specification.
         /// </summary>
@@ -96,12 +89,5 @@ namespace LeadPipe.Net.Domain
         /// <param name="expression">The LINQ expression.</param>
         /// <returns>The matching entity or default value if no match was found.</returns>
         T One(Expression<Func<T, bool>> expression);
-
-	    /// <summary>
-	    /// Returns a single result that matches the supplied query.
-	    /// </summary>
-	    /// <param name="query">The query.</param>
-	    /// <returns>The matching object or default value if no match was found.</returns>
-	    T One(IQuery<T> query);
 	}
 }

@@ -12,7 +12,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
     /// <summary>
     /// A query that returns all the test models that have a test property that starts with ABC.
     /// </summary>
-    public class TestModelsWithTestPropertiesThatStartWithABC : Query<TestModel>
+    public class TestModelsWithTestPropertiesThatStartWithABC : Query<IEnumerable<TestModel>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TestModelsWithTestPropertiesThatStartWithABC"/> class.

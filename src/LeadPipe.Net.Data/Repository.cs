@@ -97,13 +97,13 @@ namespace LeadPipe.Net.Data
         #region Public Methods
 
         /// <summary>
-		/// Represents an <see cref="IQueryable"/> list of objects that match a LINQ expression.
+		/// Represents an <see cref="IQueryable"/> list of entities that match a LINQ expression.
 		/// </summary>
 		/// <param name="expression">
 		/// The LINQ expression.
 		/// </param>
 		/// <returns>
-		/// The <see cref="IQueryable"/> list of matching objects.
+		/// The <see cref="IQueryable"/> list of matching entities.
 		/// </returns>
 		public virtual IQueryable<T> AllMatchingExpression(Expression<Func<T, bool>> expression)
 		{
@@ -111,28 +111,18 @@ namespace LeadPipe.Net.Data
 		}
 
 		/// <summary>
-		/// Returns an <see cref="IEnumerable{T}"/> list of objects that match the supplied specification.
+		/// Returns an <see cref="IEnumerable{T}"/> list of entities that match the supplied specification.
 		/// </summary>
 		/// <param name="specification">
 		/// The specification.
 		/// </param>
 		/// <returns>
-		/// The <see cref="IEnumerable{T}"/> list of matching objects.
+		/// The <see cref="IEnumerable{T}"/> list of matching entities.
 		/// </returns>
 		public virtual IEnumerable<T> AllMatchingSpecification(ISpecification<T> specification)
 		{
 			return this.All.Where(specification.SatisfiedBy()).AsEnumerable();
 		}
-
-	    /// <summary>
-	    /// Returns all objects that match the supplied query.
-	    /// </summary>
-	    /// <param name="query">The query.</param>
-	    /// <returns>All objects matching the supplied query.</returns>
-	    public virtual IEnumerable<T> AllMatchingQuery(IQuery<IEnumerable<T>> query)
-	    {
-	        return this.queryRunner.GetQueryResult(query);
-	    }
 
         /// <summary>
         /// Gets the expression tree that is associated with the instance of <see cref="T:System.Linq.IQueryable" />.
@@ -208,18 +198,8 @@ namespace LeadPipe.Net.Data
 			return this.All.Where(specification.SatisfiedBy()).SingleOrDefault();
 		}
 
-        /// <summary>
-        /// Returns a single result that matches the supplied query.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns>The matching object or default value if no match was found.</returns>
-        public virtual T One(IQuery<T> query)
-        {
-            return this.queryRunner.GetQueryResult(query);
-        }
-
 		/// <summary>
-		/// Returns a single result with the supplied key.
+		/// Singles the or default with key.
 		/// </summary>
 		/// <param name="key">
 		/// The key.

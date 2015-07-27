@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using LeadPipe.Net.Domain;
 
 namespace LeadPipe.Net.Data
@@ -12,8 +11,8 @@ namespace LeadPipe.Net.Data
     /// <summary>
     /// A query object.
     /// </summary>
-    /// <typeparam name="TResultType">The type of the result.</typeparam>
-    public abstract class Query<TResultType> : IQuery<IEnumerable<TResultType>>
+    /// <typeparam name="TResult">The type of the result.</typeparam>
+    public abstract class Query<TResult> : IQuery<TResult>
     {
         protected readonly IDataCommandProvider dataCommandProvider;
 
@@ -32,6 +31,6 @@ namespace LeadPipe.Net.Data
         /// <returns>
         /// The result of the query.
         /// </returns>
-        public abstract IEnumerable<TResultType> GetResult();
+        public abstract TResult GetResult();
     }
 }

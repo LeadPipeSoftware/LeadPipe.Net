@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Linq;
 using LeadPipe.Net.Domain;
 
@@ -60,23 +59,11 @@ namespace LeadPipe.Net.Data
         /// <returns>The result of the query.</returns>
         public T GetQueryResult(IQuery<T> query)
         {
-            var result = query.GetResult();
+            var results = query.GetResult();
 
-            return result;
+            return results;
         }
 
-        /// <summary>
-        /// Gets the query result.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns>The result of the query.</returns>
-	    public IEnumerable<T> GetQueryResult(IQuery<IEnumerable<T>> query)
-	    {
-	        var results = query.GetResult();
-
-	        return results;
-	    }
-
-	    #endregion
+		#endregion
 	}
 }

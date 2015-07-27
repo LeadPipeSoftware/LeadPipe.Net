@@ -4,11 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Linq;
+using LeadPipe.Net.Domain;
 using NUnit.Framework;
 using StructureMap;
 
-namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
+namespace LeadPipe.Net.Data.NHibernate.Tests.QueryRunnerTests
 {
 	/// <summary>
 	/// The QueryRunner GetQueryResult tests.
@@ -27,7 +29,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Arrange
 			Bootstrapper.Start();
 
-		    var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+		    var queryRunner = ObjectFactory.GetInstance<IQueryRunner<IEnumerable<TestModel>>>();
             var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
 		    var dataCommandProvider = ObjectFactory.GetInstance<IDataCommandProvider>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
@@ -49,7 +51,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Assert
 			using (unitOfWork.Start())
 			{
-                var foundModel = repository.AllMatchingQuery(new TestModelsWithTestPropertiesThatStartWithABC(dataCommandProvider));
+				var foundModel = queryRunner.GetQueryResult(new TestModelsWithTestPropertiesThatStartWithABC(dataCommandProvider));
 
 				Assert.That(foundModel.Count().Equals(2));
 			}

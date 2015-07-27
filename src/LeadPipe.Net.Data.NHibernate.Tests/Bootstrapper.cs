@@ -6,6 +6,7 @@
 
 using LeadPipe.Net.Domain;
 using StructureMap;
+using StructureMap.Pipeline;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests
 {
