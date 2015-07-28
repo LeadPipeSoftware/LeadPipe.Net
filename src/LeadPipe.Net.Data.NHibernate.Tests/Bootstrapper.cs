@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using LeadPipe.Net.Domain;
+using LeadPipe.Net.Data.NHibernate.StructureMap;
 using StructureMap;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests
@@ -25,9 +25,21 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 
 		#endregion
 
-		#region Public Methods and Operators
+        #region Public Properties
 
-		/// <summary>
+        /// <summary>
+        /// Gets or sets the container.
+        /// </summary>
+        /// <value>
+        /// The container.
+        /// </value>
+        public static Container AmbientContainer { get; protected set; }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
 		/// The start.
 		/// </summary>
 		/// <returns>
@@ -37,17 +49,17 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 		{
 			var bootstrapper = new Bootstrapper();
 
-			ObjectFactory.Initialize(
-				x =>
-				{
-					x.For<ISessionFactoryBuilder>().Singleton().Use<UnitTestSessionFactoryBuilder>();
-					x.For(typeof(IDataSessionProvider<>)).Use(typeof(NHibernate.DataSessionProvider));
-					x.For(typeof(IActiveDataSessionManager<>)).Use(typeof(NHibernate.ActiveDataSessionManager));
-					x.For<IDataCommandProvider>().Use<DataCommandProvider>();
-					x.For(typeof(IObjectFinder<>)).Use(typeof(ObjectFinder<>));
-					x.For<IUnitOfWorkFactory>().Singleton().Use<UnitOfWorkFactory>();
-                    x.For(typeof(IQueryRunner<>)).Use(typeof(QueryRunner<>));
-				});
+            AmbientContainer = new Container();
+
+            LeadPipeNHibernateDataConfiguration.Initialize(AmbientContainer, typeof(UnitTestSessionFactoryBuilder));
+
+            /*
+             * It's only necessary to register repositories if you have custom implementations that
+             * extend the base Repository class. If you do nothing, you'll simply get the generic
+             * repository implementation.
+             */
+
+            LeadPipeNHibernateDataConfiguration.RegisterRepository<TestModel>(AmbientContainer, typeof(TestModelRepository));
 
 			return bootstrapper;
 		}

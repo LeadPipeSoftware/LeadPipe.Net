@@ -31,11 +31,11 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             // Arrange
             Bootstrapper.Start();
 
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             unitOfWorkFactory.UnitOfWorkBatchMode = unitOfWorkBatchMode;
             
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
             const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -79,9 +79,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
         private void ParentMethod()
 	    {
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
             // Assert
             using (unitOfWork.Start())
@@ -102,9 +102,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
         private void ChildMethod()
         {
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
             // Assert
             using (unitOfWork.Start())

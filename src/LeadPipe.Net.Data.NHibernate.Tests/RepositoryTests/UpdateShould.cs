@@ -29,8 +29,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			const string KeyA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			const string KeyB = "ZKJWDFLKJLSKDJFLKJLSKJSLDK";
 
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+			var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var modelList = new List<TestModel>();

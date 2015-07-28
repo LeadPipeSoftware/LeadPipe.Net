@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LeadPipe.Net.Data.NHibernate.CastleWindsor</id>
+    <version>$version$</version>
+    <title>LeadPipe.Net.Data.NHibernate.CastleWindsor</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>LeadPipe.Net.Data.NHibernate.CastleWindsor is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a repository, the query object pattern, and unit of work pattern. This package provides easy component registration for Castle Windsor users.</summary>
+    <description>
+      LeadPipe.Net.Data.NHibernate.CastleWindsor is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a repository, the query object pattern, and unit of work pattern. This package provides easy component registration for Castle Windsor users.
+    
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
+    </description>
+    <copyright>Copyright © LeadPipe.Net - All rights reserved.</copyright>
+    <tags>NHibernate Castle Windsor orm repository query pattern unit of work query object</tags>
+    <dependencies>
+      <dependency id="LeadPipe.Net" />      
+      <dependency id="LeadPipe.Net.Data" />
+      <dependency id="LeadPipe.Net.Data.NHibernate" />
+      <dependency id="LeadPipe.Net.Domain" />
+      <dependency id="NHibernate" />
+    </dependencies>
+  </metadata>
+</package>

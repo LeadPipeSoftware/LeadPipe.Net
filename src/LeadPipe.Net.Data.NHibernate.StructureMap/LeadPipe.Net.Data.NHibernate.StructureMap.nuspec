@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>LeadPipe.Net.Data.NHibernate</id>
+    <id>LeadPipe.Net.Data.NHibernate.StructureMap</id>
     <version>$version$</version>
-    <title>LeadPipe.Net.Data.NHibernate</title>
+    <title>LeadPipe.Net.Data.NHibernate.StructureMap</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
     <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net</projectUrl>
     <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>LeadPipe.Net.Data.NHibernate is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a repository, the query object pattern, and unit of work pattern.</summary>
+    <summary>LeadPipe.Net.Data.NHibernate.StructureMap is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a repository, the query object pattern, and unit of work pattern. This package provides easy component registration for StructureMap users.</summary>
     <description>
-      LeadPipe.Net.Data.NHibernate is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a repository, the query object pattern, and unit of work pattern.
+      LeadPipe.Net.Data.NHibernate.StructureMap is a comprehensive pre-built data implementation package that uses NHibernate and provides implementations of a repository, the query object pattern, and unit of work pattern. This package provides easy component registration for StructureMap users.
     
       LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
     </description>
     <copyright>Copyright © LeadPipe.Net - All rights reserved.</copyright>
-    <tags>NHibernate orm repository query pattern unit of work query object</tags>
+    <tags>NHibernate StructureMap orm repository query pattern unit of work query object</tags>
     <dependencies>
       <dependency id="LeadPipe.Net" />
       <dependency id="LeadPipe.Net.Data" />

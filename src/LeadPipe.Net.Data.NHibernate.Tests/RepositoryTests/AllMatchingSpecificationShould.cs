@@ -6,7 +6,6 @@
 
 using System.Linq;
 using NUnit.Framework;
-using StructureMap;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
@@ -27,8 +26,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Arrange
 			Bootstrapper.Start();
 
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+			var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
 			var testModel01 = new TestModel("ABCDEF");
@@ -63,8 +62,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             // Arrange
             Bootstrapper.Start();
 
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var testModel01 = new TestModel("ABCDEF");
@@ -99,8 +98,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             // Arrange
             Bootstrapper.Start();
 
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var testModel01 = new TestModel("ABCDEF");
@@ -135,8 +134,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             // Arrange
             Bootstrapper.Start();
 
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var testModel01 = new TestModel("ABCDEF");
@@ -171,8 +170,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Arrange
 			Bootstrapper.Start();
 
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+			var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
 			var testModel01 = new TestModel("ABCDEF");
@@ -207,8 +206,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Arrange
 			Bootstrapper.Start();
 
-			var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+			var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
 			var testModel01 = new TestModel("BLARG");

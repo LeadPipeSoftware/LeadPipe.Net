@@ -106,6 +106,7 @@
     <Compile Include="TestModel.cs" />
     <Compile Include="TestModelMap.cs" />
     <Compile Include="TestModelQueries.cs" />
+    <Compile Include="TestModelRepository.cs" />
     <Compile Include="TestModelSpecifications.cs" />
     <Compile Include="UnitOfWorkTests\CommitShould.cs" />
     <Compile Include="UnitOfWorkTests\StartShould.cs" />
@@ -116,6 +117,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LeadPipe.Net.Data.NHibernate.StructureMap\LeadPipe.Net.Data.NHibernate.StructureMap.csproj">
+      <Project>{9d93457c-437b-4e3f-95d3-e3e5789b55e0}</Project>
+      <Name>LeadPipe.Net.Data.NHibernate.StructureMap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LeadPipe.Net.Data.NHibernate\LeadPipe.Net.Data.NHibernate.csproj">
       <Project>{9d93457c-437b-4e3f-95d3-e3e488ab55e0}</Project>
       <Name>LeadPipe.Net.Data.NHibernate</Name>

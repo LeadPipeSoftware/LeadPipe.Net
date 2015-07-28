@@ -29,7 +29,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 			// Arrange
 			Bootstrapper.Start();
 
-			var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
     		// Assert
@@ -48,7 +48,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             // Arrange
             Bootstrapper.Start();
 
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
             
             // Assert
@@ -69,9 +69,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             // Arrange
             Bootstrapper.Start();
 
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
             const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -112,7 +112,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             // Arrange
             Bootstrapper.Start();
 
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             // Assert
@@ -136,9 +136,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// </summary>
 	    private void ParentMethod()
 	    {
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
             // Assert
             using (unitOfWork.Start())
@@ -156,9 +156,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// </summary>
         private void ChildMethod()
         {
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
             // Assert
             using (unitOfWork.Start())

@@ -27,9 +27,9 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Arrange
 			Bootstrapper.Start();
 
-            var repository = ObjectFactory.GetInstance<Repository<TestModel>>();
-            var unitOfWorkFactory = ObjectFactory.GetInstance<IUnitOfWorkFactory>();
-		    var dataCommandProvider = ObjectFactory.GetInstance<IDataCommandProvider>();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+		    var dataCommandProvider = Bootstrapper.AmbientContainer.GetInstance<IDataCommandProvider>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var testModel01 = new TestModel("ABCDEF");
