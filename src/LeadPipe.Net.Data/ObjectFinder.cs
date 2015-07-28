@@ -65,14 +65,6 @@ namespace LeadPipe.Net.Data
 		}
 
 		/// <summary>
-		/// Gets the total number of results from the last query.
-		/// </summary>
-		public int TotalResults
-		{
-			get { return this.dataCommandProvider.TotalResults; }
-		}
-
-		/// <summary>
 		/// Gets or sets the data source.
 		/// </summary>
 		public virtual IQueryable<T> DataSource { get; set; }

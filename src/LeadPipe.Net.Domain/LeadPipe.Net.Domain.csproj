@@ -69,6 +69,9 @@
       <Name>LeadPipe.Net</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir)deploy\BuildNugetPackage.bat $(ProjectDir) $(TargetDir) $(TargetName) $(SolutionDir)release</PostBuildEvent>
