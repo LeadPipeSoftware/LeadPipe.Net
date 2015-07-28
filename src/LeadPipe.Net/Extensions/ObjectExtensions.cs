@@ -28,6 +28,32 @@ namespace LeadPipe.Net.Extensions
 			return TypeDescriptor.GetProperties(obj)[property].GetValue(obj);
 		}
 
+        /// <summary>
+        /// Determines whether the specified object is not the default value.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to check.</typeparam>
+        /// <param name="obj">The object to check.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified object is not the default value; otherwise, <c>false</c>.
+        /// </returns>
+	    public static bool IsNotDefaultValue<T>(this T obj)
+	    {
+	        return !EqualityComparer<T>.Default.Equals(obj, default(T));
+	    }
+
+	    /// <summary>
+        /// Determines whether the specified object is the default value.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to check.</typeparam>
+        /// <param name="obj">The object to check.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified object is the default value; otherwise, <c>false</c>.
+        /// </returns>
+	    public static bool IsDefaultValue<T>(this T obj)
+	    {
+	        return EqualityComparer<T>.Default.Equals(obj, default(T));
+	    }
+
 		/// <summary>
 		/// Determines whether the specified object is not null.
 		/// </summary>

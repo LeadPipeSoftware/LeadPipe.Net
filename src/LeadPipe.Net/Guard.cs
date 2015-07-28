@@ -101,6 +101,35 @@ namespace LeadPipe.Net
 			throw new ArgumentNullException(field.Name, message);
 		}
 
+        /// <summary>
+        /// Guards against an argument with a default value.
+        /// </summary>
+        /// <typeparam name="T">The argument type.</typeparam>
+        /// <param name="argument">The argument.</param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <remarks><code>
+        /// Guard.ProtectAgainstDefaultValueArgument(() =&gt; argument);
+        /// </code></remarks>
+        public void ProtectAgainstDefaultValueArgument<T>(Func<T> argument)
+        {
+            if (!argument().IsDefaultValue()) return;
+
+            // Get the IL code behind the delegate...
+            var il = argument.Method.GetMethodBody().GetILAsByteArray();
+
+            // Get the field handle (bytes 2-6 represent the field handle)...
+            var fieldHandle = BitConverter.ToInt32(il, 2);
+
+            // Resolve the handle...
+            var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
+
+            // Build the message...
+            var message = string.Format("Argument of type '{0}' cannot be the type's default value.", typeof(T));
+
+            // Throw the exception...
+            throw new ArgumentOutOfRangeException(field.Name, message);
+        }
+
 		/// <summary>
 		/// Guards against a null or empty string argument.
 		/// </summary>
