@@ -56,7 +56,7 @@ namespace LeadPipe.Net.Commands
 			{
 				this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Failing));
 
-				//// RDJ the exception thrown should be a reflection exception, need to look at the inner exception to get the actual exception from the handler.
+				// TODO: The exception thrown should be a reflection exception, need to look at the inner exception to get the actual exception from the handler.
 				response.Exception = ex;
 
 				if (ex.InnerException != null)
