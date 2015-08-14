@@ -19,6 +19,7 @@
     <tags>data framework repository query object pattern unit of work finder</tags>
     <dependencies>
       <dependency id="LeadPipe.Net" />
+      <dependency id="LeadPipe.Net.Domain" />
     </dependencies>
   </metadata>
 </package>
