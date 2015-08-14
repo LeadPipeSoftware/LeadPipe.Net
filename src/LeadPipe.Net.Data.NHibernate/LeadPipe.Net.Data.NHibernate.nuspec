@@ -18,7 +18,6 @@
     <copyright>Copyright © LeadPipe.Net - All rights reserved.</copyright>
     <tags>NHibernate orm repository query pattern unit of work query object</tags>
     <dependencies>
-      <dependency id="LeadPipe.Net" />
       <dependency id="LeadPipe.Net.Data" />
       <dependency id="NHibernate" />
     </dependencies>

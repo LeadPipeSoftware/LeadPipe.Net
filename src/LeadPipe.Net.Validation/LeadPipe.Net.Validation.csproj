@@ -82,6 +82,7 @@
     <EmbeddedResource Include="ValidationMessages.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LeadPipe.Net.Validation.nuspec" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

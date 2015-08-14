@@ -17,5 +17,9 @@
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
     <tags>Lead Pipe search lucene lucene.net</tags>
+    <dependencies>
+      <dependency id="LeadPipe.Net" />
+      <dependency id="Lucene.Net" />
+    </dependencies>
   </metadata>
 </package>

@@ -17,5 +17,8 @@
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
     <tags>authorization security role activity authentication</tags>
+    <dependencies>
+      <dependency id="LeadPipe.Net" />
+    </dependencies>
   </metadata>
 </package>

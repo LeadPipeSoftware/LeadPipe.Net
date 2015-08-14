@@ -155,6 +155,7 @@
     <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LeadPipe.Net.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

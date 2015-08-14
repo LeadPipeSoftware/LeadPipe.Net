@@ -82,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LeadPipe.Net.Lucene.nuspec" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

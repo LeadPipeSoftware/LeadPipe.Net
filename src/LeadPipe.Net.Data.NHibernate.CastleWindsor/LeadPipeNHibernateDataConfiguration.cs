@@ -9,6 +9,7 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
+using NHibernate;
 
 namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
 {
@@ -38,8 +39,8 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
         public static void Initialize(WindsorContainer container, Type sessionFactoryBuilder)
         {
             container.Register(Component.For(typeof(ISessionFactoryBuilder)).ImplementedBy(sessionFactoryBuilder));
-            container.Register(Component.For(typeof(IDataSessionProvider<>)).ImplementedBy(typeof(DataSessionProvider)));
-            container.Register(Component.For(typeof(IActiveDataSessionManager<>)).ImplementedBy(typeof(ActiveDataSessionManager)));
+            container.Register(Component.For(typeof(IDataSessionProvider<ISession>)).ImplementedBy(typeof(DataSessionProvider)));
+            container.Register(Component.For(typeof(IActiveDataSessionManager<ISession>)).ImplementedBy(typeof(ActiveDataSessionManager)));
             container.Register(Component.For(typeof(IDataCommandProvider)).ImplementedBy(typeof(DataCommandProvider)));
             container.Register(Component.For(typeof(IObjectFinder<>)).ImplementedBy(typeof(ObjectFinder<>)));
             container.Register(Component.For(typeof(IUnitOfWorkFactory)).ImplementedBy(typeof(UnitOfWorkFactory)).LifestyleSingleton());

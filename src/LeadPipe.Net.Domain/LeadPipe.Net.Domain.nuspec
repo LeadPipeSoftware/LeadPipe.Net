@@ -17,5 +17,8 @@
     </description>
     <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
     <tags>DDD domain driven design entity entities repository repositories aggregate</tags>
+    <dependencies>
+      <dependency id="LeadPipe.Net" />
+    </dependencies>
   </metadata>
 </package>
