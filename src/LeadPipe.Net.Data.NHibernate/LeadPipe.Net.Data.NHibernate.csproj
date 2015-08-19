@@ -79,7 +79,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LeadPipe.Net.Data.NHibernate.nuspec" />
+    <None Include="LeadPipe.Net.Data.NHibernate.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>

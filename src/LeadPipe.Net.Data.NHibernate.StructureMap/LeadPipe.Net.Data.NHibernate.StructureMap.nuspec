@@ -22,6 +22,7 @@
       <dependency id="LeadPipe.Net.Domain" />
       <dependency id="LeadPipe.Net.Data" />
       <dependency id="LeadPipe.Net.Data.NHibernate" />
+      <dependency id="NHibernate" version="3.4"/>
       <dependency id="structuremap" />
     </dependencies>
   </metadata>
