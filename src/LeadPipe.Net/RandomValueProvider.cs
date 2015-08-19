@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using LeadPipe.Net.Extensions;
 
 namespace LeadPipe.Net
 {
@@ -72,6 +73,15 @@ namespace LeadPipe.Net
 			return RandomSeed.NextDouble() > 0.5;
 		}
 
+        /// <summary>
+        /// Returns a random email address.
+        /// </summary>
+        /// <returns>A random email address.</returns>
+	    public static string RandomEmailAddress()
+	    {
+	        return "{0}@{1}.com".FormattedWith(RandomString(10, true), RandomString(10, true));
+	    }
+
 		/// <summary>
 		/// Returns a random integer.
 		/// </summary>
@@ -129,14 +139,14 @@ namespace LeadPipe.Net
 		/// Generates a random string with the given length.
 		/// </summary>
 		/// <param name="size">Size of the string.</param>
-		/// <param name="lowerCase">If true, generate a lowercase string.</param>
+		/// <param name="lowerCaseOnly">If true, generate a lowercase string.</param>
 		/// <returns>A random string.</returns>
-		public static string RandomString(int size, bool lowerCase)
+		public static string RandomString(int size, bool lowerCaseOnly = false)
 		{
 			var randomString = new StringBuilder(size);
 
 			// ASCII start position (65 = A / 97 = a)...
-			var start = lowerCase ? 97 : 65;
+			var start = lowerCaseOnly ? 97 : 65;
 
 			// Add random chars...
 			for (var i = 0; i < size; i++)
