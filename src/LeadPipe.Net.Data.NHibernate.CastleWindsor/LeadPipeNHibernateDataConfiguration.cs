@@ -38,14 +38,14 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
         /// <param name="sessionFactoryBuilder">The session factory builder type.</param>
         public static void Initialize(WindsorContainer container, Type sessionFactoryBuilder)
         {
-            container.Register(Component.For(typeof(ISessionFactoryBuilder)).ImplementedBy(sessionFactoryBuilder));
-            container.Register(Component.For(typeof(IDataSessionProvider<ISession>)).ImplementedBy(typeof(DataSessionProvider)));
-            container.Register(Component.For(typeof(IActiveDataSessionManager<ISession>)).ImplementedBy(typeof(ActiveDataSessionManager)));
-            container.Register(Component.For(typeof(IDataCommandProvider)).ImplementedBy(typeof(DataCommandProvider)));
-            container.Register(Component.For(typeof(IObjectFinder<>)).ImplementedBy(typeof(ObjectFinder<>)));
+            container.Register(Component.For(typeof(ISessionFactoryBuilder)).ImplementedBy(sessionFactoryBuilder).LifestyleScoped());
+            container.Register(Component.For(typeof(IDataSessionProvider<ISession>)).ImplementedBy(typeof(DataSessionProvider)).LifestyleScoped());
+            container.Register(Component.For(typeof(IActiveDataSessionManager<ISession>)).ImplementedBy(typeof(ActiveDataSessionManager)).LifestyleScoped());
+            container.Register(Component.For(typeof(IDataCommandProvider)).ImplementedBy(typeof(DataCommandProvider)).LifestyleScoped());
+            container.Register(Component.For(typeof(IObjectFinder<>)).ImplementedBy(typeof(ObjectFinder<>)).LifestyleScoped());
             container.Register(Component.For(typeof(IUnitOfWorkFactory)).ImplementedBy(typeof(UnitOfWorkFactory)).LifestyleSingleton());
-            container.Register(Component.For(typeof(IQueryRunner<>)).ImplementedBy(typeof(QueryRunner<>)));
-            container.Register(Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)));
+            container.Register(Component.For(typeof(IQueryRunner<>)).ImplementedBy(typeof(QueryRunner<>)).LifestyleScoped());
+            container.Register(Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleScoped());
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
         {
             Guard.Will.ThrowExceptionOfType<LeadPipeNetDataException>("The container has not been initialized. Did you call the LeadPipeNHibernateDataConfiguration.Initialize method first?").When(container.IsNull());
 
-            container.Register(Component.For(typeof(IRepository<T>)).ImplementedBy(repositoryType));
+            container.Register(Component.For(typeof(IRepository<T>)).ImplementedBy(repositoryType).LifestyleScoped());
         }
 
         #endregion

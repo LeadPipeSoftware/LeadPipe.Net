@@ -162,14 +162,16 @@ namespace LeadPipe.Net.Data
 		public T One(string key)
 		{
 			/*
-			 * This is really a bad idea as it bypasses all of the good stuff that NHibernate gives us when
-			 * it comes to caching. Doing it this way means that we HAVE to hit the database which bypasses
-			 * the first level identiy map and the second level cache. Ayende Rahien gives us the deets:
+			 * This is really a bad idea as it bypasses all of the good stuff that NHibernate gives
+             * us when it comes to caching. Doing it this way means that we HAVE to hit the
+             * database which bypasses the first level identity map and the second level cache.
+             * 
+             * Ayende Rahien gives us the deets:
 			 * 
 			 * http://ayende.com/blog/3988/nhibernate-the-difference-between-get-load-and-querying-by-id
 			 * 
-			 * It should also be noted that RavenDB doesn't support Cast as of 4/27/2013 so, well, there you
-			 * have it. Don't use this method, kids.
+			 * It should also be noted that RavenDB doesn't support Cast as of 4/27/2013 so, well,
+             * there you have it. Don't use this method, kids.
 			 */
 
 			return (T)this.All.Cast<IKeyed>().SingleOrDefault(x => x.Key == key);
