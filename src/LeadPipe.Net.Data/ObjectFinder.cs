@@ -111,6 +111,20 @@ namespace LeadPipe.Net.Data
             return this.queryRunner.GetQueryResult(query);
         }
 
+        /// <summary>
+        /// Returns a single result that has the supplied key value.
+        /// </summary>
+        /// <param name="key">
+        /// The key.
+        /// </param>
+        /// <returns>
+        /// The matching object or an exception if no match was found.
+        /// </returns>
+        public T ByKey(string key)
+        {
+            return (T)this.All.Cast<IKeyed>().SingleOrDefault(x => x.Key == key);
+        }
+
 		/// <summary>
 		/// Returns a single result that matches the supplied expression.
 		/// </summary>
@@ -118,9 +132,9 @@ namespace LeadPipe.Net.Data
 		/// The expression.
 		/// </param>
 		/// <returns>
-		/// The matching object or default value if no match was found.
+		/// The matching object or exception if no match was found.
 		/// </returns>
-		public virtual T One(Expression<Func<T, bool>> expression)
+		public virtual T OneMatchingExpression(Expression<Func<T, bool>> expression)
 		{
 			return this.All.SingleOrDefault(expression);
 		}
@@ -132,9 +146,9 @@ namespace LeadPipe.Net.Data
 		/// The specification.
 		/// </param>
 		/// <returns>
-		/// The matching object or default value if no match was found.
+		/// The matching object or exception if no match was found.
 		/// </returns>
-		public virtual T One(ISpecification<T> specification)
+		public virtual T OneMatchingSpecification(ISpecification<T> specification)
 		{
 			return this.All.Where(specification.SatisfiedBy()).SingleOrDefault();
 		}
@@ -144,38 +158,10 @@ namespace LeadPipe.Net.Data
         /// </summary>
         /// <param name="query">The query.</param>
         /// <returns>The matching object or default value if no match was found.</returns>
-        public virtual T One(IQuery<T> query)
+        public virtual T OneMatchingQuery(IQuery<T> query)
         {
             return this.queryRunner.GetQueryResult(query);
         }
-
-		/// <summary>
-		/// Singles the or default with key.
-		/// </summary>
-		/// <param name="key">
-		/// The key.
-		/// </param>
-		/// <returns>
-		/// The matching object or default value if no match was found.
-		/// </returns>
-		[Obsolete("This method is deprecated. Please use the Repository.Load or Repository.Get methods instead.")]
-		public T One(string key)
-		{
-			/*
-			 * This is really a bad idea as it bypasses all of the good stuff that NHibernate gives
-             * us when it comes to caching. Doing it this way means that we HAVE to hit the
-             * database which bypasses the first level identity map and the second level cache.
-             * 
-             * Ayende Rahien gives us the deets:
-			 * 
-			 * http://ayende.com/blog/3988/nhibernate-the-difference-between-get-load-and-querying-by-id
-			 * 
-			 * It should also be noted that RavenDB doesn't support Cast as of 4/27/2013 so, well,
-             * there you have it. Don't use this method, kids.
-			 */
-
-			return (T)this.All.Cast<IKeyed>().SingleOrDefault(x => x.Key == key);
-		}
 
 		#endregion
 

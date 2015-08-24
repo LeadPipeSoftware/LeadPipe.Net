@@ -64,35 +64,35 @@ namespace LeadPipe.Net.Domain
 	    /// <returns>All objects matching the supplied query.</returns>
 	    IEnumerable<T> AllMatchingQuery(IQuery<IEnumerable<T>> query);
 
-		/// <summary>
-		/// Returns a single result that matches the supplied specification.
-		/// </summary>
-		/// <param name="key">The key.</param>
-		/// <returns>
-		/// The matching entity or default value if no match was found.
-		/// </returns>
-		T One(string key);
+        /// <summary>
+        /// Returns a single result that matches the supplied specification.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>
+        /// The matching entity or exception if no match was found.
+        /// </returns>
+        T ByKey(string key);
 
 		/// <summary>
 		/// Returns a single result that matches the supplied specification.
 		/// </summary>
 		/// <param name="specification">The specification.</param>
-		/// <returns>The matching entity or default value if no match was found.</returns>
-		T One(ISpecification<T> specification);
+		/// <returns>The matching entity or exception if no match was found.</returns>
+		T OneMatchingSpecification(ISpecification<T> specification);
 
 		/// <summary>
 		/// Returns a single result that matches the LINQ expression.
 		/// </summary>
 		/// <param name="expression">The LINQ expression.</param>
-		/// <returns>The matching entity or default value if no match was found.</returns>
-		T One(Expression<Func<T, bool>> expression);
+		/// <returns>The matching entity or exception if no match was found.</returns>
+		T OneMatchingExpression(Expression<Func<T, bool>> expression);
 
 	    /// <summary>
 	    /// Returns a single result that matches the supplied query.
 	    /// </summary>
 	    /// <param name="query">The query.</param>
 	    /// <returns>The matching object or default value if no match was found.</returns>
-	    T One(IQuery<T> query);
+	    T OneMatchingQuery(IQuery<T> query);
 
 	    #endregion
 	}

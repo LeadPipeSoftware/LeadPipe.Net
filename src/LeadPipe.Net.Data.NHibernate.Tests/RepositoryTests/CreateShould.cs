@@ -45,7 +45,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Assert
 			using (unitOfWork.Start())
 			{
-				var foundModel = repository.Find.One(x => x.Key.Equals(Key));
+				var foundModel = repository.Find.OneMatchingExpression(x => x.Key.Equals(Key));
 
 				Assert.That(foundModel != null);
 			}
@@ -85,7 +85,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			{
 				Debug.WriteLine(string.Format("C UnitTest in Local.Data exists: {0}", Local.Data["UnitTest"] == null));
 
-				var foundModel = repository.Find.One(x => x.Key.Equals(Key));
+				var foundModel = repository.Find.OneMatchingExpression(x => x.Key.Equals(Key));
 
 				Assert.That(foundModel.TestChild == testChild);
 
@@ -120,7 +120,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Assert
 			using (unitOfWork.Start())
 			{
-				var foundModel = repository.Find.One(x => x.Key.Equals(Key));
+				var foundModel = repository.Find.OneMatchingExpression(x => x.Key.Equals(Key));
 
 				Assert.That(foundModel == null);
 			}
@@ -153,7 +153,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Assert
 			using (unitOfWork.Start())
 			{
-				var foundModel = repository.Find.One(x => x.Key.Equals(Key));
+				var foundModel = repository.Find.OneMatchingExpression(x => x.Key.Equals(Key));
 
 				Assert.That(foundModel == null);
 			}

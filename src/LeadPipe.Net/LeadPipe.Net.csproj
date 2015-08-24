@@ -70,6 +70,7 @@
     <Compile Include="Configuration\IContextAware.cs" />
     <Compile Include="EnglishAlphabetProvider.cs" />
     <Compile Include="Enumeration.cs" />
+    <Compile Include="EqualityComparers\FuzzyDateTimeEqualityComparer.cs" />
     <Compile Include="Extensions\BoolExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
