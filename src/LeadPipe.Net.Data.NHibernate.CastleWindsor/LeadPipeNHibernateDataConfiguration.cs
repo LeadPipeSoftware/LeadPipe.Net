@@ -36,16 +36,67 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
         /// </summary>
         /// <param name="container">The Castle Windsor container.</param>
         /// <param name="sessionFactoryBuilder">The session factory builder type.</param>
-        public static void Initialize(WindsorContainer container, Type sessionFactoryBuilder)
+        /// <param name="scoped">if set to <c>true</c> the registration will be scoped.</param>
+        public static void Initialize(WindsorContainer container, Type sessionFactoryBuilder, bool scoped = false)
         {
-            container.Register(Component.For(typeof(ISessionFactoryBuilder)).ImplementedBy(sessionFactoryBuilder).LifestyleScoped());
-            container.Register(Component.For(typeof(IDataSessionProvider<ISession>)).ImplementedBy(typeof(DataSessionProvider)).LifestyleScoped());
-            container.Register(Component.For(typeof(IActiveDataSessionManager<ISession>)).ImplementedBy(typeof(ActiveDataSessionManager)).LifestyleScoped());
-            container.Register(Component.For(typeof(IDataCommandProvider)).ImplementedBy(typeof(DataCommandProvider)).LifestyleScoped());
-            container.Register(Component.For(typeof(IObjectFinder<>)).ImplementedBy(typeof(ObjectFinder<>)).LifestyleScoped());
-            container.Register(Component.For(typeof(IUnitOfWorkFactory)).ImplementedBy(typeof(UnitOfWorkFactory)).LifestyleSingleton());
-            container.Register(Component.For(typeof(IQueryRunner<>)).ImplementedBy(typeof(QueryRunner<>)).LifestyleScoped());
-            container.Register(Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleScoped());
+            if (scoped)
+            {
+                container.Register(
+                    Component.For(typeof (ISessionFactoryBuilder))
+                        .ImplementedBy(sessionFactoryBuilder)
+                        .LifestyleScoped());
+                container.Register(
+                    Component.For(typeof (IDataSessionProvider<ISession>))
+                        .ImplementedBy(typeof (DataSessionProvider))
+                        .LifestyleScoped());
+                container.Register(
+                    Component.For(typeof (IActiveDataSessionManager<ISession>))
+                        .ImplementedBy(typeof (ActiveDataSessionManager))
+                        .LifestyleScoped());
+                container.Register(
+                    Component.For(typeof (IDataCommandProvider))
+                        .ImplementedBy(typeof (DataCommandProvider))
+                        .LifestyleScoped());
+                container.Register(
+                    Component.For(typeof (IObjectFinder<>)).ImplementedBy(typeof (ObjectFinder<>)).LifestyleScoped());
+                container.Register(
+                    Component.For(typeof (IUnitOfWorkFactory))
+                        .ImplementedBy(typeof (UnitOfWorkFactory))
+                        .LifestyleSingleton());
+                container.Register(
+                    Component.For(typeof (IQueryRunner<>)).ImplementedBy(typeof (QueryRunner<>)).LifestyleScoped());
+                container.Register(
+                    Component.For(typeof (IRepository<>)).ImplementedBy(typeof (Repository<>)).LifestyleScoped());
+            }
+            else
+            {
+                container.Register(
+                    Component.For(typeof(ISessionFactoryBuilder))
+                        .ImplementedBy(sessionFactoryBuilder)
+                        .LifestyleTransient());
+                container.Register(
+                    Component.For(typeof(IDataSessionProvider<ISession>))
+                        .ImplementedBy(typeof(DataSessionProvider))
+                        .LifestyleTransient());
+                container.Register(
+                    Component.For(typeof(IActiveDataSessionManager<ISession>))
+                        .ImplementedBy(typeof(ActiveDataSessionManager))
+                        .LifestyleTransient());
+                container.Register(
+                    Component.For(typeof(IDataCommandProvider))
+                        .ImplementedBy(typeof(DataCommandProvider))
+                        .LifestyleTransient());
+                container.Register(
+                    Component.For(typeof(IObjectFinder<>)).ImplementedBy(typeof(ObjectFinder<>)).LifestyleTransient());
+                container.Register(
+                    Component.For(typeof(IUnitOfWorkFactory))
+                        .ImplementedBy(typeof(UnitOfWorkFactory))
+                        .LifestyleSingleton());
+                container.Register(
+                    Component.For(typeof(IQueryRunner<>)).ImplementedBy(typeof(QueryRunner<>)).LifestyleTransient());
+                container.Register(
+                    Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleTransient());
+            }
         }
 
         /// <summary>
