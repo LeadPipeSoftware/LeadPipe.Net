@@ -1,2 +1,8 @@
 language: csharp
 solution: LeadPipe.Net.sln
+install:
+  - nuget restore LeadPipe.Net.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Debug LeadPipe.Net.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./src/LeadPipe.Net.Tests/bin/LeadPipe.Net.Tests.dll
