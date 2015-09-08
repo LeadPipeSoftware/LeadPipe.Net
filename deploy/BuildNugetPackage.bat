@@ -4,6 +4,8 @@ REM ** *************************************************************************
 REM ** Run this batch file to build the NuGet packages
 REM ** *************************************************************************
 
+REM ** BuildNugetPackage.bat /LeadPipe.Net/src/LeadPipe.Net/ /LeadPipe.Net/src/LeadPipe.Net/bin/ LeadPipe.Net /LeadPipe.Net/release
+
 SET PROJECT_DIR=%1
 SET TARGET_DIR=%2
 SET TARGET_NAME=%3

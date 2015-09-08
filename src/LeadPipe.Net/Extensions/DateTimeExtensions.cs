@@ -172,6 +172,49 @@ namespace LeadPipe.Net.Extensions
 			return setTime;
 		}
 
+        /// <summary>
+        /// Determines whether the date is after the specified date.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <param name="afterDate">The after date.</param>
+        /// <param name="compareTime">if set to <c>true</c> compare time values.</param>
+        /// <returns></returns>
+        public static bool IsAfter(this DateTime dt, DateTime afterDate, Boolean compareTime = false)
+        {
+            return compareTime
+                ? dt >= afterDate
+                : dt.Date >= afterDate.Date;
+        }
+
+        /// <summary>
+        /// Determines whether the date is before the specified date.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <param name="beforeDate">The before date.</param>
+        /// <param name="compareTime">if set to <c>true</c> compare time values.</param>
+        /// <returns></returns>
+        public static bool IsBefore(this DateTime dt, DateTime beforeDate, Boolean compareTime = false)
+        {
+            return compareTime
+                ? dt <= beforeDate
+                : dt.Date <= beforeDate.Date;
+        }
+
+        /// <summary>
+        /// Determines whether the date is between the specified dates.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="compareTime">if set to <c>true</c> compare time values.</param>
+        /// <returns></returns>
+        public static bool IsBetween(this DateTime dt, DateTime startDate, DateTime endDate, Boolean compareTime = false)
+        {
+            return compareTime
+                ? dt >= startDate && dt <= endDate
+                : dt.Date >= startDate.Date && dt.Date <= endDate.Date;
+        }
+
 		#endregion
 	}
 }
