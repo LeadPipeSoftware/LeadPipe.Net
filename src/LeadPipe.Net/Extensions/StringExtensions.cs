@@ -330,6 +330,19 @@ namespace LeadPipe.Net.Extensions
 			return string.IsNullOrEmpty(value);
 		}
 
+        /// <summary>
+        /// Determines whether the string is not null or empty.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if [is not null or empty] [the specified value]; otherwise, <c>false</c>.
+        /// </returns>
+	    public static bool IsNotNullOrEmpty(this string value)
+	    {
+            //// TODO: [GBM] Write unit tests.
+	        return !string.IsNullOrEmpty(value);
+	    }
+
 		/// <summary>
 		/// Determines whether the string is null or whitespace.
 		/// </summary>
@@ -342,6 +355,19 @@ namespace LeadPipe.Net.Extensions
 			//// TODO: [GBM] Write unit tests.
 			return string.IsNullOrWhiteSpace(value);
 		}
+
+        /// <summary>
+        /// Determines whether the string is not null or whitespace.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if [is not null or white space] [the specified value]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsNotNullOrWhiteSpace(this string value)
+        {
+            //// TODO: [GBM] Write unit tests.
+            return !string.IsNullOrWhiteSpace(value);
+        }
 
 		/// <summary>
 		/// Determines whether a string contains only numeric characters.

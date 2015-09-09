@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 
 namespace LeadPipe.Net.Extensions
 {
@@ -96,6 +97,19 @@ namespace LeadPipe.Net.Extensions
 				? obj
 				: otherValues.FirstOrDefault(value => value.IsNotNull());
 		}
+
+        /// <summary>
+        /// Sets the private field with reflection.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <param name="value">The value.</param>
+        public static void SetPrivateFieldWithReflection(this object obj, string fieldName, object value)
+        {
+            var fieldInfo = obj.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+            if (fieldInfo != null) fieldInfo.SetValue(obj, value);
+        }
 
 		/// <summary>
 		/// Returns the object as a dictionary of properties and values.

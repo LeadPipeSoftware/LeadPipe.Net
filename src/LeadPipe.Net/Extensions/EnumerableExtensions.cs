@@ -253,6 +253,63 @@ namespace LeadPipe.Net.Extensions
 			return c;
 		}
 
+        /// <summary>
+        /// Gets the item in the enumeration based on the maximum of the specified property.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="selector">The selector.</param>
+        /// <returns></returns>
+        public static TSource MaxBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
+        {
+            return source.MaxBy(selector, Comparer<TKey>.Default);
+        }
+
+        /// <summary>
+        /// Gets the item in the enumeration based on the maximum of the specified property.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="selector">The selector.</param>
+        /// <param name="comparer">The comparer.</param>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">The supplied sequence contains no elements.</exception>
+        public static TSource MaxBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => source);
+            Guard.Will.ProtectAgainstNullArgument(() => selector);
+            Guard.Will.ProtectAgainstNullArgument(() => comparer);
+
+            using (var sourceIterator = source.GetEnumerator())
+            {
+                if (!sourceIterator.MoveNext())
+                {
+                    throw new InvalidOperationException("The supplied sequence contains no elements.");
+                }
+
+                var max = sourceIterator.Current;
+
+                var maxKey = selector(max);
+
+                while (sourceIterator.MoveNext())
+                {
+                    var candidate = sourceIterator.Current;
+
+                    var candidateProjected = selector(candidate);
+
+                    if (comparer.Compare(candidateProjected, maxKey) <= 0) continue;
+
+                    max = candidate;
+
+                    maxKey = candidateProjected;
+                }
+
+                return max;
+            }
+        }
+
 		/// <summary>
 		/// Shuffles the items.
 		/// </summary>

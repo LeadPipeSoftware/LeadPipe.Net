@@ -46,7 +46,6 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowException()
 		{
-			// Throw an exception of the specified type...
 			this.exception = (InvalidOperationException)Activator.CreateInstance(typeof(InvalidOperationException));
 
 			return this;
@@ -59,7 +58,6 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowException(string message)
 		{
-			// Throw an exception of the specified type...
 			this.exception = (InvalidOperationException)Activator.CreateInstance(typeof(InvalidOperationException), message);
 
 			return this;
@@ -76,29 +74,21 @@ namespace LeadPipe.Net
 		/// </code></remarks>
 		public void ProtectAgainstNullArgument<T>(Func<T> argument) where T : class
 		{
-			/*
-			 * Good information about this technique can be found at http://abdullin.com/journal/2008/12/19/how-to-get-parameter-name-and-argument-value-from-c-lambda-v.html
-			 */
-
 			if (argument().IsNotNull())
 			{
 				return;
 			}
 
-			// Get the IL code behind the delegate...
-			var il = argument.Method.GetMethodBody().GetILAsByteArray();
+            var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
 
-			// Get the field handle (bytes 2-6 represent the field handle)...
-			var fieldHandle = BitConverter.ToInt32(il, 2);
+		    var fieldName = GetFieldName(argument);
 
-			// Resolve the handle...
-			var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
+		    if (fieldName.IsNotNull())
+		    {
+                throw new ArgumentNullException(fieldName, message);
+		    }
 
-			// Build the message...
-			var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
-
-			// Throw the exception...
-			throw new ArgumentNullException(field.Name, message);
+			throw new ArgumentNullException(message);
 		}
 
         /// <summary>
@@ -114,23 +104,19 @@ namespace LeadPipe.Net
         {
             if (!argument().IsDefaultValue()) return;
 
-            // Get the IL code behind the delegate...
-            var il = argument.Method.GetMethodBody().GetILAsByteArray();
-
-            // Get the field handle (bytes 2-6 represent the field handle)...
-            var fieldHandle = BitConverter.ToInt32(il, 2);
-
-            // Resolve the handle...
-            var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
-
-            // Build the message...
             var message = string.Format("Argument of type '{0}' cannot be the type's default value.", typeof(T));
 
-            // Throw the exception...
-            throw new ArgumentOutOfRangeException(field.Name, message);
-        }
+            var fieldName = GetFieldName(argument);
 
-		/// <summary>
+            if (fieldName.IsNotNull())
+            {
+                throw new ArgumentOutOfRangeException(fieldName, message);
+            }
+            
+            throw new ArgumentOutOfRangeException(message);
+        }        
+
+	    /// <summary>
 		/// Guards against a null or empty string argument.
 		/// </summary>
 		/// <typeparam name="T">The argument type.</typeparam>
@@ -141,10 +127,6 @@ namespace LeadPipe.Net
 		/// </code></remarks>
 		public void ProtectAgainstNullOrEmptyStringArgument<T>(Func<T> argument) where T : class
 		{
-			/*
-			 * Good information about this technique can be found at http://abdullin.com/journal/2008/12/19/how-to-get-parameter-name-and-argument-value-from-c-lambda-v.html
-			 */
-
 			var argumentAsString = argument().IsNull() ? null : argument().ToString();
 
 			if (!string.IsNullOrEmpty(argumentAsString))
@@ -152,20 +134,16 @@ namespace LeadPipe.Net
 				return;
 			}
 
-			// Get the IL code behind the delegate...
-			var il = argument.Method.GetMethodBody().GetILAsByteArray();
+            var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
 
-			// Get the field handle (bytes 2-6 represent the field handle)...
-			var fieldHandle = BitConverter.ToInt32(il, 2);
+	        var fieldName = GetFieldName(argument);
 
-			// Resolve the handle...
-			var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
+	        if (fieldName.IsNotNull())
+	        {
+                throw new ArgumentNullException(fieldName, message);
+	        }
 
-			// Build the message...
-			var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
-
-			// Throw the exception...
-			throw new ArgumentNullException(field.Name, message);
+			throw new ArgumentNullException(message);
 		}
 
 		/// <summary>
@@ -175,7 +153,6 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowArgumentNullException(string parameterName)
 		{
-			// Throw an exception of the specified type...
 			this.exception = (ArgumentNullException)Activator.CreateInstance(typeof(ArgumentNullException), parameterName);
 
 			return this;
@@ -189,7 +166,6 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowArgumentNullException(string parameterName, string message)
 		{
-			// Throw an exception of the specified type...
 			this.exception = (ArgumentNullException)Activator.CreateInstance(typeof(ArgumentNullException), parameterName, message);
 
 			return this;
@@ -202,7 +178,6 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowExceptionOfType<TException>() where TException : Exception
 		{
-			// Throw an exception of the specified type...
 			this.exception = (TException)Activator.CreateInstance(typeof(TException));
 
 			return this;
@@ -216,7 +191,6 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowExceptionOfType<TException>(string message) where TException : Exception
 		{
-			// Throw an exception of the specified type...
 			this.exception = (TException)Activator.CreateInstance(typeof(TException), message);
 
 			return this;
@@ -236,5 +210,50 @@ namespace LeadPipe.Net
 		}
 
 		#endregion
-	}
+
+        #region Private Methods
+
+        /// <summary>
+        /// Gets the name of the field.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="argument">The argument.</param>
+        /// <returns>The field name.</returns>
+        private static string GetFieldName<T>(Func<T> argument)
+        {
+            /*
+			 * Good information about this technique can be found at http://abdullin.com/journal/2008/12/19/how-to-get-parameter-name-and-argument-value-from-c-lambda-v.html
+			 */
+
+            try
+            {
+                // Get the IL code behind the delegate...
+                var methodBody = argument.Method.GetMethodBody();
+
+                if (methodBody == null) return null;
+
+                var il = methodBody.GetILAsByteArray();
+
+                if (il == null) return null;
+
+                // Get the field handle (bytes 2-6 represent the field handle)...
+                var fieldHandle = BitConverter.ToInt32(il, 2);
+
+                // Resolve the handle...
+                var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
+
+                if (field == null) return null;
+
+                return field.Name;
+            }
+            catch (Exception)
+            {
+                // By design
+            }
+
+            return null;
+        }
+
+        #endregion
+    }
 }
