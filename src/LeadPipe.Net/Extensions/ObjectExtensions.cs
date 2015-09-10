@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -104,11 +105,33 @@ namespace LeadPipe.Net.Extensions
         /// <param name="obj">The object.</param>
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="value">The value.</param>
+        /// <exception cref="System.ArgumentNullException">target;The assignment target cannot be null.</exception>
+        /// <exception cref="System.ArgumentException">fieldName;The field name cannot be null or empty.</exception>
+        /// <exception cref="System.Exception"></exception>
         public static void SetPrivateFieldWithReflection(this object obj, string fieldName, object value)
         {
-            var fieldInfo = obj.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+            Guard.Will.ProtectAgainstNullArgument(() => obj);
+            Guard.Will.ProtectAgainstNullOrEmptyStringArgument(() => fieldName);
 
-            if (fieldInfo != null) fieldInfo.SetValue(obj, value);
+            var t = obj.GetType();
+
+            FieldInfo fi = null;
+
+            while (t != null)
+            {
+                fi = t.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+
+                if (fi != null) break;
+
+                t = t.BaseType;
+            }
+
+            if (fi == null)
+            {
+                throw new Exception(string.Format("Field '{0}' not found in the type hierarchy.", fieldName));
+            }
+
+            fi.SetValue(obj, value);
         }
 
 		/// <summary>
