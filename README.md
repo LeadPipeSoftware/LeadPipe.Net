@@ -1,6 +1,10 @@
 # LeadPipe.Net
 
-LeadPipe.Net is an a'la carte open source application framework for .NET programmers. The goal is to provide proven, well-tested, and well-documented libraries that programmers can rely on to help make their jobs a little easier. LeadPipe.Net doesn't try to force a particular application style or heavy-handed conventions. Instead, it takes a "take what you want and leave the rest" approach that provides solutions without a mess of tightly coupled dependencies.
+![Lead Pipe Software Logo](LeadPipeSoftwareLogoColor.png)
+
+LeadPipe.Net is an a'la carte toolbox for .NET programmers. The goal is to provide proven, well-tested, and well-documented libraries that programmers can rely on to help make their jobs a little easier. LeadPipe.Net doesn't try to force a particular application style or heavy-handed conventions. Instead, it takes a "take what you want and leave the rest" approach that provides solutions without a mess of tightly coupled dependencies.
+
+![First Timer Friendly](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)
 
 ## LeadPipe.Net
 
