@@ -4,21 +4,127 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
 using LeadPipe.Net.Extensions;
 using NHibernate.Linq;
 using NUnit.Framework;
-using StructureMap;
+using System.Linq;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 {
-	/// <summary>
-	/// The Unit of Work Commit method tests.
-	/// </summary>
-	[TestFixture]
-	public class CommitShould
-	{
-		#region Public Methods and Operators
+    /// <summary>
+    /// The Unit of Work Commit method tests.
+    /// </summary>
+    [TestFixture]
+    public class CommitShould
+    {
+        #region Public Methods and Operators
+
+        [Test]
+        public void InvokeBeforeCommitAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                unitOfWork.InvokeBeforeCommit = () => wasCalled = true;
+
+                unitOfWork.Commit();
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        public void InvokeAftercommitAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                unitOfWork.InvokeAfterCommit = () => wasCalled = true;
+
+                unitOfWork.Commit();
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        public void InvokeOnCommitExceptionAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var castedUnitOfWork = unitOfWork as UnitOfWork;
+
+            var wasCalled = false;
+
+            // Act
+            using (castedUnitOfWork.Start())
+            {
+                castedUnitOfWork.InvokeOnCommitException = () => wasCalled = true;
+
+                castedUnitOfWork.CurrentSession.Close();
+
+                try
+                {
+                    castedUnitOfWork.Commit();
+                }
+                catch (System.Exception ex)
+                {
+                    Assert.That(ex.IsNotNull());
+                }
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        public void InvokeOnRollbackAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                unitOfWork.InvokeOnRollback = () => wasCalled = true;
+
+                unitOfWork.Rollback();
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
 
         /// <summary>
         /// Tests that Commit increments and decrements the nest level appropriately.
@@ -33,7 +139,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             unitOfWorkFactory.UnitOfWorkBatchMode = unitOfWorkBatchMode;
-            
+
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
             var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
@@ -69,7 +175,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             }
         }
 
-		#endregion
+        #endregion
 
         #region Private Methods
 
@@ -78,7 +184,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// </summary>
         /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
         private void ParentMethod()
-	    {
+        {
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
             var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
@@ -94,7 +200,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 
                 this.ChildMethod();
             }
-	    }
+        }
 
         /// <summary>
         /// The child method.
