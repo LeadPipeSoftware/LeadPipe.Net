@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
 using NHibernate;
+using System;
 
 namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
 {
@@ -44,7 +44,7 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
                 container.Register(
                    Component.For(typeof(ISessionFactoryBuilder))
                        .ImplementedBy(sessionFactoryBuilder)
-                       .LifestyleScoped());
+                       .LifestyleSingleton());
                 container.Register(
                     Component.For(typeof(IDataSessionProvider<ISession>))
                         .ImplementedBy(typeof(DataSessionProvider))
@@ -79,7 +79,7 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
                 container.Register(
                     Component.For(typeof(ISessionFactoryBuilder))
                         .ImplementedBy(sessionFactoryBuilder)
-                        .LifestyleTransient());
+                        .LifestyleSingleton());
                 container.Register(
                     Component.For(typeof(IDataSessionProvider<ISession>))
                         .ImplementedBy(typeof(DataSessionProvider))
