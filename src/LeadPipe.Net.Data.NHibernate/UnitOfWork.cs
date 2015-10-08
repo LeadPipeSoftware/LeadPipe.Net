@@ -72,7 +72,7 @@ namespace LeadPipe.Net.Data.NHibernate
         /// <summary>
         /// The nest level key.
         /// </summary>
-	    private string nestLevelKey = "LeadPipe.Net.Data.NHibernate.NestLevelKey";
+        private string nestLevelKey = "LeadPipe.Net.Data.NHibernate.NestLevelKey";
 
         #endregion Constants and Fields
 
@@ -113,7 +113,7 @@ namespace LeadPipe.Net.Data.NHibernate
         }
 
         /// <summary>
-        /// The current transaction.
+        /// The current NHibernate transaction.
         /// </summary>
         public ITransaction CurrentTransaction { get; private set; }
 
@@ -210,7 +210,7 @@ namespace LeadPipe.Net.Data.NHibernate
         /// <param name="isolationLevel">The isolation level to use when committing the transaction.</param>
         public void Commit(IsolationLevel isolationLevel)
         {
-            Guard.Will.ThrowException("There is no NHibernate session. Did you start the Unit of Work?").When(this.CurrentSession == null);
+            Guard.Will.ThrowException("There is no current NHibernate session. Did you start the Unit of Work?").When(this.CurrentSession == null);
 
             // If we're using a singular transaction and we're not at the root then bail...
             if (this.UnitOfWorkBatchMode.Equals(UnitOfWorkBatchMode.Singular) && this.NestLevel > 0) return;
@@ -231,7 +231,7 @@ namespace LeadPipe.Net.Data.NHibernate
                 }
                 finally
                 {
-                    this.CurrentTransaction.Rollback();
+                    this.Rollback();
 
                     throw new LeadPipeNetDataException("Unable to commit the transaction. See inner exception for details.", ex);
                 }
@@ -269,7 +269,31 @@ namespace LeadPipe.Net.Data.NHibernate
             }
             finally
             {
-                this.Dispose();
+                /*
+                 * Per Jason (http://nhibernate.info/blog/2009/09/08/part-9-nhibernate-transactions.html)...
+                 *
+                 * "The NHibernate ITransaction will perform an implicit rollback when it is
+                 * disposed, unless an explicit call to Commit or Rollback has already occurred. To
+                 * implement this behavior, [NHibernate implements] IDisposable in our transaction
+                 * wrapper and chain our wrapper’s Dispose to NHibernate.ITransaction’s Dispose.
+                 *
+                 * This implicit rollback can indicate a missing call to Commit, so it generates an
+                 * alert in NHibernate Profiler. If you intend to rollback, do it explicitly. Your
+                 * code will be easier to understand."
+                 *
+                 * As such, we're performing an explicit rollback.
+                 */
+
+                this.CurrentTransaction.Rollback();
+
+                /*
+                 * As per the NHibernate documentation, we dispose after rollback to keep the
+                 * session consistent REGARDLESS OF THE NEST LEVEL. Everybody's done. Kaput!
+                 *
+                 * http://nhibernate.info/doc/nhibernate-reference/manipulatingdata.html
+                 */
+
+                this.activeDataSessionManager.ClearActiveDataSession();
             }
         }
 
@@ -294,7 +318,7 @@ namespace LeadPipe.Net.Data.NHibernate
         /// of work then nothing will happen. If we want to propagate changes to the database, we
         /// have to call the Commit method on the unit of work.
         /// </remarks>
-		public IUnitOfWork Start(FlushMode flushMode)
+        public IUnitOfWork Start(FlushMode flushMode)
         {
             // If we don't have a session then create one...
             if (this.CurrentSession.IsNull())
