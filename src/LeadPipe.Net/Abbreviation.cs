@@ -1,7 +1,16 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Abbreviation.cs" company="Lead Pipe Software">
+//     Copyright (c) Lead Pipe Software All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 
 namespace LeadPipe.Net
 {
+    /// <summary>
+    /// The Abbreviation attribute for properties, enum values, and fields. Allows for assigning abbreviations easily.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class Abbreviation : Attribute
     {
