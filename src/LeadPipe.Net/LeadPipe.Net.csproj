@@ -48,6 +48,12 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Abbreviation.cs" />
+    <Compile Include="CommonObjects\BloodType.cs" />
+    <Compile Include="CommonObjects\CardinalDirection.cs" />
+    <Compile Include="CommonObjects\HealthInformation.cs" />
+    <Compile Include="CommonObjects\UnitedStates.cs" />
+    <Compile Include="CommonObjects\UnitedStatesAddress.cs" />
     <Compile Include="Clock.cs" />
     <Compile Include="Commands\CommandExecutionResult.cs" />
     <Compile Include="Commands\CommandExecutionStatus.cs" />
@@ -60,6 +66,9 @@
     <Compile Include="Commands\ICommandMediator.cs" />
     <Compile Include="Commands\IQuery.cs" />
     <Compile Include="Commands\IQueryHandler.cs" />
+    <Compile Include="CommonObjects\Birthday.cs" />
+    <Compile Include="CommonObjects\PersonalName.cs" />
+    <Compile Include="CommonObjects\Person.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\ConfigurationSetting.cs" />
     <Compile Include="Configuration\ContextAwareApplicationSettingService.cs" />
@@ -160,6 +169,7 @@
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT %25ComputerName%25 == ZIRCON GOTO end
