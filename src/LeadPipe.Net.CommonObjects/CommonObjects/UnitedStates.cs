@@ -6,7 +6,7 @@
 
 using System.ComponentModel;
 
-namespace LeadPipe.Net.CommonObjects
+namespace LeadPipe.Net.CommonObjects.CommonObjects
 {
     /// <summary>
     /// The states in the United States.

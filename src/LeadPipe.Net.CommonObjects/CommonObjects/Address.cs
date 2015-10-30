@@ -4,10 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.CommonObjects
+using System;
+
+namespace LeadPipe.Net.CommonObjects.CommonObjects
 {
     /// <summary>
-    /// A simple representation of a U.S. address.
+    /// A simple representation of a U.S. postal address.
     /// </summary>
     public class Address
     {
@@ -82,6 +84,19 @@ namespace LeadPipe.Net.CommonObjects
         public virtual string RecipientLine
         {
             get { return recipientLine; }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return string.Concat(
+                AttentionLine, Environment.NewLine,
+                RecipientLine, Environment.NewLine,
+                DeliveryAddressLine, Environment.NewLine,
+                LastLine);
         }
     }
 }

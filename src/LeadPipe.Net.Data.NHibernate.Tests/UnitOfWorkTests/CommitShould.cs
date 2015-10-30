@@ -44,7 +44,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         [Test]
-        public void InvokeAftercommitAction()
+        public void InvokeAfterCommitAction()
         {
             // Arrange
             Bootstrapper.Start();

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LeadPipe.Net.CommonObjects</id>
+    <version>$version$</version>
+    <title>LeadPipe.Net.CommonObjects</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>LeadPipe.Net.CommonObjects is a collection of common business objects.</summary>
+    <description>
+      LeadPipe.Net is a collection of common business objects.
+      
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
+    </description>
+    <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
+    <tags>library framework common business objects</tags>
+  </metadata>
+</package>

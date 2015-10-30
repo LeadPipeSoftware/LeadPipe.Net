@@ -14,10 +14,8 @@ namespace LeadPipe.Net.CommonObjects
         #region Private Properties
 
         private string Ethnicity; // TODO
-        private string MaritalStatus;
         private string EmploymentStatus;
         private string Religion;
-        private string SocialSecurityNumber;
         private string DeathDate;
 
         /// <summary>
@@ -36,9 +34,19 @@ namespace LeadPipe.Net.CommonObjects
         private HealthInformation healthInformation;
 
         /// <summary>
+        /// The person's marital status.
+        /// </summary>
+        private MaritalStatus maritalStatus;
+
+        /// <summary>
         /// The person's name.
         /// </summary>
         private PersonalName name;
+
+        /// <summary>
+        /// The person's social security number.
+        /// </summary>
+        private SocialSecurityNumber socialSecurityNumber;
 
         #endregion Private Properties
 
@@ -82,6 +90,22 @@ namespace LeadPipe.Net.CommonObjects
         public virtual ContactInformation ContactInformation
         {
             get { return contactInformation; }
+        }
+
+        /// <summary>
+        /// The person's social security number.
+        /// </summary>
+        public SocialSecurityNumber SecurityNumber
+        {
+            get { return socialSecurityNumber; }
+        }
+
+        /// <summary>
+        /// The person's marital status.
+        /// </summary>
+        public MaritalStatus MaritalStatus
+        {
+            get { return maritalStatus; }
         }
 
         #endregion Public Properties

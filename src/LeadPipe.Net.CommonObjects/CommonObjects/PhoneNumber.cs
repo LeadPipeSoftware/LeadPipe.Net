@@ -7,7 +7,7 @@
 using System;
 using System.Linq;
 
-namespace LeadPipe.Net.CommonObjects
+namespace LeadPipe.Net.CommonObjects.CommonObjects
 {
     /// <summary>
     /// A struct representing a North American phone number that conforms to the North American

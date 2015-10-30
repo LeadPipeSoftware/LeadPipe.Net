@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using LeadPipe.Net.CommonObjects;
 using LeadPipe.Net.Extensions;
 using System;
 using System.Collections.Generic;
@@ -414,7 +413,11 @@ namespace LeadPipe.Net
         /// <returns>A random integer.</returns>
         public static int RandomInteger(int min, int max)
         {
-            return RandomSeed.Next(min, max);
+            var returnValue = RandomSeed.Next(min, max);
+
+            // TODO: This MIGHT result in a stack overflow.
+
+            return returnValue.IsBetween(min, max) ? returnValue : RandomInteger(min, max);
         }
 
         /// <summary>
@@ -552,17 +555,6 @@ namespace LeadPipe.Net
         public static string RandomTopLevelDomain()
         {
             return TopLevelDomains[RandomInteger(0, TopLevelDomains.Length)];
-        }
-
-        /// <summary>
-        /// Returns a random state in the United States.
-        /// </summary>
-        /// <returns>A random state in the United States.</returns>
-        public static UnitedStates RandomUnitedState()
-        {
-            var values = Enum.GetValues(typeof(UnitedStates));
-
-            return (UnitedStates)values.GetValue(RandomSeed.Next(values.Length));
         }
 
         /// <summary>

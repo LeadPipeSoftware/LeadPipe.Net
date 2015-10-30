@@ -7,9 +7,8 @@
 using LeadPipe.Net.Extensions;
 using System;
 using System.Globalization;
-using System.Linq;
 
-namespace LeadPipe.Net.CommonObjects
+namespace LeadPipe.Net.CommonObjects.CommonObjects
 {
     /// <summary>
     /// A culture-aware class that represents money.
@@ -49,20 +48,15 @@ namespace LeadPipe.Net.CommonObjects
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Money"/> class.
+        /// Initializes a new instance of the <see cref="Money" /> class.
         /// </summary>
         /// <param name="amount">The amount.</param>
-        /// <param name="currencyCode">The currency code.</param>
-        public Money(decimal amount, string currencyCode)
+        /// <param name="cultureName">Name of the culture.</param>
+        public Money(decimal amount, string cultureName)
         {
             this.amount = amount;
 
-            this.cultureInfo = CultureInfo.CurrentCulture;
-
-            if (currencyCode.IsNotNullOrEmpty())
-            {
-                this.cultureInfo = GetCultureFromCurrencyCode(currencyCode);
-            }
+            this.cultureInfo = new CultureInfo(cultureName);
         }
 
         /// <summary>
@@ -366,25 +360,5 @@ namespace LeadPipe.Net.CommonObjects
         }
 
         #endregion Arithmetic Operator Overloads
-
-        #region Private Methods
-
-        /// <summary>
-        /// Gets the culture based on a currency code.
-        /// </summary>
-        /// <param name="currencyCode">The currency code.</param>
-        /// <returns>The matching CultureInfo.</returns>
-        private CultureInfo GetCultureFromCurrencyCode(string currencyCode)
-        {
-            var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                           let r = new RegionInfo(c.LCID)
-                           where r != null
-                           && r.ISOCurrencySymbol.ToUpper() == currencyCode.ToUpper()
-                           select c).FirstOrDefault();
-
-            return culture;
-        }
-
-        #endregion Private Methods
     }
 }

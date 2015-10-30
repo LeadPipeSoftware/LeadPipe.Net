@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.CommonObjects
+namespace LeadPipe.Net.CommonObjects.CommonObjects
 {
     /// <summary>
     /// A class that represents health information for a person.

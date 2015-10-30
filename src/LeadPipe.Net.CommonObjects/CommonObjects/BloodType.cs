@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace LeadPipe.Net.CommonObjects
+namespace LeadPipe.Net.CommonObjects.CommonObjects
 {
     /// <summary>
     /// An enumeration of blood types.

@@ -59,6 +59,9 @@
     <Compile Include="DataCommandProvider.cs" />
     <Compile Include="DataSessionProvider.cs" />
     <Compile Include="ISessionFactoryBuilder.cs" />
+    <Compile Include="UnitOfWorkExtensions.cs" />
+    <Compile Include="NHibernateExtensions.cs" />
+    <Compile Include="NHibernateResultTransformers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataTransaction.cs" />
     <Compile Include="Query.cs" />

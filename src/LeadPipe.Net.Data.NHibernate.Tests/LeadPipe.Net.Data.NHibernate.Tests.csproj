@@ -108,6 +108,7 @@
     <Compile Include="TestModelQueries.cs" />
     <Compile Include="TestModelRepository.cs" />
     <Compile Include="TestModelSpecifications.cs" />
+    <Compile Include="NHibernateExtensionsTests\AsDynamicListShould.cs" />
     <Compile Include="UnitOfWorkTests\CommitShould.cs" />
     <Compile Include="UnitOfWorkTests\StartShould.cs" />
     <Compile Include="UnitTestSessionFactoryBuilder.cs" />
