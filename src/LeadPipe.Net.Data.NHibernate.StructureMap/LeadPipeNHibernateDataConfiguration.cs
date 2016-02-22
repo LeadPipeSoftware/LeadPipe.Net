@@ -61,6 +61,7 @@ namespace LeadPipe.Net.Data.NHibernate.StructureMap
             container.Configure(c =>
             {
                 c.For(typeof(IRepository<T>)).Use(repositoryType);
+                c.For(typeof(Repository<T>)).Use(repositoryType);
             });
         }
 

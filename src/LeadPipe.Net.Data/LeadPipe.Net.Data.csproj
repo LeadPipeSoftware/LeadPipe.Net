@@ -55,6 +55,7 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUnitOfWorkFactory.cs" />
     <Compile Include="IUseSchema.cs" />
+    <Compile Include="RepositoryStrictness.cs" />
     <Compile Include="UnitOfWorkBatchMode.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="ObjectFinder.cs" />

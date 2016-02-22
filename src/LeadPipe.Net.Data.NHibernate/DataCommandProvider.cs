@@ -97,7 +97,6 @@ namespace LeadPipe.Net.Data.NHibernate
 		public T Load<T>(object id)
 		{
 			return this.Session.Load<T>(id);
-			
 		}
 
 		/// <summary>

@@ -27,16 +27,17 @@ namespace LeadPipe.Net.Domain
          * the actual storage and query technology. Provide REPOSITORIES only for AGGREGATE roots
          * that actually need direct access. Keep the client focused on the model, delegating all
          * object storage and access to the REPOSITORIES.
-         * 
+         *
          * Page 152 - Evans, Eric. Domain Driven Design. 2004. Addison-Wesley. September 2010
          */
 
         /*
-         * Anyone paying attention would likely notice that I've been careful to use the term 'object' rather than
-         * 'entity' throughout this type. Why? Because while entities are access via repositories in DDD, that doesn't
-         * mean that the repository pattern doesn't have value outside of DDD as well. For that matter, we should take
-         * care to remember that persistence does not necessarily mean "save it to disk" and that the pattern is useful
-         * beyond CRUD.
+         * Anyone paying attention would likely notice that I've been careful to use the term
+         * 'object' rather than 'entity' throughout this type. Why? Because while entities (well,
+         * aggregate roots actually) are accessed via repositories in DDD, that doesn't mean that
+         * the repository pattern doesn't have value outside of DDD as well. For that matter, we
+         * should take care to remember that persistence does not necessarily mean "save it to
+         * disk" and that the pattern is useful beyond CRUD.
          */
 
 		#region Public Methods

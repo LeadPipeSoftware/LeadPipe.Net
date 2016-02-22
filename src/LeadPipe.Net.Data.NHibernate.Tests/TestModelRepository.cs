@@ -19,7 +19,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
         /// <param name="dataCommandProvider">The data session.</param>
         /// <param name="objectFinder">The object finder.</param>
         public TestModelRepository(IDataCommandProvider dataCommandProvider, IObjectFinder<TestModel> objectFinder)
-            : base(dataCommandProvider, objectFinder)
+            : base(dataCommandProvider, objectFinder, RepositoryStrictness.Open)
         {
         }
     }
