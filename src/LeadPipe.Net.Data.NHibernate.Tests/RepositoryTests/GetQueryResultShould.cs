@@ -29,7 +29,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 
             var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-		    var dataCommandProvider = Bootstrapper.AmbientContainer.GetInstance<IDataCommandProvider>();
+		    var query = Bootstrapper.AmbientContainer.GetInstance<TestModelsWithTestPropertiesThatStartWithABC>();
 			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var testModel01 = new TestModel("ABCDEF");
@@ -49,7 +49,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			// Assert
 			using (unitOfWork.Start())
 			{
-				var foundModel = repository.Find.AllMatchingQuery(new TestModelsWithTestPropertiesThatStartWithABC(dataCommandProvider));
+				var foundModel = repository.Find.AllMatchingQuery(query);
 
 				Assert.That(foundModel.Count().Equals(2));
 			}

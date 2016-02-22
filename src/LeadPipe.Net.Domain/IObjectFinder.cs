@@ -87,13 +87,6 @@ namespace LeadPipe.Net.Domain
 		/// <returns>The matching entity or exception if no match was found.</returns>
 		T OneMatchingExpression(Expression<Func<T, bool>> expression);
 
-	    /// <summary>
-	    /// Returns a single result that matches the supplied query.
-	    /// </summary>
-	    /// <param name="query">The query.</param>
-	    /// <returns>The matching object or default value if no match was found.</returns>
-	    T OneMatchingQuery(IQuery<T> query);
-
 	    #endregion
 	}
 }

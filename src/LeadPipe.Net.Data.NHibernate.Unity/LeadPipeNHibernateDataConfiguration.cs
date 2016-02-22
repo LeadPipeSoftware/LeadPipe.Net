@@ -42,7 +42,6 @@ namespace LeadPipe.Net.Data.NHibernate.Unity
             container.RegisterType<IDataCommandProvider, DataCommandProvider>();
             container.RegisterType(typeof(IObjectFinder<>), typeof(ObjectFinder<>));
             container.RegisterType<IUnitOfWorkFactory, UnitOfWorkFactory>();
-            container.RegisterType(typeof(IQueryRunner<>), typeof(QueryRunner<>));
             container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
         }
 

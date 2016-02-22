@@ -44,7 +44,6 @@ namespace LeadPipe.Net.Data.NHibernate.StructureMap
                 c.For<IDataCommandProvider>().Use<DataCommandProvider>();
                 c.For(typeof(IObjectFinder<>)).Use(typeof(ObjectFinder<>));
                 c.For<IUnitOfWorkFactory>().Singleton().Use<UnitOfWorkFactory>();
-                c.For(typeof(IQueryRunner<>)).Use(typeof(QueryRunner<>));
                 c.For(typeof(IRepository<>)).Use(typeof(Repository<>));
             });
         }

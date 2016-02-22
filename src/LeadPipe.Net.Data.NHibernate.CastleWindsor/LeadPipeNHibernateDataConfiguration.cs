@@ -66,10 +66,6 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
                         .ImplementedBy(typeof(UnitOfWorkFactory))
                         .LifestyleScoped());
                 container.Register(
-                    Component.For(typeof(IQueryRunner<>))
-                    .ImplementedBy(typeof(QueryRunner<>))
-                    .LifestyleScoped());
-                container.Register(
                     Component.For(typeof(IRepository<>))
                     .ImplementedBy(typeof(Repository<>))
                     .LifestyleScoped());
@@ -98,8 +94,6 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
                     Component.For(typeof(IUnitOfWorkFactory))
                         .ImplementedBy(typeof(UnitOfWorkFactory))
                         .LifestyleSingleton());
-                container.Register(
-                    Component.For(typeof(IQueryRunner<>)).ImplementedBy(typeof(QueryRunner<>)).LifestyleTransient());
                 container.Register(
                     Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleTransient());
             }

@@ -10,7 +10,7 @@ namespace LeadPipe.Net.Domain
     /// A query that can be run with IQueryRunner.
     /// </summary>
     /// <typeparam name="TResult">The type of the result.</typeparam>
-    public interface IQuery<TResult>
+    public interface IQuery<out TResult>
     {
         /// <summary>
         /// Gets the result of the query.

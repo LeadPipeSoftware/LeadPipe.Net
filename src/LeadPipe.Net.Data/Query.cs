@@ -15,7 +15,7 @@ namespace LeadPipe.Net.Data
     /// <typeparam name="TResultType">The type of the result.</typeparam>
     public abstract class Query<TResultType> : IQuery<IEnumerable<TResultType>>
     {
-        protected readonly IDataCommandProvider dataCommandProvider;
+        protected readonly IDataCommandProvider DataCommandProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Query{TResult}"/> class.
@@ -23,7 +23,7 @@ namespace LeadPipe.Net.Data
         /// <param name="dataCommandProvider">The data command provider.</param>
         protected Query(IDataCommandProvider dataCommandProvider)
         {
-            this.dataCommandProvider = dataCommandProvider;
+            DataCommandProvider = dataCommandProvider;
         }
 
         /// <summary>

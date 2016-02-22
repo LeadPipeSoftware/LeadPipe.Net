@@ -27,12 +27,7 @@ namespace LeadPipe.Net.Data
 		/// </summary>
 		private readonly IDataCommandProvider dataCommandProvider;
 
-        /// <summary>
-        /// The query runner.
-        /// </summary>
-	    private readonly IQueryRunner<T> queryRunner;
-
-	    #endregion
+        #endregion
 
 		#region Constructors and Destructors
 
@@ -40,13 +35,11 @@ namespace LeadPipe.Net.Data
         /// Initializes a new instance of the <see cref="ObjectFinder&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="dataCommandProvider">The data command provider.</param>
-        /// <param name="queryRunner">The query runner.</param>
-		public ObjectFinder(IDataCommandProvider dataCommandProvider, IQueryRunner<T> queryRunner)
+        public ObjectFinder(IDataCommandProvider dataCommandProvider)
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => dataCommandProvider);
 
 			this.dataCommandProvider = dataCommandProvider;
-            this.queryRunner = queryRunner;
 		}
 
 		#endregion
@@ -108,7 +101,7 @@ namespace LeadPipe.Net.Data
         /// <returns>All objects matching the supplied query.</returns>
         public virtual IEnumerable<T> AllMatchingQuery(IQuery<IEnumerable<T>> query)
         {
-            return this.queryRunner.GetQueryResult(query);
+            return query.GetResult();
         }
 
         /// <summary>
@@ -152,16 +145,6 @@ namespace LeadPipe.Net.Data
 		{
 			return this.All.Where(specification.SatisfiedBy()).SingleOrDefault();
 		}
-
-        /// <summary>
-        /// Returns a single result that matches the supplied query.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns>The matching object or default value if no match was found.</returns>
-        public virtual T OneMatchingQuery(IQuery<T> query)
-        {
-            return this.queryRunner.GetQueryResult(query);
-        }
 
 		#endregion
 
