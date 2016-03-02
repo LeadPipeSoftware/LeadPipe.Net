@@ -18,6 +18,14 @@ namespace LeadPipe.Net.Extensions
     public static class ObjectExtensions
     {
         #region Public Methods and Operators
+        
+        /// <summary>
+        /// Gets a property name.
+        /// </summary>
+        public static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
+		{
+    	    return (propertyExpression.Body as MemberExpression).Member.Name;
+		}
 
         /// <summary>
         /// Gets a property value.
