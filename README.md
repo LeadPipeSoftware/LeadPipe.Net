@@ -55,6 +55,7 @@ authorizer
 	.Can.Not.ExecuteAnyOfTheseActivities(new[] { activity })
 	.In(application);
 ```
+
 Head [over here](src/LeadPipe.Net.Authorization/README.md) for more information!
 
 ## LeadPipe.Net.Validation

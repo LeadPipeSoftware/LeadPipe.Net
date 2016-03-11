@@ -174,8 +174,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 
 			var testModel = new TestModel(Key);
 
-			// Assert
-			repository.Create(testModel);
+            // Assert
+            repository.Create(testModel);
 		}
 
 		#endregion
