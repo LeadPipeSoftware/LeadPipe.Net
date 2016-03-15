@@ -5,14 +5,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Commands;
-using LeadPipe.Net.Tests.CommandTests;
+using NUnit.Framework;
 
-namespace LeadPipe.Net.Core.Tests.CommandTests
+namespace LeadPipe.Net.Tests.CommandTests
 {
-
-    using NUnit.Framework;
-
-
     /// <summary>
     /// Tests for the Request method.
     /// </summary>

@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace LeadPipe.Net.Core.Tests.CommandTests
+namespace LeadPipe.Net.Tests.CommandTests
 {
     public class InversionOfControl
     {
