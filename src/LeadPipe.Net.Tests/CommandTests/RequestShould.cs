@@ -1,106 +1,109 @@
-﻿////// --------------------------------------------------------------------------------------------------------------------
-////// <copyright file="RequestShould.cs" company="Lead Pipe Software">
-//////   Copyright (c) Lead Pipe Software All rights reserved.
-////// </copyright>
-////// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="RequestShould.cs" company="Lead Pipe Software">
+//   Copyright (c) Lead Pipe Software All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
 
-////namespace LeadPipe.Net.Core.Tests.CommandTests
-////{
-////	using LeadPipe.Net.Core.Extensions;
+using LeadPipe.Net.Commands;
+using LeadPipe.Net.Tests.CommandTests;
 
-////	using NUnit.Framework;
+namespace LeadPipe.Net.Core.Tests.CommandTests
+{
 
-////	/// <summary>
-////	/// Tests for the Request method.
-////	/// </summary>
-////	public class RequestShould
-////	{
-////		/// <summary>
-////		/// Tests to ensure that a response is returned for a command despite the fact that no handler is registered.
-////		/// </summary>
-////		[Test]
-////		public void ReturnResponseWithExceptionForCommandGivenNoHandlerIsRegistered()
-////		{
-////			// Arrange
-////			InversionOfControl.Initialize(new UnityContainer());
-////			InversionOfControl.Container.RegisterType<ICommandMediator, CommandMediator>();
+    using NUnit.Framework;
 
-////			var mediator = InversionOfControl.Container.Resolve<ICommandMediator>();
 
-////			const string StringToWrite = "This is a test!";
+    /// <summary>
+    /// Tests for the Request method.
+    /// </summary>
+    public class RequestShould
+    {
+        /// <summary>
+        /// Tests to ensure that a response is returned for a command despite the fact that no handler is registered.
+        /// </summary>
+        [Test]
+        public void ReturnResponseWithExceptionForCommandGivenNoHandlerIsRegistered()
+        {
+            // Arrange
+            var ioc = new InversionOfControl();
+            ioc.Register<ICommandHandler<DebugWriteCommand>, DebugWriterCommandHandler>();
 
-////			// Act
-////			var response = mediator.Request(new DebugWriteCommand { TextToWrite = StringToWrite });
+            var mediator = new CommandMediator(ioc.Resolve);
 
-////			// Assert
-////			Assert.That(response.HasException(), Is.True);
-////		}
+            const string StringToWrite = "This is a test!";
 
-////		/// <summary>
-////		/// Tests to ensure that a response is returned for a command when at least one handler is registered.
-////		/// </summary>
-////		[Test]
-////		public void ReturnResponseForCommandGivenHandlerIsRegistered()
-////		{
-////			// Arrange
-////			InversionOfControl.Initialize(new UnityContainer());
-////			InversionOfControl.Container.RegisterType<ICommandMediator, CommandMediator>();
-////			InversionOfControl.Container.RegisterType<ICommandHandler<DebugWriteCommand, UnitType>, DebugWriterCommandHandler>();
+            // Act
+            var response = mediator.Request(new DebugWriteCommand { TextToWrite = StringToWrite });
 
-////			var mediator = InversionOfControl.Container.Resolve<ICommandMediator>();
+            // Assert
+            Assert.That(response.HasException(), Is.True);
+        }
 
-////			const string StringToWrite = "This is a test!";
+        /// <summary>
+        /// Tests to ensure that a response is returned for a command when at least one handler is registered.
+        /// </summary>
+        [Test]
+        public void ReturnResponseForCommandGivenHandlerIsRegistered()
+        {
+            // Arrange
+            var ioc = new InversionOfControl();
+            ioc.Register<ICommandMediator, CommandMediator>();
+            ioc.Register<ICommandHandler<DebugWriteCommand, UnitType>, DebugWriterCommandHandler>();
 
-////			// Act
-////			var response = mediator.Request(new DebugWriteCommand { TextToWrite = StringToWrite });
+            var mediator = new CommandMediator(ioc.Resolve);
 
-////			// Assert
-////			Assert.NotNull(response);
-////		}
+            const string StringToWrite = "This is a test!";
 
-////		/// <summary>
-////		/// Tests to ensure that the response contains the exception when the command throws an exception.
-////		/// </summary>
-////		[Test]
-////		public void ReturnResponseWithExceptionForCommandGivenCommandThrowsException()
-////		{
-////			// Arrange
-////			InversionOfControl.Initialize(new UnityContainer());
-////			InversionOfControl.Container.RegisterType<ICommandMediator, CommandMediator>();
-////			InversionOfControl.Container.RegisterType<ICommandHandler<ExplodingTestCommand, UnitType>, ExplodingTestCommandHandler>();
+            // Act
+            var response = mediator.Request(new DebugWriteCommand { TextToWrite = StringToWrite });
 
-////			var mediator = InversionOfControl.Container.Resolve<ICommandMediator>();
+            // Assert
+            Assert.NotNull(response);
+        }
 
-////			const string ExpectedExceptionMessage = "Kaboom!";
+        /// <summary>
+        /// Tests to ensure that the response contains the exception when the command throws an exception.
+        /// </summary>
+        [Test]
+        public void ReturnResponseWithExceptionForCommandGivenCommandThrowsException()
+        {
+            // Arrange
+            var ioc = new InversionOfControl();
+            ioc.Register<ICommandMediator, CommandMediator>();
+            ioc.Register<ICommandHandler<ExplodingTestCommand, UnitType>, ExplodingTestCommandHandler>();
 
-////			// Act & Assert
-////			var response = mediator.Request(new ExplodingTestCommand { ExceptionMessage = ExpectedExceptionMessage });
+            var mediator = new CommandMediator(ioc.Resolve);
 
-////			// Assert
-////			Assert.NotNull(response.Exception);
-////			Assert.That(response.Exception.Message.Equals(ExpectedExceptionMessage));
-////		}
+            const string ExpectedExceptionMessage = "Kaboom!";
 
-////		/// <summary>
-////		/// Tests to ensure that the response contains the exception when the command throws an exception.
-////		/// </summary>
-////		[Test]
-////		public void ReturnResponseWithExecutionResultSetToFailedGivenCommandThrowsException()
-////		{
-////			// Arrange
-////			InversionOfControl.Initialize(new UnityContainer());
-////			InversionOfControl.Container.RegisterType<ICommandMediator, CommandMediator>();
-////			InversionOfControl.Container.RegisterType<ICommandHandler<ExplodingTestCommand, UnitType>, ExplodingTestCommandHandler>();
+            // Act & Assert
+            var response = mediator.Request(new ExplodingTestCommand { ExceptionMessage = ExpectedExceptionMessage });
 
-////			var mediator = InversionOfControl.Container.Resolve<ICommandMediator>();
+            // Assert
+            Assert.NotNull(response.Exception);
+            Assert.That(response.Exception.Message.Equals(ExpectedExceptionMessage));
+        }
 
-////			const string ExpectedExceptionMessage = "Kaboom!";
+        /// <summary>
+        /// Tests to ensure that the response contains the exception when the command throws an exception.
+        /// </summary>
+        [Test]
+        public void ReturnResponseWithExecutionResultSetToFailedGivenCommandThrowsException()
+        {
+            // Arrange
+            var ioc = new InversionOfControl();
+            ioc.Register<ICommandMediator, CommandMediator>();
+            ioc.Register<ICommandHandler<ExplodingTestCommand, UnitType>, ExplodingTestCommandHandler>();
 
-////			// Act & Assert
-////			var response = mediator.Request(new ExplodingTestCommand { ExceptionMessage = ExpectedExceptionMessage });
+            var mediator = new CommandMediator(ioc.Resolve);
 
-////			// Assert
-////			Assert.That(response.CommandExecutionResult.Equals(CommandExecutionResult.Failed));
-////		}
-////	}
-////}
+            const string ExpectedExceptionMessage = "Kaboom!";
+
+            // Act & Assert
+            var response = mediator.Request(new ExplodingTestCommand { ExceptionMessage = ExpectedExceptionMessage });
+
+            // Assert
+            Assert.That(response.CommandExecutionResult.Equals(CommandExecutionResult.Failed));
+        }
+    }
+}

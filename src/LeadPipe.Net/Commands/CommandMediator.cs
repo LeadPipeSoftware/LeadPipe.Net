@@ -5,27 +5,37 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Concurrent;
+using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.Practices.ServiceLocation;
 
 namespace LeadPipe.Net.Commands
 {
-	/// <summary>
-	/// The CommandExecutingEventHandler delegate.
-	/// </summary>
-	/// <param name="sender">The sender.</param>
-	/// <param name="e">The <see cref="CommandExecutionStatusChangedEventArgs"/> instance containing the event data.</param>
-	public delegate void CommandExecutingEventHandler(object sender, CommandExecutionStatusChangedEventArgs e);
+
+    public delegate object SingleInstanceFactory(Type serviceType);
+
+    /// <summary>
+    /// The CommandExecutingEventHandler delegate.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="CommandExecutionStatusChangedEventArgs"/> instance containing the event data.</param>
+    public delegate void CommandExecutingEventHandler(object sender, CommandExecutionStatusChangedEventArgs e);
 
 	/// <summary>
 	/// Mediates command execution requests and returns command responses.
 	/// </summary>
 	public class CommandMediator : ICommandMediator
 	{
-		/// <summary>
-		/// The handler method name.
-		/// </summary>
-		public const string HandlerMethodName = "Handle";
+
+        private static ConcurrentDictionary<Tuple<Type, Type>, Func<CommandMediator, ICommand, object>> _createCommandDelegates = new ConcurrentDictionary<Tuple<Type, Type>, Func<CommandMediator, ICommand, object>>();
+
+        private readonly SingleInstanceFactory singleInstanceFactory;
+
+	    public CommandMediator(SingleInstanceFactory singleInstanceFactory)
+	    {
+	        this.singleInstanceFactory = singleInstanceFactory;
+	    }
+
 
 		/// <summary>
 		/// Occurs when the mediator is executing a command.
@@ -40,43 +50,77 @@ namespace LeadPipe.Net.Commands
 		/// <returns>The command response.</returns>
 		public virtual CommandHandlerResponse<TResponseData> Request<TResponseData>(ICommand<TResponseData> command)
 		{
-			this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Executing));
+            this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Executing));
+            var response = new CommandHandlerResponse<TResponseData>();
 
-			var response = new CommandHandlerResponse<TResponseData>();
+            if (command == null) throw new ArgumentNullException(nameof(command));
+            var commandType = command.GetType();
 
-			try
-			{
-				var handler = this.GetHandler(command);
+            try
+            {
+                var func = _createCommandDelegates.GetOrAdd(Tuple.Create(commandType, typeof(TResponseData)), GenerateCommandDelegate);
 
-				response.Data = ProcessCommandWithHandler(command, handler);
+                response.Data = (TResponseData) func(this, command);
 
-				response.CommandExecutionResult = CommandExecutionResult.Succeeded;
-			}
-			catch (Exception ex)
-			{
-				this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Failing));
+                response.CommandExecutionResult = CommandExecutionResult.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Failing));
 
-				// TODO: The exception thrown should be a reflection exception, need to look at the inner exception to get the actual exception from the handler.
-				response.Exception = ex;
+                response.Exception = ex;
 
-				if (ex.InnerException != null)
-				{
-					response.Exception = ex.InnerException;
-				}
+                response.CommandExecutionResult = CommandExecutionResult.Failed;
+            }
 
-				response.CommandExecutionResult = CommandExecutionResult.Failed;
-			}
+            this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Finished));
+            return response;
+        }
 
-			this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Finished));
+        private Func<CommandMediator, ICommand, object> GenerateCommandDelegate(Tuple<Type, Type> io)
+        {
+            var commandType = io.Item1;
+            var returnType = io.Item2;
 
-			return response;
-		}
+            var mediatorParam = Expression.Parameter(typeof(CommandMediator), "mediator");
+            var commandParam = Expression.Parameter(typeof(ICommand), "command");
+            var castOperation = Expression.Convert(commandParam, commandType);
 
-		/// <summary>
-		/// Raises the CommandOrQueryExecuting event.
-		/// </summary>
-		/// <param name="e">The <see cref="CommandExecutionStatusChangedEventArgs"/> instance containing the event data.</param>
-		protected void OnCommandExecuting(CommandExecutionStatusChangedEventArgs e)
+            var func = new Func<DummyCreateCommand, object>(ExecuteCreateCommand<DummyCreateCommand, object>);
+            var mi = func.Method
+                .GetGenericMethodDefinition()
+                .MakeGenericMethod(commandType, returnType);
+
+            var call = Expression.Call(mediatorParam, mi, castOperation);
+            var castResult = Expression.Convert(call, typeof(object));
+            var lambda = Expression.Lambda<Func<CommandMediator, ICommand, object>>(castResult, mediatorParam, commandParam);
+            return lambda.Compile();
+        }
+
+        private TResponseData ExecuteCreateCommand<TCommand, TResponseData>(TCommand command) where TCommand : ICommand<TResponseData>
+        {
+            if (command == null) throw new ArgumentNullException(nameof(command));
+            var handler = CreateInstance<ICommandHandler<TCommand, TResponseData>>();
+            var id = handler.Handle(command);
+            return id;
+        }
+
+        private THandler CreateInstance<THandler>()
+        {
+            return (THandler)singleInstanceFactory(typeof(THandler));
+        }
+
+
+        private class DummyCreateCommand : ICommand<object>
+        {
+        }
+
+
+        /// <summary>
+        /// Raises the CommandOrQueryExecuting event.
+        /// </summary>
+        /// <param name="e">The <see cref="CommandExecutionStatusChangedEventArgs"/> instance containing the event data.</param>
+        protected void OnCommandExecuting(CommandExecutionStatusChangedEventArgs e)
 		{
 			if (this.CommandExecuting != null)
 			{
@@ -84,47 +128,5 @@ namespace LeadPipe.Net.Commands
 			}
 		}
 
-		/// <summary>
-		/// Gets the handler method.
-		/// </summary>
-		/// <param name="handler">The handler.</param>
-		/// <param name="query">The query.</param>
-		/// <param name="name">The name.</param>
-		/// <returns>The handler method info.</returns>
-		private static MethodInfo GetHandlerMethod(object handler, object query, string name)
-		{
-			return handler.GetType().GetMethod(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod, null, CallingConventions.HasThis, new[] { query.GetType() }, null);
-		}
-
-		/// <summary>
-		/// Processes the command with handler.
-		/// </summary>
-		/// <typeparam name="TResponseData">The type of the T response data.</typeparam>
-		/// <param name="command">The command.</param>
-		/// <param name="handler">The handler.</param>
-		/// <returns>The response data.</returns>
-		private static TResponseData ProcessCommandWithHandler<TResponseData>(ICommand<TResponseData> command, object handler)
-		{
-			return (TResponseData)GetHandlerMethod(handler, command, HandlerMethodName).Invoke(handler, new object[] { command });
-		}
-
-		/// <summary>
-		/// Gets the command handler.
-		/// </summary>
-		/// <typeparam name="TResponseData">The type of the T response data.</typeparam>
-		/// <param name="command">The command.</param>
-		/// <returns>The command handler.</returns>
-		private object GetHandler<TResponseData>(ICommand<TResponseData> command)
-		{
-			var handlerType = typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), typeof(TResponseData));
-
-			/*
-			 * TODO: Using a service locator is hardly ideal. Implement a better solution.
-			 */
-			
-			var handler = ServiceLocator.Current.GetInstance(handlerType);
-
-			return handler;
-		}
 	}
 }

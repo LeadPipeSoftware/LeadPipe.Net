@@ -56,6 +56,7 @@
     <Compile Include="CommandTests\DebugWriterCommandHandler.cs" />
     <Compile Include="CommandTests\ExplodingTestCommand.cs" />
     <Compile Include="CommandTests\ExplodingTestCommandHandler.cs" />
+    <Compile Include="CommandTests\InversionOfControl.cs" />
     <Compile Include="CommandTests\RequestShould.cs" />
     <Compile Include="CommandTests\SendShould.cs" />
     <Compile Include="CommandTests\TestQuery.cs" />
