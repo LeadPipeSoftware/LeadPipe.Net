@@ -17,49 +17,49 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 	[TestFixture]
 	public class AllShould
 	{
-		#region Public Methods and Operators
+        #region Public Methods and Operators
 
-		/// <summary>
-		/// Tests that All property returns matching objects when using Fetch.
-		/// </summary>
-		[Test]
-		public void ReturnAllMatchingObjectsGivenFetch()
-		{
-			// Arrange
-			Bootstrapper.Start();
-			const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        /// <summary>
+        /// Tests that All property returns matching objects when using Fetch.
+        /// </summary>
+        [Test]
+        public void ReturnAllMatchingObjectsGivenFetch()
+        {
+            // Arrange
+            Bootstrapper.Start();
+            const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-			var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
-			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
-			var testChildA = new TestChildModel("AAA");
-			var testChildB = new TestChildModel("BBB");
-			var testChildC = new TestChildModel("CCC");
-			
-			var testModel = new TestModel(Key);
+            var testChildA = new TestChildModel("AAA");
+            var testChildB = new TestChildModel("BBB");
+            var testChildC = new TestChildModel("CCC");
 
-			testModel.TestChildren.Add(testChildA);
-			testModel.TestChildren.Add(testChildB);
-			testModel.TestChildren.Add(testChildC);
+            var testModel = new TestModel(Key);
 
-			// Act
-			using (unitOfWork.Start())
-			{
-				repository.Create(testModel);
+            testModel.TestChildren.Add(testChildA);
+            testModel.TestChildren.Add(testChildB);
+            testModel.TestChildren.Add(testChildC);
 
-				unitOfWork.Commit();
-			}
+            // Act
+            using (unitOfWork.Start())
+            {
+                repository.Create(testModel);
 
-			// Assert
-			using (unitOfWork.Start())
-			{
-				var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
+                unitOfWork.Commit();
+            }
 
-				Assert.That(foundModel.Count.Equals(1));
-			}
-		}
+            // Assert
+            using (unitOfWork.Start())
+            {
+                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
 
-		#endregion
-	}
+                Assert.That(foundModel.Count.Equals(1));
+            }
+        }
+        #endregion
+
+    }
 }

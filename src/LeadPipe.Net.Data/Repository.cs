@@ -279,9 +279,9 @@ namespace LeadPipe.Net.Data
             if (this.repositoryStrictness.Equals(RepositoryStrictness.Open)) return;
 
             // Otherwise, throw an exception if the generic type isn't an aggregate root...
-            var root = this.RepositoryType as IAggregateRoot;
+	        var isAggregateRoot = typeof (IAggregateRoot).IsAssignableFrom(this.RepositoryType);
 
-            if (root.IsNull())
+            if (!isAggregateRoot)
 	        {
 	            throw new LeadPipeNetDataException(this.RepositoryType.FullName.FormattedWith("Type {0} is not an IAggregateRoot. Please inherit from IAggregateRoot or set the RepositoryStrictness value to RepositoryStrictness.Open to suppress this error."));
 	        }

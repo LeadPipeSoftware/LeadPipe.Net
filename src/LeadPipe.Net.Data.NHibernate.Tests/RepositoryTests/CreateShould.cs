@@ -4,7 +4,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Diagnostics;
+using System.Linq;
+using NHibernate.Linq;
 using NUnit.Framework;
 using StructureMap;
 
@@ -178,6 +181,80 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 			repository.Create(testModel);
 		}
 
-		#endregion
-	}
+        /// <summary>
+        /// Tests that All property returns matching objects when using Fetch.
+        /// </summary>
+        [Test]
+        public void EnforceAggregateRootConstraintWhenUsingStrictMode()
+        {
+            // Arrange
+            Bootstrapper.Start();
+            const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123";
+
+            var repository = Bootstrapper.AmbientContainer.GetInstance<StrictTestModelRepository>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var testModel = new TestModel(Key);
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                Assert.Throws<LeadPipeNetDataException>(() => repository.Create(testModel));
+
+                unitOfWork.Commit();
+            }
+        }
+
+	    [Test]
+	    public void NotThrowWhenAggregateRootConstraintIsMet()
+	    {
+            // Arrange
+            Bootstrapper.Start();
+            const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123";
+
+            var repository = Bootstrapper.AmbientContainer.GetInstance<StrictAggregateRootTestModelRepository>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var testModel = new AggregateRootTestModel(Key);
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                repository.Create(testModel);
+
+                unitOfWork.Commit();
+            }
+        }
+
+        /// <summary>
+        /// Tests that All property returns matching objects when using Fetch.
+        /// </summary>
+        [Test]
+        public void NotEnforceAggregateRootConstraintWhenUsingOpenMode()
+        {
+            // Arrange
+            Bootstrapper.Start();
+            const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123";
+
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var testModel = new TestModel(Key);
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                repository.Create(testModel);
+
+                unitOfWork.Commit();
+            }
+        }
+
+        #endregion
+
+
+    }
 }
