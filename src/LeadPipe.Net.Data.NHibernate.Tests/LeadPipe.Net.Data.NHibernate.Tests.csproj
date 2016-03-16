@@ -93,6 +93,8 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ActiveDataSessionManagerTests\HasActiveDataSessionShould.cs" />
+    <Compile Include="AggregateRootTestModel.cs" />
+    <Compile Include="AggregateRootTestModelMap.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DataSessionProviderTests\CreateShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +103,8 @@
     <Compile Include="RepositoryTests\UpdateShould.cs" />
     <Compile Include="RepositoryTests\CreateShould.cs" />
     <Compile Include="RepositoryTests\AllMatchingSpecificationShould.cs" />
+    <Compile Include="StrictAggregateRootTestModelRepository.cs" />
+    <Compile Include="StrictTestModelRepository.cs" />
     <Compile Include="TestChildMap.cs" />
     <Compile Include="TestChildModel.cs" />
     <Compile Include="TestModel.cs" />
