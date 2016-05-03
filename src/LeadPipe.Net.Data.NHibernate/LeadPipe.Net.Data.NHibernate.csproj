@@ -58,6 +58,7 @@
     <Compile Include="ActiveDataSessionManager.cs" />
     <Compile Include="DataCommandProvider.cs" />
     <Compile Include="DataSessionProvider.cs" />
+    <Compile Include="EnumerationType.cs" />
     <Compile Include="ISessionFactoryBuilder.cs" />
     <Compile Include="UnitOfWorkExtensions.cs" />
     <Compile Include="NHibernateExtensions.cs" />

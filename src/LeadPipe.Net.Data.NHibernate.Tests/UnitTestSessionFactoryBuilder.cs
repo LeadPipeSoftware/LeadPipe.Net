@@ -60,7 +60,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 			this.Configuration = this.Configure();
 			var mapping = this.Map();
 			this.Configuration.AddDeserializedMapping(mapping, MapDocumentName);
-			
+
 			this.sessionFactory = this.Configuration.BuildSessionFactory();
 
 			new SchemaExport(this.Configuration).Create(false, true);
@@ -108,9 +108,10 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
 			mapper.AddMapping<TestChildMap>();
             mapper.AddMapping<AggregateRootTestModelMap>();
 
-			var mapping = mapper.CompileMappingFor(new[] { typeof(TestModel), typeof(TestChildModel), typeof(AggregateRootTestModel) });
+            //var mapping = mapper.CompileMappingFor(new[] { typeof(TestModel), typeof(TestChildModel) });
+            var mapping = mapper.CompileMappingFor(new[] { typeof(TestModel), typeof(TestChildModel), typeof(AggregateRootTestModel) });
 
-			return mapping;
+            return mapping;
 		}
 
 		#endregion

@@ -60,7 +60,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
              */
 
             LeadPipeNHibernateDataConfiguration.RegisterRepository<TestModel>(AmbientContainer, typeof(TestModelRepository));
-            LeadPipeNHibernateDataConfiguration.RegisterRepository<AggregateRootTestModel>(AmbientContainer, typeof (Repository<AggregateRootTestModel>));
+            //LeadPipeNHibernateDataConfiguration.RegisterRepository<AggregateRootTestModel>(AmbientContainer, typeof (Repository<AggregateRootTestModel>));
 
 
             return bootstrapper;
