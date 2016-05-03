@@ -9,4 +9,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("LeadPipe.Net.Validation")]
 [assembly: AssemblyDescription("LeadPipe.Net Validation Library")]
-[assembly: Guid("5d3e743d-x2a1-gh0h-8s9e-ggregf672472")]
+[assembly: Guid("1190ff46-1970-415d-834d-db9bf547db0f")]

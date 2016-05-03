@@ -68,6 +68,7 @@
     <Compile Include="NoWhitespaceAttribute.cs" />
     <Compile Include="NumericAttribute.cs" />
     <Compile Include="PrintableCharacterAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidatableObjectExtensions.cs" />
     <Compile Include="ValidationMessages.Designer.cs" />
     <Compile Include="Validator.cs" />

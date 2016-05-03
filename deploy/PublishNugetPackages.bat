@@ -14,6 +14,10 @@ ECHO [Variables]----------------------------------------------------------------
 ECHO Using NUGET_SOURCE_FOLDER: %NUGET_SOURCE_FOLDER%
 ECHO Using NUGET_PATH: %NUGET_PATH%
 
+ECHO [Safety Check]-------------------------------------------------------------
+
+set /p DUMMY=Did you remember to update the CommonAssemblyInfo file? Hit ENTER if you did...
+
 ECHO [Environment Check]--------------------------------------------------------
 
 IF NOT EXIST %NUGET_PATH% GOTO NugetNotFound

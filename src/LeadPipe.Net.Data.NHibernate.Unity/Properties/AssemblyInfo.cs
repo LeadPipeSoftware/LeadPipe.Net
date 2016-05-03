@@ -9,4 +9,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("LeadPipe.Net.Data.NHibernate.Unity")]
 [assembly: AssemblyDescription("LeadPipe.Net Data NHibernate Unity Libraries")]
-[assembly: Guid("01973e65-94b8-4bd5-be56-983UNITY8d65")]
+[assembly: Guid("d8a588eb-c5fc-43d9-a9f1-8d9902d01371")]

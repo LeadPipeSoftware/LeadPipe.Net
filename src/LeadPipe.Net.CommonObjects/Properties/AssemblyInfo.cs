@@ -7,6 +7,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("LeadPipe.Net.Data.NHibernate.CastleWindsor")]
-[assembly: AssemblyDescription("LeadPipe.Net Data NHibernate Castle Windsor Libraries")]
-[assembly: Guid("7fd3ce9e-d784-44fe-9c2a-b8594540208e")]
+[assembly: AssemblyTitle("LeadPipe.Net.CommonObjects")]
+[assembly: AssemblyDescription("LeadPipe.Net Common Object Library")]
+[assembly: Guid("2214419b-e4fc-4cc1-8695-7903c5a69d19")]
+
