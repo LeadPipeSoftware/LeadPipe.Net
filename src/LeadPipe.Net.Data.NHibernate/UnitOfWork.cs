@@ -251,6 +251,7 @@ namespace LeadPipe.Net.Data.NHibernate
 				return;
 			}
 
+			this.CurrentTransaction.Dispose();
 			this.activeDataSessionManager.ClearActiveDataSession();
 		}
 

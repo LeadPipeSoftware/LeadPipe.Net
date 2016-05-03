@@ -78,7 +78,7 @@ namespace LeadPipe.Net.Data
 		/// <summary>
 		/// Gets the object finder entry point.
 		/// </summary>
-		public IObjectFinder<T> Find
+		public virtual IObjectFinder<T> Find
 		{
 			get
 			{
@@ -204,7 +204,7 @@ namespace LeadPipe.Net.Data
 		/// </summary>
 		/// <param name="id">The id.</param>
 		/// <returns>The matching object.</returns>
-		public T Get(string id)
+		public virtual T Get(string id)
 		{
             EnforceStrictMode();
 
