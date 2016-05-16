@@ -322,10 +322,32 @@ namespace LeadPipe.Net.Tests.GuardTests
 
 			// Act
 			Guard
-                .Will
-                .AssociateExceptionsWith(relationship)
-                .And
-                .ThrowExceptionOfType<InvalidOperationException>()
+				.Will
+				.AssociateExceptionsWith(relationship)
+				.And
+				.ThrowExceptionOfType<InvalidOperationException>()
+				.When(nullString.IsNull());
+
+			// Assert
+		}
+
+		/// <summary>
+		/// Test to make sure that an exception with a relationship and custom message is thrown when an assertion fails.
+		/// </summary>
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "[TEST] Custom message goes here.")]
+		public void ThrowAnInvalidOperationExceptionWithCustomMessageAndRelationshipIdGivenNullObject()
+		{
+			// Arrange
+			string nullString = null;
+			string relationship = "TEST";
+
+			// Act
+			Guard
+				.Will
+				.AssociateExceptionsWith(relationship)
+				.And
+				.ThrowExceptionOfType<InvalidOperationException>("Custom message goes here.")
 				.When(nullString.IsNull());
 
 			// Assert
