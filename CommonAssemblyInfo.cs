@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Lead Pipe Software")]
-[assembly: AssemblyProduct("LeadPipe.Net.CommonObjects")]
+[assembly: AssemblyProduct("LeadPipe.Net")]
 [assembly: AssemblyCopyright("Copyright © Lead Pipe Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -16,4 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyInformationalVersion("2016.05.03.01")]
+[assembly: AssemblyInformationalVersion("2016.05.10.2")]

@@ -25,41 +25,41 @@ namespace LeadPipe.Net.Data
 		/// </summary>
 		private readonly IObjectFinder<T> objectFinder;
 
-	    private readonly RepositoryStrictness repositoryStrictness;
+		private readonly RepositoryStrictness repositoryStrictness;
 
-	    #endregion
+		#endregion
 
 		#region Constructors and Destructors
 
-	    /// <summary>
-	    /// Initializes a new instance of the <see cref="Repository&lt;T&gt;"/> class.
-	    /// </summary>
-	    /// <param name="dataCommandProvider">The data session.</param>
-	    /// <param name="objectFinder">The object finder.</param>
-	    /// <param name="repositoryStrictness">The strictness of the repository.</param>
-	    public Repository(
-            IDataCommandProvider dataCommandProvider,
-            IObjectFinder<T> objectFinder,
-            RepositoryStrictness repositoryStrictness = RepositoryStrictness.Strict)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Repository&lt;T&gt;"/> class.
+		/// </summary>
+		/// <param name="dataCommandProvider">The data session.</param>
+		/// <param name="objectFinder">The object finder.</param>
+		/// <param name="repositoryStrictness">The strictness of the repository.</param>
+		public Repository(
+			IDataCommandProvider dataCommandProvider,
+			IObjectFinder<T> objectFinder,
+			RepositoryStrictness repositoryStrictness = RepositoryStrictness.Strict)
 		{
 			Guard.Will.ThrowException("No unit of work was available.").When(dataCommandProvider == null);
 
 			this.DataCommandProvider = dataCommandProvider;
 			this.objectFinder = objectFinder;
-	        this.repositoryStrictness = repositoryStrictness;
+			this.repositoryStrictness = repositoryStrictness;
 		}
 
 		#endregion
 
 		#region Public Properties
 
-	    /// <summary>
-	    /// Gets the repository strictness.
-	    /// </summary>
-	    public RepositoryStrictness RepositoryStrictness
-	    {
-	        get { return this.repositoryStrictness; }
-	    }
+		/// <summary>
+		/// Gets the repository strictness.
+		/// </summary>
+		public RepositoryStrictness RepositoryStrictness
+		{
+			get { return this.repositoryStrictness; }
+		}
 
 		/// <summary>
 		/// Gets the type of object the repository manages.
@@ -82,9 +82,9 @@ namespace LeadPipe.Net.Data
 		{
 			get
 			{
-                EnforceStrictMode();
+				EnforceStrictMode();
 
-                return this.objectFinder;
+				return this.objectFinder;
 			}
 		}
 
@@ -111,9 +111,9 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => obj);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            this.DataCommandProvider.Create(obj);
+			this.DataCommandProvider.Create(obj);
 		}
 
 		/// <summary>
@@ -124,10 +124,10 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => objects);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            // Create each object...
-            foreach (T entity in objects)
+			// Create each object...
+			foreach (T entity in objects)
 			{
 				this.DataCommandProvider.Create(entity);
 			}
@@ -141,9 +141,9 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => obj);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            this.DataCommandProvider.Delete(obj);
+			this.DataCommandProvider.Delete(obj);
 		}
 
 		/// <summary>
@@ -154,10 +154,10 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => objects);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            // Delete each object...
-            foreach (T entity in objects)
+			// Delete each object...
+			foreach (T entity in objects)
 			{
 				this.DataCommandProvider.Delete(entity);
 			}
@@ -172,8 +172,8 @@ namespace LeadPipe.Net.Data
 		{
 			return this.DataCommandProvider.Load<T>(id);
 
-            EnforceStrictMode();
-        }
+			EnforceStrictMode();
+		}
 
 		/// <summary>
 		/// Loads the object with the specified id or throws an exception.
@@ -182,9 +182,9 @@ namespace LeadPipe.Net.Data
 		/// <returns>The matching object.</returns>
 		public T Load(string id)
 		{
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            return this.DataCommandProvider.Load<T>(id);
+			return this.DataCommandProvider.Load<T>(id);
 		}
 
 		/// <summary>
@@ -194,9 +194,9 @@ namespace LeadPipe.Net.Data
 		/// <returns>The matching object.</returns>
 		public virtual T Get(object id)
 		{
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            return this.DataCommandProvider.Get<T>(id);
+			return this.DataCommandProvider.Get<T>(id);
 		}
 
 		/// <summary>
@@ -206,9 +206,9 @@ namespace LeadPipe.Net.Data
 		/// <returns>The matching object.</returns>
 		public virtual T Get(string id)
 		{
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            return this.DataCommandProvider.Get<T>(id);
+			return this.DataCommandProvider.Get<T>(id);
 		}
 
 		/// <summary>
@@ -219,9 +219,9 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => obj);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            this.DataCommandProvider.Save(obj);
+			this.DataCommandProvider.Save(obj);
 		}
 
 		/// <summary>
@@ -232,10 +232,10 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => objects);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            // Save each object...
-            foreach (T entity in objects)
+			// Save each object...
+			foreach (T entity in objects)
 			{
 				this.DataCommandProvider.Save(entity);
 			}
@@ -249,9 +249,9 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => obj);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            this.DataCommandProvider.Update(obj);
+			this.DataCommandProvider.Update(obj);
 		}
 
 		/// <summary>
@@ -262,10 +262,10 @@ namespace LeadPipe.Net.Data
 		{
 			Guard.Will.ProtectAgainstNullArgument(() => objects);
 
-            EnforceStrictMode();
+			EnforceStrictMode();
 
-            // Update each object...
-            foreach (T entity in objects)
+			// Update each object...
+			foreach (T entity in objects)
 			{
 				this.DataCommandProvider.Update(entity);
 			}
@@ -273,18 +273,18 @@ namespace LeadPipe.Net.Data
 
 		#endregion
 
-	    private void EnforceStrictMode()
-	    {
-            // Do nothing if we're in open mode...
-            if (this.repositoryStrictness.Equals(RepositoryStrictness.Open)) return;
+		private void EnforceStrictMode()
+		{
+			// Do nothing if we're in open mode...
+			if (this.repositoryStrictness.Equals(RepositoryStrictness.Open)) return;
 
-            // Otherwise, throw an exception if the generic type isn't an aggregate root...
-	        var isAggregateRoot = typeof (IAggregateRoot).IsAssignableFrom(this.RepositoryType);
+			// Otherwise, throw an exception if the generic type isn't an aggregate root...
+			var isAggregateRoot = typeof (IAggregateRoot).IsAssignableFrom(this.RepositoryType);
 
-            if (!isAggregateRoot)
-	        {
-	            throw new LeadPipeNetDataException(this.RepositoryType.FullName.FormattedWith("Type {0} is not an IAggregateRoot. Please inherit from IAggregateRoot or set the RepositoryStrictness value to RepositoryStrictness.Open to suppress this error."));
-	        }
-	    }
+			if (!isAggregateRoot)
+			{
+				throw new LeadPipeNetDataException(this.RepositoryType.FullName.FormattedWith("Type {0} is not an IAggregateRoot. Please inherit from IAggregateRoot or set the RepositoryStrictness value to RepositoryStrictness.Open to suppress this error."));
+			}
+		}
 	}
 }
