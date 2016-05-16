@@ -36,6 +36,17 @@ namespace LeadPipe.Net
 		#region Public Properties
 
 		/// <summary>
+		/// Chaining candy.
+		/// </summary>
+		public Guard And
+		{
+			get
+			{
+				return this;
+			}
+		}
+
+		/// <summary>
 		/// Gets the start of the fluent guard chain.
 		/// </summary>
 		public static Guard Will
@@ -50,7 +61,17 @@ namespace LeadPipe.Net
 
 		#region Public Methods
 
-		public Guard RelatedTo(string relationshipId)
+		/// <summary>
+		/// Sets the relationship id.
+		/// </summary>
+		/// <param name="relationshipId">The relationship id.</param>
+		/// <remarks>
+		/// <para>
+		/// Note that this must be called BEFORE any Throw statements if you want the relationship displayed in the message.
+		/// </para>
+		/// </remarks>
+		/// <returns>The Guard with the relationship id set.</returns>
+		public Guard AssociateExceptionsWith(string relationshipId)
 		{
 			this.relationshipId = relationshipId;
 
@@ -65,28 +86,47 @@ namespace LeadPipe.Net
 		{
 			this.actionToInvoke = actionToInvoke;
 
-		    return this;
+			return this;
 		}
 
 		/// <summary>
-		/// Gets an exception.
+		/// Sets up to throw an InvalidOperationException with no message if the assertion fails.
 		/// </summary>
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowException()
 		{
-			this.exception = (InvalidOperationException)Activator.CreateInstance(typeof(InvalidOperationException));
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(string.Empty);
+
+			this.exception = (InvalidOperationException)Activator.CreateInstance(typeof(InvalidOperationException), exceptionMessage);
 
 			return this;
 		}
 
 		/// <summary>
-		/// Gets an exception.
+		/// Sets the message to include in the InvalidOperationException if the assertion fails.
 		/// </summary>
 		/// <param name="message">The exception message.</param>
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowException(string message)
 		{
-			this.exception = (InvalidOperationException)Activator.CreateInstance(typeof(InvalidOperationException), message);
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(message);
+
+			this.exception = (InvalidOperationException)Activator.CreateInstance(typeof(InvalidOperationException), exceptionMessage);
+
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the exception to throw if the assertion fails.
+		/// </summary>
+		/// <remarks>
+		/// <para>Note that the relationship will not included even if it is set when using this call.</para>
+		/// </remarks>
+		/// <param name="exceptionToThrow">The exception to throw.</param>
+		/// <returns>The Guard with an exception set.</returns>
+		public Guard ThrowException(Exception exceptionToThrow)
+		{
+			this.exception = exceptionToThrow;
 
 			return this;
 		}
@@ -109,14 +149,16 @@ namespace LeadPipe.Net
 
 			var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
 
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(message);
+
 			var fieldName = GetFieldName(argument);
 
 			if (fieldName.IsNotNull())
 			{
-				throw new ArgumentNullException(fieldName, message);
+				throw new ArgumentNullException(fieldName, exceptionMessage);
 			}
 
-			throw new ArgumentNullException(message);
+			throw new ArgumentNullException(exceptionMessage);
 		}
 
 		/// <summary>
@@ -134,14 +176,16 @@ namespace LeadPipe.Net
 
 			var message = string.Format("Argument of type '{0}' cannot be the type's default value.", typeof(T));
 
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(message);
+
 			var fieldName = GetFieldName(argument);
 
 			if (fieldName.IsNotNull())
 			{
-				throw new ArgumentOutOfRangeException(fieldName, message);
+				throw new ArgumentOutOfRangeException(fieldName, exceptionMessage);
 			}
 
-			throw new ArgumentOutOfRangeException(message);
+			throw new ArgumentOutOfRangeException(exceptionMessage);
 		}
 
 		/// <summary>
@@ -164,14 +208,16 @@ namespace LeadPipe.Net
 
 			var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
 
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(message);
+
 			var fieldName = GetFieldName(argument);
 
 			if (fieldName.IsNotNull())
 			{
-				throw new ArgumentNullException(fieldName, message);
+				throw new ArgumentNullException(fieldName, exceptionMessage);
 			}
 
-			throw new ArgumentNullException(message);
+			throw new ArgumentNullException(exceptionMessage);
 		}
 
 		/// <summary>
@@ -206,7 +252,9 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowExceptionOfType<TException>() where TException : Exception
 		{
-			this.exception = (TException)Activator.CreateInstance(typeof(TException));
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(String.Empty);
+
+			this.exception = (TException)Activator.CreateInstance(typeof(TException), exceptionMessage);
 
 			return this;
 		}
@@ -219,7 +267,9 @@ namespace LeadPipe.Net
 		/// <returns>The Guard with an exception type set.</returns>
 		public Guard ThrowExceptionOfType<TException>(string message) where TException : Exception
 		{
-			this.exception = (TException)Activator.CreateInstance(typeof(TException), message);
+			var exceptionMessage = this.AddRelationshipIdToExceptionMessage(message);
+
+			this.exception = (TException)Activator.CreateInstance(typeof(TException), exceptionMessage);
 
 			return this;
 		}
@@ -231,23 +281,32 @@ namespace LeadPipe.Net
 		public void When(bool assertion)
 		{
 			// If the assertion is false then bail...
-		    if (!assertion) return;
+			if (!assertion) return;
 
-		    // Invoke the action if there is one...
-		    if (actionToInvoke.IsNotNull())
-		    {
-		        this.actionToInvoke.Invoke();
-		    }
+			// Invoke the action if there is one...
+			if (actionToInvoke.IsNotNull())
+			{
+				this.actionToInvoke.Invoke();
+			}
 
-		    if (this.exception.IsNotNull())
-		    {
-		        throw this.exception;
-		    }
+			if (this.exception.IsNotNull())
+			{
+				throw this.exception;
+			}
 		}
 
 		#endregion
 
 		#region Private Methods
+
+		private string AddRelationshipIdToExceptionMessage(string rootMessage)
+		{
+			if (rootMessage.IsNullOrEmpty() && this.relationshipId.IsNotNullOrEmpty()) return this.relationshipId.FormattedWith("[{0}]");
+
+			return this.relationshipId.IsNotNullOrEmpty()
+				? string.Format("[{0}] {1}", this.relationshipId, rootMessage)
+				: rootMessage;
+		}
 
 		/// <summary>
 		/// Gets the name of the field.

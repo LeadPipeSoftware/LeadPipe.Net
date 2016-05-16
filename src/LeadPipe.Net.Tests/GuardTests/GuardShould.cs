@@ -309,6 +309,28 @@ namespace LeadPipe.Net.Tests.GuardTests
 			// Assert
 		}
 
+		/// <summary>
+		/// Test to make sure that an exception with a relationship is thrown when an assertion fails.
+		/// </summary>
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "[TEST]")]
+		public void ThrowAnInvalidOperationExceptionWithRelationshipIdGivenNullObject()
+		{
+			// Arrange
+			string nullString = null;
+			string relationship = "TEST";
+
+			// Act
+			Guard
+                .Will
+                .AssociateExceptionsWith(relationship)
+                .And
+                .ThrowExceptionOfType<InvalidOperationException>()
+				.When(nullString.IsNull());
+
+			// Assert
+		}
+
 		#endregion
 	}
 }
