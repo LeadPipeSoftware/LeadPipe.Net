@@ -17,9 +17,19 @@ namespace LeadPipe.Net
 		#region Constants and Fields
 
 		/// <summary>
+		/// The action to invoke.
+		/// </summary>
+		private Action actionToInvoke;
+
+		/// <summary>
 		/// The exception to throw.
 		/// </summary>
 		private Exception exception;
+
+		/// <summary>
+		/// Provides a context to help chain together exceptions that may occur in different threads.
+		/// </summary>
+		private string relationshipId;
 
 		#endregion
 
@@ -39,6 +49,24 @@ namespace LeadPipe.Net
 		#endregion
 
 		#region Public Methods
+
+		public Guard RelatedTo(string relationshipId)
+		{
+			this.relationshipId = relationshipId;
+
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the action to invoke when the guard condition is met.
+		/// </summary>
+		/// <param name="actionToInvoke">The action.</param>
+		public Guard Execute(Action actionToInvoke)
+		{
+			this.actionToInvoke = actionToInvoke;
+
+		    return this;
+		}
 
 		/// <summary>
 		/// Gets an exception.
@@ -79,44 +107,44 @@ namespace LeadPipe.Net
 				return;
 			}
 
-            var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
+			var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
 
-		    var fieldName = GetFieldName(argument);
+			var fieldName = GetFieldName(argument);
 
-		    if (fieldName.IsNotNull())
-		    {
-                throw new ArgumentNullException(fieldName, message);
-		    }
+			if (fieldName.IsNotNull())
+			{
+				throw new ArgumentNullException(fieldName, message);
+			}
 
 			throw new ArgumentNullException(message);
 		}
 
-        /// <summary>
-        /// Guards against an argument with a default value.
-        /// </summary>
-        /// <typeparam name="T">The argument type.</typeparam>
-        /// <param name="argument">The argument.</param>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        /// <remarks><code>
-        /// Guard.ProtectAgainstDefaultValueArgument(() =&gt; argument);
-        /// </code></remarks>
-        public void ProtectAgainstDefaultValueArgument<T>(Func<T> argument)
-        {
-            if (!argument().IsDefaultValue()) return;
+		/// <summary>
+		/// Guards against an argument with a default value.
+		/// </summary>
+		/// <typeparam name="T">The argument type.</typeparam>
+		/// <param name="argument">The argument.</param>
+		/// <exception cref="System.ArgumentNullException"></exception>
+		/// <remarks><code>
+		/// Guard.ProtectAgainstDefaultValueArgument(() =&gt; argument);
+		/// </code></remarks>
+		public void ProtectAgainstDefaultValueArgument<T>(Func<T> argument)
+		{
+			if (!argument().IsDefaultValue()) return;
 
-            var message = string.Format("Argument of type '{0}' cannot be the type's default value.", typeof(T));
+			var message = string.Format("Argument of type '{0}' cannot be the type's default value.", typeof(T));
 
-            var fieldName = GetFieldName(argument);
+			var fieldName = GetFieldName(argument);
 
-            if (fieldName.IsNotNull())
-            {
-                throw new ArgumentOutOfRangeException(fieldName, message);
-            }
-            
-            throw new ArgumentOutOfRangeException(message);
-        }        
+			if (fieldName.IsNotNull())
+			{
+				throw new ArgumentOutOfRangeException(fieldName, message);
+			}
 
-	    /// <summary>
+			throw new ArgumentOutOfRangeException(message);
+		}
+
+		/// <summary>
 		/// Guards against a null or empty string argument.
 		/// </summary>
 		/// <typeparam name="T">The argument type.</typeparam>
@@ -134,14 +162,14 @@ namespace LeadPipe.Net
 				return;
 			}
 
-            var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
+			var message = string.Format("Argument of type '{0}' cannot be null.", typeof(T));
 
-	        var fieldName = GetFieldName(argument);
+			var fieldName = GetFieldName(argument);
 
-	        if (fieldName.IsNotNull())
-	        {
-                throw new ArgumentNullException(fieldName, message);
-	        }
+			if (fieldName.IsNotNull())
+			{
+				throw new ArgumentNullException(fieldName, message);
+			}
 
 			throw new ArgumentNullException(message);
 		}
@@ -202,58 +230,66 @@ namespace LeadPipe.Net
 		/// <param name="assertion">if set to <c>true</c> [assertion].</param>
 		public void When(bool assertion)
 		{
-			// If the assertion is true then...
-			if (assertion)
-			{
-				throw this.exception;
-			}
+			// If the assertion is false then bail...
+		    if (!assertion) return;
+
+		    // Invoke the action if there is one...
+		    if (actionToInvoke.IsNotNull())
+		    {
+		        this.actionToInvoke.Invoke();
+		    }
+
+		    if (this.exception.IsNotNull())
+		    {
+		        throw this.exception;
+		    }
 		}
 
 		#endregion
 
-        #region Private Methods
+		#region Private Methods
 
-        /// <summary>
-        /// Gets the name of the field.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="argument">The argument.</param>
-        /// <returns>The field name.</returns>
-        private static string GetFieldName<T>(Func<T> argument)
-        {
-            /*
+		/// <summary>
+		/// Gets the name of the field.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="argument">The argument.</param>
+		/// <returns>The field name.</returns>
+		private static string GetFieldName<T>(Func<T> argument)
+		{
+			/*
 			 * Good information about this technique can be found at http://abdullin.com/journal/2008/12/19/how-to-get-parameter-name-and-argument-value-from-c-lambda-v.html
 			 */
 
-            try
-            {
-                // Get the IL code behind the delegate...
-                var methodBody = argument.Method.GetMethodBody();
+			try
+			{
+				// Get the IL code behind the delegate...
+				var methodBody = argument.Method.GetMethodBody();
 
-                if (methodBody == null) return null;
+				if (methodBody == null) return null;
 
-                var il = methodBody.GetILAsByteArray();
+				var il = methodBody.GetILAsByteArray();
 
-                if (il == null) return null;
+				if (il == null) return null;
 
-                // Get the field handle (bytes 2-6 represent the field handle)...
-                var fieldHandle = BitConverter.ToInt32(il, 2);
+				// Get the field handle (bytes 2-6 represent the field handle)...
+				var fieldHandle = BitConverter.ToInt32(il, 2);
 
-                // Resolve the handle...
-                var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
+				// Resolve the handle...
+				var field = argument.Target.GetType().Module.ResolveField(fieldHandle);
 
-                if (field == null) return null;
+				if (field == null) return null;
 
-                return field.Name;
-            }
-            catch (Exception)
-            {
-                // By design
-            }
+				return field.Name;
+			}
+			catch (Exception)
+			{
+				// By design
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
