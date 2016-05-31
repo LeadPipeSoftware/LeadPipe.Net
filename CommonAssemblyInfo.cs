@@ -16,4 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyInformationalVersion("2016.05.16.1")]
+[assembly: AssemblyInformationalVersion("2016.05.31.1")]

@@ -46,6 +46,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DomainEvents.cs" />
+    <Compile Include="DomainEvent.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IAggregateRoot.cs" />

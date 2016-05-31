@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDomainEvent.cs" company="Lead Pipe Software">
+// <copyright file="DomainEvent.cs" company="Lead Pipe Software">
 //   Copyright (c) Lead Pipe Software All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,12 +11,13 @@ namespace LeadPipe.Net.Domain
 	/// <summary>
 	/// Defines a domain event.
 	/// </summary>
-	public interface IDomainEvent
+	public abstract class DomainEvent : IDomainEventWithId
 	{
-	}
+		public DomainEvent()
+		{
+			DomainEventId = Guid.NewGuid();
+		}
 
-	public interface IDomainEventWithId
-	{
-		Guid DomainEventId { get; }
+		public Guid DomainEventId { get; protected set; }
 	}
 }
