@@ -353,6 +353,28 @@ namespace LeadPipe.Net.Tests.GuardTests
 			// Assert
 		}
 
+		/// <summary>
+		/// Test to make sure that an exception is thrown immediately upon a Now() call.
+		/// </summary>
+		[Test]
+		[ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "[TEST]")]
+		public void ThrowAnInvalidOperationExceptionWithRelationshipIdGivenNullObjectAndNowCalled()
+		{
+			// Arrange
+			string nullString = null;
+			string relationship = "TEST";
+
+			// Act
+			Guard
+				.Will
+				.AssociateExceptionsWith(relationship)
+				.And
+				.ThrowExceptionOfType<InvalidOperationException>()
+				.Now();
+
+			// Assert
+		}
+
 		#endregion
 	}
 }

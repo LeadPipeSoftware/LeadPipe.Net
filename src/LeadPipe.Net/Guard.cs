@@ -274,15 +274,8 @@ namespace LeadPipe.Net
 			return this;
 		}
 
-		/// <summary>
-		/// Conditions the specified assertion.
-		/// </summary>
-		/// <param name="assertion">if set to <c>true</c> [assertion].</param>
-		public void When(bool assertion)
+		public void Now()
 		{
-			// If the assertion is false then bail...
-			if (!assertion) return;
-
 			// Invoke the action if there is one...
 			if (actionToInvoke.IsNotNull())
 			{
@@ -293,6 +286,18 @@ namespace LeadPipe.Net
 			{
 				throw this.exception;
 			}
+		}
+
+		/// <summary>
+		/// Conditions the specified assertion.
+		/// </summary>
+		/// <param name="assertion">if set to <c>true</c> [assertion].</param>
+		public void When(bool assertion)
+		{
+			// If the assertion is false then bail...
+			if (!assertion) return;
+
+			Now();
 		}
 
 		#endregion
