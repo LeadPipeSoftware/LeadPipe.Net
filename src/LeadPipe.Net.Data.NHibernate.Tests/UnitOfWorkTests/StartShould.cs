@@ -1,62 +1,61 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StartShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
 using LeadPipe.Net.Extensions;
 using NHibernate.Linq;
 using NUnit.Framework;
-using StructureMap;
+using System.Linq;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
 {
-	/// <summary>
-	/// The Unit of Work Start method tests.
-	/// </summary>
-	[TestFixture]
-	public class StartShould
-	{
-		#region Public Methods and Operators
-
-		/// <summary>
-		/// Tests that Start starts a Unit of Work.
-		/// </summary>
-		[Test]
-		public void CreateUnitOfWork()
-		{
-			// Arrange
-			Bootstrapper.Start();
-
-			var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-    		// Assert
-			using (unitOfWork.Start())
-			{
-				Assert.That(unitOfWork.IsStarted.IsTrue());
-			}
-		}
-
+    /// <summary>
+    /// The Unit of Work Start method tests.
+    /// </summary>
+    [TestFixture]
+    public class StartShould
+    {
         /// <summary>
-        /// Tests that Start increments the nest level when starting multiple units of work when nesting is enabled.
+        /// Tests that Start starts a Unit of Work.
         /// </summary>
         [Test]
-        public void IncrementNestLevelWhenStartingMultipleUnitsOfWorkGivenNestingEnabled()
+        public void CreateUnitOfWork()
         {
             // Arrange
             Bootstrapper.Start();
 
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            
+
             // Assert
             using (unitOfWork.Start())
             {
-                unitOfWork.Start();
+                Assert.That(unitOfWork.IsStarted.IsTrue());
+            }
+        }
 
-                Assert.That(unitOfWork.NestLevel.Equals(1));
+        /// <summary>
+        /// Tests that Start decrements the nest level when disposing a nested units of work when nesting is enabled.
+        /// </summary>
+        [Test]
+        public void DecrementNestLevelWhenDisposingNestedUnitOfWorkGivenNestingEnabled()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            // Assert
+            using (unitOfWork.Start())
+            {
+                using (unitOfWork.Start())
+                {
+                    Assert.That(unitOfWork.NestLevel.Equals(1));
+                }
+
+                Assert.That(unitOfWork.NestLevel.Equals(0));
             }
         }
 
@@ -104,10 +103,10 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         /// <summary>
-        /// Tests that Start decrements the nest level when disposing a nested units of work when nesting is enabled.
+        /// Tests that Start increments the nest level when starting multiple units of work when nesting is enabled.
         /// </summary>
         [Test]
-        public void DecrementNestLevelWhenDisposingNestedUnitOfWorkGivenNestingEnabled()
+        public void IncrementNestLevelWhenStartingMultipleUnitsOfWorkGivenNestingEnabled()
         {
             // Arrange
             Bootstrapper.Start();
@@ -118,38 +117,11 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             // Assert
             using (unitOfWork.Start())
             {
-                using (unitOfWork.Start())
-                {
-                    Assert.That(unitOfWork.NestLevel.Equals(1));
-                }
+                unitOfWork.Start();
 
-                Assert.That(unitOfWork.NestLevel.Equals(0));
+                Assert.That(unitOfWork.NestLevel.Equals(1));
             }
         }
-
-		#endregion
-
-        #region Private Methods
-
-        /// <summary>
-        /// Parent test method.
-        /// </summary>
-	    private void ParentMethod()
-	    {
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
-
-            // Assert
-            using (unitOfWork.Start())
-            {
-                Guard.Will.ThrowException("Expected nest level 1 but was {0}".FormattedWith(unitOfWork.NestLevel)).When(!unitOfWork.NestLevel.Equals(1));
-
-                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
-
-                this.ChildMethod();
-            }
-	    }
 
         /// <summary>
         /// The child method.
@@ -169,6 +141,24 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Parent test method.
+        /// </summary>
+        private void ParentMethod()
+        {
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+
+            // Assert
+            using (unitOfWork.Start())
+            {
+                Guard.Will.ThrowException("Expected nest level 1 but was {0}".FormattedWith(unitOfWork.NestLevel)).When(!unitOfWork.NestLevel.Equals(1));
+
+                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
+
+                this.ChildMethod();
+            }
+        }
     }
 }

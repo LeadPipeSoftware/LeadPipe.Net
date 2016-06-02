@@ -1,22 +1,21 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IRepository.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace LeadPipe.Net.Domain
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	/// <summary>
-	/// Defines a strongly-typed repository.
-	/// </summary>
-	/// <typeparam name="T">
-	/// The type that the repository serves.
-	/// </typeparam>
-	public interface IRepository<T> : IWithFinder<IObjectFinder<T>>
-		where T : class
-	{
+    /// <summary>
+    /// Defines a strongly-typed repository.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type that the repository serves.
+    /// </typeparam>
+    public interface IRepository<T> : IWithFinder<IObjectFinder<T>>
+        where T : class
+    {
         /*
          * For each type of object that needs global access, create an object that can provide the
          * illusion of an in-memory collection of all objects of that type. Set up access through a
@@ -40,84 +39,80 @@ namespace LeadPipe.Net.Domain
          * disk" and that the pattern is useful beyond CRUD.
          */
 
-		#region Public Methods
+        /// <summary>
+        /// Creates an object in the repository.
+        /// </summary>
+        /// <param name="obj">The object to create.</param>
+        void Create(T obj);
 
-		/// <summary>
-		/// Creates an object in the repository.
-		/// </summary>
-		/// <param name="obj">The object to create.</param>
-		void Create(T obj);
+        /// <summary>
+        /// Creates multiple objects in the repository.
+        /// </summary>
+        /// <param name="objects">The objects to create.</param>
+        void Create(IEnumerable<T> objects);
 
-		/// <summary>
-		/// Creates multiple objects in the repository.
-		/// </summary>
-		/// <param name="objects">The objects to create.</param>
-		void Create(IEnumerable<T> objects);
+        /// <summary>
+        /// Delete an object from the repository.
+        /// </summary>
+        /// <param name="obj">The object to delete.</param>
+        void Delete(T obj);
 
-		/// <summary>
-		/// Delete an object from the repository.
-		/// </summary>
-		/// <param name="obj">The object to delete.</param>
-		void Delete(T obj);
+        /// <summary>
+        /// Delete multiple objects from the repository.
+        /// </summary>
+        /// <param name="objects">The objects to delete.</param>
+        void Delete(IEnumerable<T> objects);
 
-		/// <summary>
-		/// Delete multiple objects from the repository.
-		/// </summary>
-		/// <param name="objects">The objects to delete.</param>
-		void Delete(IEnumerable<T> objects);
+        /// <summary>
+        /// Gets the object with the specified id or returns null.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>The matching object.</returns>
+        T Get(object id);
 
-		/// <summary>
-		/// Loads the object with the specified id or throws an exception.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Load(object id);
+        /// <summary>
+        /// Gets the object with the specified id or returns null.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>The matching object.</returns>
+        T Get(string id);
 
-		/// <summary>
-		/// Loads the object with the specified id or throws an exception.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Load(string id);
+        /// <summary>
+        /// Loads the object with the specified id or throws an exception.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>The matching object.</returns>
+        T Load(object id);
 
-		/// <summary>
-		/// Gets the object with the specified id or returns null.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Get(object id);
+        /// <summary>
+        /// Loads the object with the specified id or throws an exception.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>The matching object.</returns>
+        T Load(string id);
 
-		/// <summary>
-		/// Gets the object with the specified id or returns null.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <returns>The matching object.</returns>
-		T Get(string id);
+        /// <summary>
+        /// Saves an object to the repository.
+        /// </summary>
+        /// <param name="obj">The object to save.</param>
+        void Save(T obj);
 
-		/// <summary>
-		/// Saves an object to the repository.
-		/// </summary>
-		/// <param name="obj">The object to save.</param>
-		void Save(T obj);
+        /// <summary>
+        /// Saves multiple objects to the repository.
+        /// </summary>
+        /// <param name="objects">The objects to save.</param>
+        void Save(IEnumerable<T> objects);
 
-		/// <summary>
-		/// Saves multiple objects to the repository.
-		/// </summary>
-		/// <param name="objects">The objects to save.</param>
-		void Save(IEnumerable<T> objects);
+        /// <summary>
+        /// Updates an object in the repository.
+        /// </summary>
+        /// <param name="obj">The object to update.</param>
+        void Update(T obj);
 
-		/// <summary>
-		/// Updates an object in the repository.
-		/// </summary>
-		/// <param name="obj">The object to update.</param>
-		void Update(T obj);
-
-		/// <summary>
-		/// Updates multiple objects in the repository.
-		/// </summary>
-		/// <param name="objects">The objects to update.</param>
-		void Update(IEnumerable<T> objects);
-
-		#endregion
-	}
+        /// <summary>
+        /// Updates multiple objects in the repository.
+        /// </summary>
+        /// <param name="objects">The objects to update.</param>
+        void Update(IEnumerable<T> objects);
+    }
 }

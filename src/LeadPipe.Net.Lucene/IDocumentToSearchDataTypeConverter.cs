@@ -1,18 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDocumentToSearchDataTypeConverter.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using Lucene.Net.Documents;
 
 namespace LeadPipe.Net.Lucene
 {
-	/// <summary>
-	/// Converts Lucene Document types to SearchData types.
-	/// </summary>
-	public interface IDocumentToSearchDataTypeConverter<TSearchData> where TSearchData : IKeyed, new()
-	{
+    /// <summary>
+    /// Converts Lucene Document types to SearchData types.
+    /// </summary>
+    public interface IDocumentToSearchDataTypeConverter<TSearchData> where TSearchData : IKeyed, new()
+    {
         /// <summary>
         /// Converts the specified document to search data.
         /// </summary>
@@ -21,6 +20,6 @@ namespace LeadPipe.Net.Lucene
         /// <param name="score">The score.</param>
         /// <param name="topScore">The top score.</param>
         /// <returns></returns>
-		TSearchData Convert(int documentId, Document document, float score, float topScore);
-	}
+        TSearchData Convert(int documentId, Document document, float score, float topScore);
+    }
 }

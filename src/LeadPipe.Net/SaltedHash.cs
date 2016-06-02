@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SaltedHash.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -53,8 +52,6 @@ namespace LeadPipe.Net
     /// </remarks>
     public class SaltedHash
     {
-        #region Constants and Fields
-
         /// <summary>
         /// The hash provider.
         /// </summary>
@@ -64,10 +61,6 @@ namespace LeadPipe.Net
         /// The salt length.
         /// </summary>
         private readonly int saltLength;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaltedHash"/> class.
@@ -87,10 +80,6 @@ namespace LeadPipe.Net
             : this(new SHA256Managed(), 32)
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Returns both a hash and a salt for the supplied data.
@@ -187,10 +176,6 @@ namespace LeadPipe.Net
             return this.VerifyHash(dataToVerify, hashToVerify, saltToVerify);
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         /// Computes a salted hash.
         /// </summary>
@@ -211,7 +196,5 @@ namespace LeadPipe.Net
             // Compute hash value of our plain text with appended salt...
             return this.hashProvider.ComputeHash(dataAndSalt);
         }
-
-        #endregion
     }
 }

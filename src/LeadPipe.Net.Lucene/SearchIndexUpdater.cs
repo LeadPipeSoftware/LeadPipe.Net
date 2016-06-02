@@ -1,15 +1,14 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SearchIndexUpdater.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LeadPipe.Net.Lucene
 {
@@ -20,9 +19,8 @@ namespace LeadPipe.Net.Lucene
     /// </summary>
     public class SearchIndexUpdater<TEntity, TSearchData> : ISearchIndexUpdater<TEntity, TSearchData> where TSearchData : IKeyed, new()
     {
-        private readonly ISearchDataToDocumentTypeConverter<TSearchData> searchDataToDocumentTypeConverter;
-
         private readonly IEntityToSearchDataTypeConverter<TEntity, TSearchData> entityToSearchDataTypeConverter;
+        private readonly ISearchDataToDocumentTypeConverter<TSearchData> searchDataToDocumentTypeConverter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndexUpdater{TEntity, TSearchData}"/> class.
@@ -89,6 +87,18 @@ namespace LeadPipe.Net.Lucene
         }
 
         /// <summary>
+        /// Deletes a single entity from the index.
+        /// </summary>
+        /// <param name="searchData">The search data.</param>
+        /// <param name="indexWriter">The index writer.</param>
+        private static void DeleteEntityFromIndex(TSearchData searchData, IndexWriter indexWriter)
+        {
+            var searchQuery = new TermQuery(new Term("Key", searchData.Key));
+
+            indexWriter.DeleteDocuments(searchQuery);
+        }
+
+        /// <summary>
         /// Adds an entity to the index.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -102,18 +112,6 @@ namespace LeadPipe.Net.Lucene
             var document = this.searchDataToDocumentTypeConverter.Convert(searchData);
 
             indexWriter.AddDocument(document);
-        }
-
-        /// <summary>
-        /// Deletes a single entity from the index.
-        /// </summary>
-        /// <param name="searchData">The search data.</param>
-        /// <param name="indexWriter">The index writer.</param>
-        private static void DeleteEntityFromIndex(TSearchData searchData, IndexWriter indexWriter)
-        {
-            var searchQuery = new TermQuery(new Term("Key", searchData.Key));
-
-            indexWriter.DeleteDocuments(searchQuery);
         }
     }
 }

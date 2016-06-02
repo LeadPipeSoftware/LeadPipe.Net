@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfWorkBatchMode.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace LeadPipe.Net.Data
@@ -15,6 +14,7 @@ namespace LeadPipe.Net.Data
         /// Exceptions are thrown if repositories are used with objects that do not inherit from IAggregateRoot.
         /// </summary>
         Strict,
+
         /// <summary>
         /// The repository will accept any kind of object.
         /// </summary>

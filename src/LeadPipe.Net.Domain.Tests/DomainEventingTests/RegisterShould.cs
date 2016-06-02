@@ -1,39 +1,34 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RegisterShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace LeadPipe.Net.Domain.Tests.DomainEventingTests
 {
-	/// <summary>
-	/// The DomainEvents Register method tests.
-	/// </summary>
-	public class RegisterShould
-	{
-		#region Public Methods
+    /// <summary>
+    /// The DomainEvents Register method tests.
+    /// </summary>
+    public class RegisterShould
+    {
+        /// <summary>
+        /// Ensures that registered callback actions are stored in local data.
+        /// </summary>
+        [Test]
+        public void StoreTheCallbackActionInLocalData()
+        {
+            DomainEvents.Clear();
 
-		/// <summary>
-		/// Ensures that registered callback actions are stored in local data.
-		/// </summary>
-		[Test]
-		public void StoreTheCallbackActionInLocalData()
-		{
-			DomainEvents.Clear();
+            DomainEvents.Register<TestDomainEvent>(x => x.NewName = "GOT IT");
 
-			DomainEvents.Register<TestDomainEvent>(x => x.NewName = "GOT IT");
+            var actions = Local.Data[DomainEvents.DomainEventActionsKey] as List<Delegate>;
 
-			var actions = Local.Data[DomainEvents.DomainEventActionsKey] as List<Delegate>;
+            Assert.That(actions != null);
 
-			Assert.That(actions != null);
-
-			Assert.That(actions.Count.Equals(1));
-		}
-
-		#endregion
-	}
+            Assert.That(actions.Count.Equals(1));
+        }
+    }
 }

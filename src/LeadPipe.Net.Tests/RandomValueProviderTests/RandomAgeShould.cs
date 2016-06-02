@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RandomAgeShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -15,8 +14,6 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
     [TestFixture]
     public class RandomAgeShould
     {
-        #region Public Methods
-
         [Test]
         public void ReturnRandomAge()
         {
@@ -28,7 +25,5 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
         {
             Assert.That(RandomValueProvider.RandomAge(AgeGroup.Teen).IsBetween(12, 18));
         }
-
-        #endregion
     }
 }

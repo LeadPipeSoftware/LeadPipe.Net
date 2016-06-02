@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RandomDateShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using NUnit.Framework;
@@ -15,8 +14,6 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
     [TestFixture]
     public class RandomDateShould
     {
-        #region Public Methods
-
         /// <summary>
         /// Runs in a loop to create a bunch of random dates. Fails if an invalid date is created.
         /// </summary>
@@ -32,7 +29,5 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
                     RandomValueProvider.RandomInteger(1600, 1900), RandomValueProvider.RandomInteger(1901, 2100));
             }
         }
-
-        #endregion
     }
 }

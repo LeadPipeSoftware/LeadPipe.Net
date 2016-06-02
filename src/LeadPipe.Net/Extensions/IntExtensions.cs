@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IntExtensions.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -14,64 +13,16 @@ namespace LeadPipe.Net.Extensions
     /// </summary>
     public static class IntExtensions
     {
-        #region Public Methods
-
         /// <summary>
-        /// Determines whether the integer is between two numbers.
+        /// Returns a TimeSpan that represents the integer in days.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <param name="lower">The lower value.</param>
-        /// <param name="upper">The upper value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified lower is between the lower and upper values; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsBetween(this int value, int lower, int upper)
-        {
-            // Return whether the value is between the lower and upper values...
-            return value > lower && value < upper;
-        }
-
-        /// <summary>
-        /// Determines whether the integer is in a range.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="lower">The lower value.</param>
-        /// <param name="upper">The upper value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified lower is in the range; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool InRange(this int value, int lower, int upper)
-        {
-            // Return whether the value is in the range...
-            return value >= lower && value <= upper;
-        }
-
-        /// <summary>
-        /// Determines whether the specified value is an even number.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified value is even; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsEven(this int value)
+        /// <returns>A TimeSpan of the integer in days.</returns>
+        public static TimeSpan Days(this int value)
         {
             //// TODO: [GBM] Write unit tests.
 
-            return (value % 2) == 0;
-        }
-
-        /// <summary>
-        /// Determines whether the specified integer is an odd number.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified value is odd; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsOdd(this int value)
-        {
-            //// TODO: [GBM] Write unit tests.
-
-            return (value % 2) != 0;
+            return TimeSpan.FromDays(value);
         }
 
         /// <summary>
@@ -160,6 +111,76 @@ namespace LeadPipe.Net.Extensions
         }
 
         /// <summary>
+        /// Returns a TimeSpan that represents the integer in hours.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>A TimeSpan of the integer in hours.</returns>
+        public static TimeSpan Hours(this int value)
+        {
+            //// TODO: [GBM] Write unit tests.
+
+            return TimeSpan.FromHours(value);
+        }
+
+        /// <summary>
+        /// Determines whether the integer is in a range.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="lower">The lower value.</param>
+        /// <param name="upper">The upper value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified lower is in the range; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool InRange(this int value, int lower, int upper)
+        {
+            // Return whether the value is in the range...
+            return value >= lower && value <= upper;
+        }
+
+        /// <summary>
+        /// Determines whether the integer is between two numbers.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="lower">The lower value.</param>
+        /// <param name="upper">The upper value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified lower is between the lower and upper values; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsBetween(this int value, int lower, int upper)
+        {
+            // Return whether the value is between the lower and upper values...
+            return value > lower && value < upper;
+        }
+
+        /// <summary>
+        /// Determines whether the specified value is an even number.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is even; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsEven(this int value)
+        {
+            //// TODO: [GBM] Write unit tests.
+
+            return (value % 2) == 0;
+        }
+
+        /// <summary>
+        /// Determines whether the specified integer is an odd number.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is odd; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsOdd(this int value)
+        {
+            //// TODO: [GBM] Write unit tests.
+
+            return (value % 2) != 0;
+        }
+
+        /// <summary>
         /// Returns a TimeSpan that represents the integer in milliseconds.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -181,30 +202,6 @@ namespace LeadPipe.Net.Extensions
             //// TODO: [GBM] Write unit tests.
 
             return TimeSpan.FromMinutes(value);
-        }
-
-        /// <summary>
-        /// Returns a TimeSpan that represents the integer in hours.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>A TimeSpan of the integer in hours.</returns>
-        public static TimeSpan Hours(this int value)
-        {
-            //// TODO: [GBM] Write unit tests.
-
-            return TimeSpan.FromHours(value);
-        }
-
-        /// <summary>
-        /// Returns a TimeSpan that represents the integer in days.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>A TimeSpan of the integer in days.</returns>
-        public static TimeSpan Days(this int value)
-        {
-            //// TODO: [GBM] Write unit tests.
-
-            return TimeSpan.FromDays(value);
         }
 
         /// <summary>
@@ -255,7 +252,5 @@ namespace LeadPipe.Net.Extensions
                 action(a);
             }
         }
-
-        #endregion
     }
 }

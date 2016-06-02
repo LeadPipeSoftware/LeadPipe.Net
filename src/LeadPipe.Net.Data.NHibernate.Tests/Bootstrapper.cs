@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Bootstrapper.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Data.NHibernate.StructureMap;
@@ -9,23 +8,17 @@ using StructureMap;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests
 {
-	/// <summary>
-	/// The bootstrapper.
-	/// </summary>
-	public class Bootstrapper
-	{
-		#region Constructors and Destructors
-
-		/// <summary>
-		/// Prevents a default instance of the <see cref="Bootstrapper"/> class from being created.
-		/// </summary>
-		private Bootstrapper()
-		{
-		}
-
-		#endregion
-
-        #region Public Properties
+    /// <summary>
+    /// The bootstrapper.
+    /// </summary>
+    public class Bootstrapper
+    {
+        /// <summary>
+        /// Prevents a default instance of the <see cref="Bootstrapper"/> class from being created.
+        /// </summary>
+        private Bootstrapper()
+        {
+        }
 
         /// <summary>
         /// Gets or sets the container.
@@ -35,19 +28,15 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
         /// </value>
         public static Container AmbientContainer { get; protected set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
-		/// The start.
-		/// </summary>
-		/// <returns>
-		/// The started bootstrapper.
-		/// </returns>
-		public static Bootstrapper Start()
-		{
-			var bootstrapper = new Bootstrapper();
+        /// The start.
+        /// </summary>
+        /// <returns>
+        /// The started bootstrapper.
+        /// </returns>
+        public static Bootstrapper Start()
+        {
+            var bootstrapper = new Bootstrapper();
 
             AmbientContainer = new Container();
 
@@ -62,10 +51,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
             LeadPipeNHibernateDataConfiguration.RegisterRepository<TestModel>(AmbientContainer, typeof(TestModelRepository));
             //LeadPipeNHibernateDataConfiguration.RegisterRepository<AggregateRootTestModel>(AmbientContainer, typeof (Repository<AggregateRootTestModel>));
 
-
             return bootstrapper;
-		}
-
-		#endregion
-	}
+        }
+    }
 }

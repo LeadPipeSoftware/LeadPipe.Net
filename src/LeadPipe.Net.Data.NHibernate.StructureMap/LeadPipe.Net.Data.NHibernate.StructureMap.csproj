@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="LeadPipeNHibernateDataConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructureMapExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeadPipe.Net.Data.NHibernate\LeadPipe.Net.Data.NHibernate.csproj">

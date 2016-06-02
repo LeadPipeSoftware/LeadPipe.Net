@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RandomFullNameShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -16,18 +15,6 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
     [TestFixture]
     public class RandomFullNameShould
     {
-        #region Public Methods
-
-        [Test]
-        public void ReturnRandomFullName()
-        {
-            var randomValue = RandomValueProvider.RandomFullName();
-
-            Console.WriteLine(randomValue);
-
-            Assert.That(randomValue.IsNotNullOrEmpty());
-        }
-
         [Test]
         public void ReturnRandomFemaleFullName()
         {
@@ -39,9 +26,9 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
         }
 
         [Test]
-        public void ReturnRandomMaleFullName()
+        public void ReturnRandomFullName()
         {
-            var randomValue = RandomValueProvider.RandomFullName(Gender.Male);
+            var randomValue = RandomValueProvider.RandomFullName();
 
             Console.WriteLine(randomValue);
 
@@ -68,6 +55,14 @@ namespace LeadPipe.Net.Tests.RandomValueProviderTests
             Assert.That(randomValue.IsNotNullOrEmpty());
         }
 
-        #endregion
+        [Test]
+        public void ReturnRandomMaleFullName()
+        {
+            var randomValue = RandomValueProvider.RandomFullName(Gender.Male);
+
+            Console.WriteLine(randomValue);
+
+            Assert.That(randomValue.IsNotNullOrEmpty());
+        }
     }
 }

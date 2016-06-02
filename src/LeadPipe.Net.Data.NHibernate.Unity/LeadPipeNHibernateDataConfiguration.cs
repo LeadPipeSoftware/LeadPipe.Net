@@ -1,13 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LeadPipeNHibernateDataConfiguration.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
 using Microsoft.Practices.Unity;
+using System;
 
 namespace LeadPipe.Net.Data.NHibernate.Unity
 {
@@ -16,18 +15,12 @@ namespace LeadPipe.Net.Data.NHibernate.Unity
     /// </summary>
     public class LeadPipeNHibernateDataConfiguration
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Prevents a default instance of the <see cref="LeadPipeNHibernateDataConfiguration"/> class from being created.
         /// </summary>
         private LeadPipeNHibernateDataConfiguration()
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Initializes the configuration.
@@ -57,7 +50,5 @@ namespace LeadPipe.Net.Data.NHibernate.Unity
 
             container.RegisterType(typeof(IRepository<T>), repositoryType);
         }
-
-        #endregion
     }
 }

@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TestModelMap.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using NHibernate.Mapping.ByCode;
@@ -14,8 +13,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
     /// </summary>
     public class TestModelMap : ClassMapping<TestModel>
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TestModelMap"/> class.
         /// </summary>
@@ -41,7 +38,5 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
                 bag.Cascade(Cascade.All);
             }, a => a.OneToMany());
         }
-
-        #endregion
     }
 }

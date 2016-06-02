@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Address.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -51,7 +50,9 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
             this.lastLine = lastLine;
         }
 
-        protected Address() { }
+        protected Address()
+        {
+        }
 
         /// <summary>
         /// The attention line is placed above the Recipient Line, that is, above the name of the

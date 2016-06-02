@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LinqExtensions.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Linq;
@@ -9,120 +8,119 @@ using System.Text;
 
 namespace LeadPipe.Net.Extensions
 {
-	/// <summary>
-	/// The LINQ extension methods.
-	/// </summary>
-	public static class LinqExtensions
-	{
-		#region Public Methods and Operators
+    /// <summary>
+    /// The LINQ extension methods.
+    /// </summary>
+    public static class LinqExtensions
+    {
+        /// <summary>
+        /// Converts LINQ data to a comma separated string including header.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>
+        /// A CSV string representation of the data.
+        /// </returns>
+        public static string ToCommaDelimitedString(this IOrderedQueryable data)
+        {
+            return ToDelimitedString(data, ",");
+        }
 
-		/// <summary>
-		/// Converts LINQ data to a comma separated string including header.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <returns>
-		/// A CSV string representation of the data.
-		/// </returns>
-		public static string ToCommaDelimitedString(this IOrderedQueryable data)
-		{
-			return ToDelimitedString(data, ",");
-		}
+        /// <summary>
+        /// Converts the LINQ data to a delimited string with a header.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="delimiter">The delimiter.</param>
+        /// <returns>
+        /// A CSV string representation of the data.
+        /// </returns>
+        public static string ToDelimitedString(this IOrderedQueryable data, string delimiter)
+        {
+            return ToDelimitedString(data, delimiter, null);
+        }
 
-		/// <summary>
-		/// Converts the LINQ data to a delimited string with a header.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <param name="delimiter">The delimiter.</param>
-		/// <returns>
-		/// A CSV string representation of the data.
-		/// </returns>
-		public static string ToDelimitedString(this IOrderedQueryable data, string delimiter)
-		{
-			return ToDelimitedString(data, delimiter, null);
-		}
+        /// <summary>
+        /// Converts the LINQ data to a delimited string with a header.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="delimiter">The delimiter.</param>
+        /// <param name="nullValue">The null value.</param>
+        /// <returns>
+        /// A CSV string representation of the data.
+        /// </returns>
+        public static string ToDelimitedString(this IOrderedQueryable data, string delimiter, string nullValue)
+        {
+            var delimitedData = new StringBuilder();
 
-		/// <summary>
-		/// Converts the LINQ data to a delimited string with a header.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <param name="delimiter">The delimiter.</param>
-		/// <param name="nullValue">The null value.</param>
-		/// <returns>
-		/// A CSV string representation of the data.
-		/// </returns>
-		public static string ToDelimitedString(this IOrderedQueryable data, string delimiter, string nullValue)
-		{
-			var delimitedData = new StringBuilder();
+            var replaceFrom = delimiter.Trim();
 
-			var replaceFrom = delimiter.Trim();
+            var replaceDelimiter = ";";
 
-			var replaceDelimiter = ";";
+            var headers = data.ElementType.GetProperties();
 
-			var headers = data.ElementType.GetProperties();
+            switch (replaceFrom)
+            {
+                case ";":
+                    replaceDelimiter = ":";
+                    break;
 
-			switch (replaceFrom)
-			{
-				case ";":
-					replaceDelimiter = ":";
-					break;
-				case ",":
-					replaceDelimiter = "¸";
-					break;
-				case "\t":
-					replaceDelimiter = "    ";
-					break;
-				default:
-					break;
-			}
+                case ",":
+                    replaceDelimiter = "¸";
+                    break;
 
-			if (headers.Length > 0)
-			{
-				foreach (var head in headers)
-				{
-					delimitedData.Append(head.Name.Replace("_", " ") + delimiter);
-				}
+                case "\t":
+                    replaceDelimiter = "    ";
+                    break;
 
-				delimitedData.Append("\n");
-			}
+                default:
+                    break;
+            }
 
-			foreach (var row in data)
-			{
-				var fields = row.GetType().GetProperties();
+            if (headers.Length > 0)
+            {
+                foreach (var head in headers)
+                {
+                    delimitedData.Append(head.Name.Replace("_", " ") + delimiter);
+                }
 
-				foreach (var t in fields)
-				{
-					object value = null;
+                delimitedData.Append("\n");
+            }
 
-					try
-					{
-						value = t.GetValue(row, null);
-					}
-					catch
-					{
-					}
+            foreach (var row in data)
+            {
+                var fields = row.GetType().GetProperties();
 
-					if (value.IsNotNull())
-					{
-						delimitedData.Append(
-							value.ToString()
-								.Replace("\r", "\f")
-								.Replace("\n", " \f")
-								.Replace("_", " ")
-								.Replace(replaceFrom, replaceDelimiter) + delimiter);
-					}
-					else
-					{
-						delimitedData.Append(nullValue);
-						delimitedData.Append(delimiter);
-					}
-				}
+                foreach (var t in fields)
+                {
+                    object value = null;
 
-				delimitedData.Append("\n");
-			}
+                    try
+                    {
+                        value = t.GetValue(row, null);
+                    }
+                    catch
+                    {
+                    }
 
-			return delimitedData.ToString();
-		}
+                    if (value.IsNotNull())
+                    {
+                        delimitedData.Append(
+                            value.ToString()
+                                .Replace("\r", "\f")
+                                .Replace("\n", " \f")
+                                .Replace("_", " ")
+                                .Replace(replaceFrom, replaceDelimiter) + delimiter);
+                    }
+                    else
+                    {
+                        delimitedData.Append(nullValue);
+                        delimitedData.Append(delimiter);
+                    }
+                }
 
-		#endregion
-	}
+                delimitedData.Append("\n");
+            }
+
+            return delimitedData.ToString();
+        }
+    }
 }

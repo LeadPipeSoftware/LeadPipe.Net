@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetPermutationsShould.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -18,8 +17,6 @@ namespace LeadPipe.Net.Tests.EnumerableExtensionsTests
     [TestFixture]
     public class GetPermutationsShould
     {
-        #region Public Methods
-
         [Test]
         public void ReturnTheCorrectNumberOfPermutations()
         {
@@ -50,7 +47,5 @@ namespace LeadPipe.Net.Tests.EnumerableExtensionsTests
 
             Assert.That(l.GetPermutationCount().Equals(permutations.Count()));
         }
-
-        #endregion Public Methods
     }
 }

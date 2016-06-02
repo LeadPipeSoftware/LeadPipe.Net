@@ -56,7 +56,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ActiveDataSessionManager.cs" />
-    <Compile Include="WellKnownInstanceType.cs" />
     <Compile Include="DataCommandProvider.cs" />
     <Compile Include="DataSessionProvider.cs" />
     <Compile Include="EnumerationType.cs" />

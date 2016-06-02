@@ -1,41 +1,36 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetValidationResultsAsListShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+using NUnit.Framework;
 using System;
 using System.Linq;
-using NUnit.Framework;
 
 namespace LeadPipe.Net.Validation.Tests.LeadPipeNetInvalidEntityExceptionTests
 {
     /// <summary>
-	/// GetValidationResultsAsList method tests.
-	/// </summary>
-	[TestFixture]
-	public class GetValidationResultsAsListShould
-	{
-		#region Public Methods
+    /// GetValidationResultsAsList method tests.
+    /// </summary>
+    [TestFixture]
+    public class GetValidationResultsAsListShould
+    {
+        /// <summary>
+        /// Test to make sure that validation results are returned as a list.
+        /// </summary>
+        [Test]
+        public void ReturnValidationResults()
+        {
+            // Arrange
+            var entityId = Guid.NewGuid().ToString();
+            var invalidEntity = new ValidatableEntity { NumericProperty = "ABC" };
+            var exception = new LeadPipeNetInvalidEntityException("This is a test.", entityId, invalidEntity.Validate());
 
-		/// <summary>
-		/// Test to make sure that validation results are returned as a list.
-		/// </summary>
-		[Test]
-		public void ReturnValidationResults()
-		{
-			// Arrange
-			var entityId = Guid.NewGuid().ToString();
-			var invalidEntity = new ValidatableEntity { NumericProperty = "ABC" };
-			var exception = new LeadPipeNetInvalidEntityException("This is a test.", entityId, invalidEntity.Validate());
+            // Act
+            var validationResults = exception.GetValidationResultsAsList();
 
-			// Act
-			var validationResults = exception.GetValidationResultsAsList();
-
-			// Assert
-			Assert.IsNotNull(validationResults.FirstOrDefault(x => x.Key.Equals("NumericProperty")));
-		}
-
-		#endregion
-	}
+            // Assert
+            Assert.IsNotNull(validationResults.FirstOrDefault(x => x.Key.Equals("NumericProperty")));
+        }
+    }
 }

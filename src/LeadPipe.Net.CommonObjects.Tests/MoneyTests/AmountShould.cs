@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AmountShould.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.CommonObjects.CommonObjects;
@@ -15,8 +14,6 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
     [TestFixture]
     public class AmountShould
     {
-        #region Public Methods
-
         [TestCase(0.00)]
         [TestCase(0.01)]
         [TestCase(0.001)]
@@ -34,7 +31,5 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
 
             Assert.That(money.Amount.Equals(amount));
         }
-
-        #endregion Public Methods
     }
 }

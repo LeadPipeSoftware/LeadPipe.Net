@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EnumExtensions.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -9,29 +8,29 @@ using System.ComponentModel;
 
 namespace LeadPipe.Net.Extensions
 {
-	/// <summary>
-	/// Extension methods for the Enum type.
-	/// </summary>
-	public static class EnumExtensions
-	{
-		/// <summary>
-		/// Gets the enum description based on the DescriptionAttribute.
-		/// </summary>
-		/// <param name="enumeration">The enumeration.</param>
-		/// <returns>
-		/// The enum description.
-		/// </returns>
-		public static string ToDescription(this Enum enumeration)
-		{
-			var type = enumeration.GetType();
+    /// <summary>
+    /// Extension methods for the Enum type.
+    /// </summary>
+    public static class EnumExtensions
+    {
+        /// <summary>
+        /// Gets the enum description based on the DescriptionAttribute.
+        /// </summary>
+        /// <param name="enumeration">The enumeration.</param>
+        /// <returns>
+        /// The enum description.
+        /// </returns>
+        public static string ToDescription(this Enum enumeration)
+        {
+            var type = enumeration.GetType();
 
-			var memberInfo = type.GetMember(enumeration.ToString());
+            var memberInfo = type.GetMember(enumeration.ToString());
 
-			if (memberInfo.Length <= 0) return enumeration.ToString();
+            if (memberInfo.Length <= 0) return enumeration.ToString();
 
-			var attrs = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-			return attrs.Length > 0 ? ((DescriptionAttribute)attrs[0]).Description : enumeration.ToString();
-		}
-	}
+            return attrs.Length > 0 ? ((DescriptionAttribute)attrs[0]).Description : enumeration.ToString();
+        }
+    }
 }

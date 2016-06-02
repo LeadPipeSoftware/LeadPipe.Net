@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IEncryptable.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace LeadPipe.Net
@@ -12,13 +11,13 @@ namespace LeadPipe.Net
     public interface IEncryptable
     {
         /// <summary>
-        /// Encrypts this instance.
-        /// </summary>
-        void Encrypt();
-
-        /// <summary>
         /// Decrypts this instance.
         /// </summary>
         void Decrypt();
+
+        /// <summary>
+        /// Encrypts this instance.
+        /// </summary>
+        void Encrypt();
     }
 }

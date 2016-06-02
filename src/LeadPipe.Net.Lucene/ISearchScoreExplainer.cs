@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISearchScoreExplainer.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using Lucene.Net.Store;
@@ -9,11 +8,11 @@ using Lucene.Net.Util;
 
 namespace LeadPipe.Net.Lucene
 {
-	/// <summary>
-	/// Explains search scores.
-	/// </summary>
-	public interface ISearchScoreExplainer
-	{
+    /// <summary>
+    /// Explains search scores.
+    /// </summary>
+    public interface ISearchScoreExplainer
+    {
         /// <summary>
         /// Explains the search score.
         /// </summary>
@@ -22,6 +21,6 @@ namespace LeadPipe.Net.Lucene
         /// <param name="input">The input.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-		string Explain(Version luceneVersion, FSDirectory fsDirectory, string input, int resultId);
-	}
+        string Explain(Version luceneVersion, FSDirectory fsDirectory, string input, int resultId);
+    }
 }

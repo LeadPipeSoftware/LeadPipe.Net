@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StringExtensions.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -139,13 +138,13 @@ namespace LeadPipe.Net.Extensions
             }
 
             /*
-			 * Handle cases when length is different.
-			 *
-			 * GIVEN handleLengthDifferences is True
-			 *  WHEN value is 1234
-			 *   AND comparedWith is 123
-			 *  THEN returnCode should be 3
-			 */
+             * Handle cases when length is different.
+             *
+             * GIVEN handleLengthDifferences is True
+             *  WHEN value is 1234
+             *   AND comparedWith is 123
+             *  THEN returnCode should be 3
+             */
             if (handleLengthDifference && value.Length != comparedWith.Length)
             {
                 return shorten.Length;
@@ -314,7 +313,7 @@ namespace LeadPipe.Net.Extensions
         /// <returns>
         /// <c>true</c> if [is not null or empty] [the specified value]; otherwise, <c>false</c>.
         /// </returns>
-	    public static bool IsNotNullOrEmpty(this string value)
+        public static bool IsNotNullOrEmpty(this string value)
         {
             //// TODO: [GBM] Write unit tests.
             return !string.IsNullOrEmpty(value);

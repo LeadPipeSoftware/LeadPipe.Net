@@ -1,112 +1,99 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MaximumAttribute.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+using LeadPipe.Net.Extensions;
 using System;
 using System.ComponentModel.DataAnnotations;
-using LeadPipe.Net.Extensions;
 
 namespace LeadPipe.Net.Validation
 {
     /// <summary>
-	/// A custom data validation attribute that ensures a value is equal to or less than a maximum value.
-	/// </summary>
-	public class MaximumAttribute : LeadPipeValidationAttribute
-	{
-		#region Constants and Fields
+    /// A custom data validation attribute that ensures a value is equal to or less than a maximum value.
+    /// </summary>
+    public class MaximumAttribute : LeadPipeValidationAttribute
+    {
+        /// <summary>
+        /// The maximum.
+        /// </summary>
+        private readonly double maximum;
 
-		/// <summary>
-		/// The maximum.
-		/// </summary>
-		private readonly double maximum;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaximumAttribute"/> class.
+        /// </summary>
+        /// <param name="maximum">The maximum.</param>
+        /// <param name="ignoreIfConverted">if set to <c>true</c> [ignore if converted].</param>
+        public MaximumAttribute(int maximum, bool ignoreIfConverted = false) : base(ignoreIfConverted)
+        {
+            this.maximum = maximum;
+        }
 
-		#endregion
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaximumAttribute"/> class.
+        /// </summary>
+        /// <param name="maximum">The maximum.</param>
+        /// <param name="ignoreIfConverted">if set to <c>true</c> [ignore if converted].</param>
+        public MaximumAttribute(double maximum, bool ignoreIfConverted = false) : base(ignoreIfConverted)
+        {
+            this.maximum = maximum;
+        }
 
-		#region Constructors and Destructors
+        /// <summary>
+        /// Prevents a default instance of the <see cref="MaximumAttribute"/> class from being created.
+        /// </summary>
+        /// <remarks>
+        /// The Maximum attribute does not work without a maximum length value so the default constructor is blocked.
+        /// </remarks>
+        private MaximumAttribute()
+        {
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MaximumAttribute"/> class.
-		/// </summary>
-		/// <param name="maximum">The maximum.</param>
-		/// <param name="ignoreIfConverted">if set to <c>true</c> [ignore if converted].</param>
-		public MaximumAttribute(int maximum, bool ignoreIfConverted = false) : base(ignoreIfConverted)
-		{
-			this.maximum = maximum;
-		}
+        /// <summary>
+        /// Validates the specified value with respect to the current validation attribute.
+        /// </summary>
+        /// <param name="value">
+        /// The value to validate.
+        /// </param>
+        /// <param name="validationContext">
+        /// The context information about the validation operation.
+        /// </param>
+        /// <returns>
+        /// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> class.
+        /// </returns>
+        protected override ValidationResult PerformCustomValidation(object value, ValidationContext validationContext)
+        {
+            if (value.IsNull())
+            {
+                return ValidationResult.Success;
+            }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MaximumAttribute"/> class.
-		/// </summary>
-		/// <param name="maximum">The maximum.</param>
-		/// <param name="ignoreIfConverted">if set to <c>true</c> [ignore if converted].</param>
-		public MaximumAttribute(double maximum, bool ignoreIfConverted = false) : base(ignoreIfConverted)
-		{
-			this.maximum = maximum;
-		}
+            if (validationContext.IsNull())
+            {
+                validationContext = new ValidationContext(value, null, null) { DisplayName = "The value" };
+            }
 
-		/// <summary>
-		/// Prevents a default instance of the <see cref="MaximumAttribute"/> class from being created.
-		/// </summary>
-		/// <remarks>
-		/// The Maximum attribute does not work without a maximum length value so the default constructor is blocked.
-		/// </remarks>
-		private MaximumAttribute()
-		{
-		}
+            var memberNames = new[] { validationContext.MemberName };
 
-		#endregion
+            double valueAsDouble;
 
-		#region Methods
+            var isDouble = double.TryParse(Convert.ToString(value), out valueAsDouble);
 
-		/// <summary>
-		/// Validates the specified value with respect to the current validation attribute.
-		/// </summary>
-		/// <param name="value">
-		/// The value to validate.
-		/// </param>
-		/// <param name="validationContext">
-		/// The context information about the validation operation.
-		/// </param>
-		/// <returns>
-		/// An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/> class.
-		/// </returns>
-		protected override ValidationResult PerformCustomValidation(object value, ValidationContext validationContext)
-		{
-			if (value.IsNull())
-			{
-				return ValidationResult.Success;
-			}
+            if (!isDouble)
+            {
+                this.ErrorMessage = validationContext.DisplayName.FormattedWith(ValidationMessages.ValueMustBeNumeric);
 
-			if (validationContext.IsNull())
-			{
-				validationContext = new ValidationContext(value, null, null) { DisplayName = "The value" };
-			}
+                return new ValidationResult(this.ErrorMessage, memberNames);
+            }
 
-			var memberNames = new[] { validationContext.MemberName };
+            if (valueAsDouble > this.maximum)
+            {
+                this.ErrorMessage = string.Format(ValidationMessages.ValueMustBeLessThanOrEqualTo, validationContext.DisplayName, this.maximum);
 
-			double valueAsDouble;
+                return new ValidationResult(this.ErrorMessage, memberNames);
+            }
 
-			var isDouble = double.TryParse(Convert.ToString(value), out valueAsDouble);
-
-			if (!isDouble)
-			{
-				this.ErrorMessage = validationContext.DisplayName.FormattedWith(ValidationMessages.ValueMustBeNumeric);
-
-				return new ValidationResult(this.ErrorMessage, memberNames);
-			}
-
-			if (valueAsDouble > this.maximum)
-			{
-				this.ErrorMessage = string.Format(ValidationMessages.ValueMustBeLessThanOrEqualTo, validationContext.DisplayName, this.maximum);
-
-				return new ValidationResult(this.ErrorMessage, memberNames);
-			}
-
-			return ValidationResult.Success;
-		}
-
-		#endregion
-	}
+            return ValidationResult.Success;
+        }
+    }
 }

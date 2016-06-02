@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISearchServiceConfiguration.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using Lucene.Net.Index;
@@ -15,6 +14,30 @@ namespace LeadPipe.Net.Lucene
     /// </summary>
     public interface ISearchServiceConfiguration
     {
+        /// <summary>
+        /// Gets the fs directory.
+        /// </summary>
+        /// <value>
+        /// The fs directory.
+        /// </value>
+        FSDirectory FsDirectory { get; }
+
+        /// <summary>
+        /// Gets the hit limit.
+        /// </summary>
+        /// <value>
+        /// The hit limit.
+        /// </value>
+        int HitLimit { get; set; }
+
+        /// <summary>
+        /// Gets the index folder.
+        /// </summary>
+        /// <value>
+        /// The index folder.
+        /// </value>
+        string IndexFolder { get; }
+
         /// <summary>
         /// Gets the lucene version.
         /// </summary>
@@ -32,35 +55,11 @@ namespace LeadPipe.Net.Lucene
         IndexWriter.MaxFieldLength MaxFieldLength { get; }
 
         /// <summary>
-        /// Gets the index folder.
-        /// </summary>
-        /// <value>
-        /// The index folder.
-        /// </value>
-        string IndexFolder { get; }
-
-        /// <summary>
-        /// Gets the fs directory.
-        /// </summary>
-        /// <value>
-        /// The fs directory.
-        /// </value>
-        FSDirectory FsDirectory { get; }
-
-        /// <summary>
         /// Gets the write lock semaphore file name.
         /// </summary>
         /// <value>
         /// The write lock semaphore file name.
         /// </value>
         string WriteLockSemaphoreFileName { get; }
-
-        /// <summary>
-        /// Gets the hit limit.
-        /// </summary>
-        /// <value>
-        /// The hit limit.
-        /// </value>
-        int HitLimit { get; set; }
     }
 }

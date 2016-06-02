@@ -1,81 +1,76 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HasActiveDataSessionShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using NUnit.Framework;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests.ActiveDataSessionManagerTests
 {
-	using ActiveDataSessionManager = NHibernate.ActiveDataSessionManager;
+    using ActiveDataSessionManager = NHibernate.ActiveDataSessionManager;
 
-	/// <summary>
-	/// The ActiveDataSessionManager HasActiveDataSession property tests.
-	/// </summary>
-	[TestFixture]
-	public class HasActiveDataSessionShould
-	{
-		#region Public Methods and Operators
+    /// <summary>
+    /// The ActiveDataSessionManager HasActiveDataSession property tests.
+    /// </summary>
+    [TestFixture]
+    public class HasActiveDataSessionShould
+    {
+        /// <summary>
+        /// Tests that ActiveDataSessionManager returns true when an active session is cleared.
+        /// </summary>
+        [Test]
+        public void ReturnFalseGivenActiveDataSessionCleared()
+        {
+            // Arrange
+            var activeSessionManager = new ActiveDataSessionManager();
+            var unitTestSessionFactoryBuilder = new UnitTestSessionFactoryBuilder();
+            var sessionFactory = unitTestSessionFactoryBuilder.Build();
+            var session = sessionFactory.OpenSession();
+            activeSessionManager.SetActiveDataSession(session);
 
-		/// <summary>
-		/// Tests that ActiveDataSessionManager returns true when there is an active session.
-		/// </summary>
-		[Test]
-		public void ReturnTrueGivenActiveDataSession()
-		{
-			// Arrange
-			var activeSessionManager = new ActiveDataSessionManager();
-			var unitTestSessionFactoryBuilder = new UnitTestSessionFactoryBuilder();
-			var sessionFactory = unitTestSessionFactoryBuilder.Build();
-			var session = sessionFactory.OpenSession();
+            // Act
+            activeSessionManager.ClearActiveDataSession();
 
-			// Act
-			activeSessionManager.SetActiveDataSession(session);
+            // Assert
+            Assert.That(activeSessionManager.HasActiveDataSession == false);
+        }
 
-			// Assert
-			Assert.That(activeSessionManager.HasActiveDataSession);
+        /// <summary>
+        /// Tests that ActiveDataSessionManager returns false when there is no active session.
+        /// </summary>
+        [Test]
+        public void ReturnFalseGivenNoActiveDataSession()
+        {
+            // Arrange
+            var activeDataSessionManager = new ActiveDataSessionManager();
 
-			activeSessionManager.ClearActiveDataSession();
-		}
+            // Act
 
-		/// <summary>
-		/// Tests that ActiveDataSessionManager returns false when there is no active session.
-		/// </summary>
-		[Test]
-		public void ReturnFalseGivenNoActiveDataSession()
-		{
-			// Arrange
-			var activeDataSessionManager = new ActiveDataSessionManager();
+            // Assert
+            Assert.That(activeDataSessionManager.HasActiveDataSession == false);
 
-			// Act
+            activeDataSessionManager.ClearActiveDataSession();
+        }
 
-			// Assert
-			Assert.That(activeDataSessionManager.HasActiveDataSession == false);
+        /// <summary>
+        /// Tests that ActiveDataSessionManager returns true when there is an active session.
+        /// </summary>
+        [Test]
+        public void ReturnTrueGivenActiveDataSession()
+        {
+            // Arrange
+            var activeSessionManager = new ActiveDataSessionManager();
+            var unitTestSessionFactoryBuilder = new UnitTestSessionFactoryBuilder();
+            var sessionFactory = unitTestSessionFactoryBuilder.Build();
+            var session = sessionFactory.OpenSession();
 
-			activeDataSessionManager.ClearActiveDataSession();
-		}
+            // Act
+            activeSessionManager.SetActiveDataSession(session);
 
-		/// <summary>
-		/// Tests that ActiveDataSessionManager returns true when an active session is cleared.
-		/// </summary>
-		[Test]
-		public void ReturnFalseGivenActiveDataSessionCleared()
-		{
-			// Arrange
-			var activeSessionManager = new ActiveDataSessionManager();
-			var unitTestSessionFactoryBuilder = new UnitTestSessionFactoryBuilder();
-			var sessionFactory = unitTestSessionFactoryBuilder.Build();
-			var session = sessionFactory.OpenSession();
-			activeSessionManager.SetActiveDataSession(session);
+            // Assert
+            Assert.That(activeSessionManager.HasActiveDataSession);
 
-			// Act
-			activeSessionManager.ClearActiveDataSession();
-
-			// Assert
-			Assert.That(activeSessionManager.HasActiveDataSession == false);
-		}
-
-		#endregion
-	}
+            activeSessionManager.ClearActiveDataSession();
+        }
+    }
 }

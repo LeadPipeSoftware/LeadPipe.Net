@@ -58,7 +58,6 @@
     <Compile Include="DomainEventingTests\RegisterShould.cs" />
     <Compile Include="DomainEventingTests\TestDomainEvent.cs" />
     <Compile Include="DomainEventingTests\TestEntity.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

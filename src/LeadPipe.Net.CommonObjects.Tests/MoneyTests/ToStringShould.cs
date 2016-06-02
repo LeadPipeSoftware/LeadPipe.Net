@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ToStringShould.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.CommonObjects.CommonObjects;
@@ -15,8 +14,6 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
     [TestFixture]
     public class ToStringShould
     {
-        #region Public Methods
-
         [Test]
         public void ReturnWithoutCurrencySymbol()
         {
@@ -36,7 +33,5 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
 
             Assert.That(moneyAsString.Equals(expected));
         }
-
-        #endregion Public Methods
     }
 }

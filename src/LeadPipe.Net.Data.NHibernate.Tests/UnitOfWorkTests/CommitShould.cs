@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CommitShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -17,30 +16,53 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
     [TestFixture]
     public class CommitShould
     {
-        #region Public Methods and Operators
-
-        [Test]
-        public void InvokeBeforeCommitAction()
+        /// <summary>
+        /// Tests that Commit increments and decrements the nest level appropriately.
+        /// </summary>
+        /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
+        [TestCase(UnitOfWorkBatchMode.Singular)]
+        [TestCase(UnitOfWorkBatchMode.Nested)]
+        public void IncrementAndDecrementNestLevelWhenStartingMultipleUnitsOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode)
         {
             // Arrange
             Bootstrapper.Start();
 
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            unitOfWorkFactory.UnitOfWorkBatchMode = unitOfWorkBatchMode;
 
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
-            var wasCalled = false;
+            const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            // Act
+            var testChildA = new TestChildModel("AAA");
+            var testChildB = new TestChildModel("BBB");
+            var testChildC = new TestChildModel("CCC");
+
+            var testModel = new TestModel(Key);
+
+            testModel.TestChildren.Add(testChildA);
+            testModel.TestChildren.Add(testChildB);
+            testModel.TestChildren.Add(testChildC);
+
             using (unitOfWork.Start())
             {
-                unitOfWork.InvokeBeforeCommit = () => wasCalled = true;
+                repository.Create(testModel);
 
                 unitOfWork.Commit();
             }
 
-            // Assert
-            Assert.That(wasCalled.Equals(true));
+            // Act & Assert
+            using (unitOfWork.Start())
+            {
+                Assert.That(unitOfWork.NestLevel.Equals(0));
+
+                this.ParentMethod();
+
+                Assert.That(unitOfWork.NestLevel.Equals(0));
+
+                unitOfWork.Commit();
+            }
         }
 
         [Test]
@@ -59,6 +81,30 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             using (unitOfWork.Start())
             {
                 unitOfWork.InvokeAfterCommit = () => wasCalled = true;
+
+                unitOfWork.Commit();
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        public void InvokeBeforeCommitAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                unitOfWork.InvokeBeforeCommit = () => wasCalled = true;
 
                 unitOfWork.Commit();
             }
@@ -127,57 +173,25 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         /// <summary>
-        /// Tests that Commit increments and decrements the nest level appropriately.
+        /// The child method.
         /// </summary>
         /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
-        [TestCase(UnitOfWorkBatchMode.Singular)]
-        [TestCase(UnitOfWorkBatchMode.Nested)]
-        public void IncrementAndDecrementNestLevelWhenStartingMultipleUnitsOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode)
+        private void ChildMethod()
         {
-            // Arrange
-            Bootstrapper.Start();
-
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-            unitOfWorkFactory.UnitOfWorkBatchMode = unitOfWorkBatchMode;
-
             var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
             var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
 
-            const string Key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-            var testChildA = new TestChildModel("AAA");
-            var testChildB = new TestChildModel("BBB");
-            var testChildC = new TestChildModel("CCC");
-
-            var testModel = new TestModel(Key);
-
-            testModel.TestChildren.Add(testChildA);
-            testModel.TestChildren.Add(testChildB);
-            testModel.TestChildren.Add(testChildC);
-
+            // Assert
             using (unitOfWork.Start())
             {
-                repository.Create(testModel);
+                Guard.Will.ThrowException("The unit of work did not start!").When(unitOfWork.IsStarted.IsFalse());
 
-                unitOfWork.Commit();
-            }
+                Guard.Will.ThrowException("Expected nest level 2 but was {0}".FormattedWith(unitOfWork.NestLevel)).When(!unitOfWork.NestLevel.Equals(2));
 
-            // Act & Assert
-            using (unitOfWork.Start())
-            {
-                Assert.That(unitOfWork.NestLevel.Equals(0));
-
-                this.ParentMethod();
-
-                Assert.That(unitOfWork.NestLevel.Equals(0));
-
-                unitOfWork.Commit();
+                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
             }
         }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>
         /// Parent test method.
@@ -201,28 +215,5 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
                 this.ChildMethod();
             }
         }
-
-        /// <summary>
-        /// The child method.
-        /// </summary>
-        /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
-        private void ChildMethod()
-        {
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
-
-            // Assert
-            using (unitOfWork.Start())
-            {
-                Guard.Will.ThrowException("The unit of work did not start!").When(unitOfWork.IsStarted.IsFalse());
-
-                Guard.Will.ThrowException("Expected nest level 2 but was {0}".FormattedWith(unitOfWork.NestLevel)).When(!unitOfWork.NestLevel.Equals(2));
-
-                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
-            }
-        }
-
-        #endregion
     }
 }

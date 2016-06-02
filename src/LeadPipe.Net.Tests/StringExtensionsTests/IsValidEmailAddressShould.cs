@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IsValidEmailAddressShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -15,8 +14,6 @@ namespace LeadPipe.Net.Tests.StringExtensionsTests
     [TestFixture]
     public class IsValidEmailAddressShould
     {
-        #region Public Methods
-
         [TestCase(@"NotAnEmail", false)]
         [TestCase(@"@NotAnEmail", false)]
         [TestCase(@"""test\\blah""@example.com", true)]
@@ -49,7 +46,5 @@ namespace LeadPipe.Net.Tests.StringExtensionsTests
 
             Assert.That(result.Equals(expected));
         }
-
-        #endregion
     }
 }

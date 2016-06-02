@@ -1,13 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Role.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+using LeadPipe.Net.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using LeadPipe.Net.Domain;
 
 namespace LeadPipe.Net.Authorization
 {
@@ -19,16 +18,10 @@ namespace LeadPipe.Net.Authorization
     /// </remarks>
     public class Role : PersistableObject<Guid>, IEntity
     {
-        #region Constants and Fields
-
         /// <summary>
         /// The domain id.
         /// </summary>
         private string domainId;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Role" /> class.
@@ -49,10 +42,6 @@ namespace LeadPipe.Net.Authorization
         protected Role()
         {
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets or sets the role's activities.
@@ -111,7 +100,5 @@ namespace LeadPipe.Net.Authorization
         /// </value>
         [Required]
         public virtual string Name { get; set; }
-
-        #endregion
     }
 }
