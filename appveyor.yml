@@ -60,6 +60,10 @@ hosts:
 
 # environment variables
 # environment:
+  # nuget_user:
+  #   secure: UGK+eu2UlqYc9A6yaB6O512+a4nk2MTFZAP6uEag5Ao=
+  # nuget_password:
+  #   secure: MQ0OWFeOoxXY2qHYYAtOKQ==
   # my_var1: value1
   # my_var2: value2
   # this is how to set encrypted variable. Go to "Encrypt data" page in account menu to encrypt data.
@@ -165,7 +169,7 @@ build:
   include_nuget_references: false # add -IncludeReferencedProjects option while packaging NuGet artifacts
 
   # MSBuild verbosity level
-  verbosity: normal # quiet|minimal|normal|detailed
+  verbosity: quiet # quiet|minimal|normal|detailed
 
 # scripts to run before build
 before_build:
@@ -309,13 +313,15 @@ before_build:
   #   artifact: MyPackage.cspkg
 
     # Deploying to NuGet feed
-  # - provider: NuGet
-  #   server: https://my.nuget.server/feed
-  #   api_key:
-  #     secure: FYWX6NfjZIVw==
-  #   skip_symbols: false
-  #   symbol_server: https://your.symbol.server/feed
-  #   artifact: MyPackage.nupkg
+  - provider: NuGet
+    #server: https://my.nuget.server/feed
+    api_key:
+      secure: KOuefOyyNAUkmvK/FX8RkYVk7McFuufUdSJVCh4IQfbVpbkLPvdYjD6d12//wUz+
+    skip_symbols: true
+    #symbol_server: https://your.symbol.server/feed
+    artifact: /.*\.nupkg/
+    on:
+      appveor_repo_tag: true
 
     # Deploy to GitHub Releases
   # - provider: GitHub
