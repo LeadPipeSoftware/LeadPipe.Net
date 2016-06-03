@@ -43,6 +43,7 @@ os: Windows Server 2012
 # scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf input
+  - ps: Update-AppveyorBuild -Version "$(Get-Date -format yyyy.MM.dd).$env:appveyor_build_number"
 
 # clone directory
 clone_folder: C:\Code\LeadPipe.Net
