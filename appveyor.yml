@@ -9,7 +9,7 @@
 #---------------------------------#
 
 # version format
-version: 1.0.{build}
+version: {build}
 
 # you can use {branch} name in version format too
 # version: 1.0.{build}-{branch}
@@ -26,7 +26,7 @@ branches:
     - /dev-*/
 
 # Do not build on tags (GitHub only)
-skip_tags: true
+skip_tags: false
 
 # Skipping commits with particular message or from user
 skip_commits:
@@ -380,8 +380,8 @@ notifications:
     to:
       - greg@leadpipesoftware.com
       # - user2@email.com
-    subject: 'Build {{status}}'                  # optional
-    message: "{{message}}, {{commitId}}, ..."    # optional
+    subject: '{{projectName}} build {{status}}'  # optional
+    #message: "{{message}}, {{commitId}}, ..."    # optional
     on_build_status_changed: true
 
   # HipChat
