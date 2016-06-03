@@ -1,8 +1,8 @@
-#OS junk files
+# OS Junk
 [Tt]humbs.db
 *.DS_Store
 
-#Visual Studio files
+# Visual Studio files
 *.[Oo]bj
 *.user
 *.aps
@@ -30,37 +30,40 @@ obj/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
-
-#Visual Studio Code files
-.vscode/
 .vs/
 
-#MonoDevelop
+# Visual Studio Code files
+.vscode/
+
+# Coverity Scan files
+cov-int/
+
+# MonoDevelop
 *.pidb
 *.userprefs
 
-#Tooling
+# Tooling
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
 .settings/
 
-#Project files
+# Project files
 [Bb]uild/
 
-#Subversion files
+# Subversion files
 .svn
 
 # Office Temp Files
 ~$*
 
-#NuGet
+# NuGet
 packages/
 release/
 
-# ncrunch
+# NCrunch
 *ncrunch*
 *crunch*.local.xml
 
-# visual studio database projects
+# Visual Studio Database Projects
 *.dbmdl
