@@ -19,11 +19,10 @@ branches:
   # whitelist
   only:
     - master
-    - production
-
-  # blacklist
-  except:
-    - /dev-*/
+ 
+  # # blacklist
+  # except:
+  #   - /dev-*/
 
 # Do not build on tags (GitHub only)
 skip_tags: false
@@ -321,8 +320,8 @@ before_build:
     skip_symbols: true
     #symbol_server: https://your.symbol.server/feed
     artifact: /.*\.nupkg/
-    on:
-      appveor_repo_tag: true
+    # on:
+    #   appveor_repo_tag: true
 
     # Deploy to GitHub Releases
   # - provider: GitHub
