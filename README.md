@@ -4,8 +4,9 @@
 
 LeadPipe.Net is an a'la carte toolbox for .NET programmers. The goal is to provide proven, well-tested, and well-documented libraries that programmers can rely on to help make their jobs a little easier. LeadPipe.Net doesn't try to force a particular application style or heavy-handed conventions. Instead, it takes a "take what you want and leave the rest" approach that provides solutions without a mess of tightly coupled dependencies.
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LeadPipeSoftware/LeadPipe.Net/master/LICENSE)
+[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LeadPipeSoftware/LeadPipe.Net/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/LeadPipe.Net.svg?maxAge=2592000)](https://www.nuget.org/packages/LeadPipe.Net/)
+[![Build Status](https://ci.appveyor.com/api/projects/status/4hiafv203dl3910f?svg=true)](https://ci.appveyor.com/project/GregMajor/leadpipe-net)
 [![First Timer Friendly](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](http://www.firsttimersonly.com/)
 
 ## LeadPipe.Net
