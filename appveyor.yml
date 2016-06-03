@@ -218,7 +218,6 @@ test_script:
 # to disable automatic tests 
 #test: off
 
-
 #---------------------------------#
 #      artifacts configuration    #
 #---------------------------------#
@@ -237,7 +236,6 @@ test_script:
 
   # pushing all *.nupkg files in directory
   # - path: out\*.nupkg
-
 
 #---------------------------------#
 #     deployment configuration    #
