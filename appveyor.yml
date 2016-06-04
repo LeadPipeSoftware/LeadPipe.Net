@@ -196,14 +196,9 @@ after_build:
 #---------------------------------#
 
 test:
-  # assemblies:
-  #   - asm1.dll
-  #   - asm2.dll
-
   categories:
     except:
       - RequiresDatabase
-
 # to run tests from different categories as separate jobs in parallel
 #test:
 #  categories:
