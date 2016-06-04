@@ -313,15 +313,15 @@ deploy:
 
     # Deploying to NuGet feed
   - provider: NuGet
-    #server: https://my.nuget.server/feed
-    api_key:
-      secure: KOuefOyyNAUkmvK/FX8RkYVk7McFuufUdSJVCh4IQfbVpbkLPvdYjD6d12//wUz+
-    skip_symbols: true
-    #symbol_server: https://your.symbol.server/feed
-    artifact: /.*\.nupkg/
-    on:
-      branch: master
-      #appveor_repo_tag: true
+      #server: https://my.nuget.server/feed
+      api_key:
+        secure: KOuefOyyNAUkmvK/FX8RkYVk7McFuufUdSJVCh4IQfbVpbkLPvdYjD6d12//wUz+
+      skip_symbols: true
+      #symbol_server: https://your.symbol.server/feed
+      artifact: /.*\.nupkg/
+      on:
+        branch: master
+        #appveor_repo_tag: true
 
     # Deploy to GitHub Releases
   # - provider: GitHub
