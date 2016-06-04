@@ -44,7 +44,6 @@ os: Windows Server 2012
 init:
   - git config --global core.autocrlf input
   - ps: Update-AppveyorBuild -Version "$(Get-Date -format yyyy.MM.dd).$env:appveyor_build_number"
-  - ps: (Get-Content CommonAssemblyInfo.cs).replace('1.0.*', "$(Get-Date -format yyyy.MM.dd).$env:appveyor_build_number") | Set-Content CommonAssemblyInfo.cs
 
 # clone directory
 clone_folder: C:\Code\LeadPipe.Net
@@ -116,7 +115,8 @@ cache:
   # - msmq                # start Queuing services
 
 # scripts that run after cloning repository
-# install:
+install:
+  - ps: (Get-Content CommonAssemblyInfo.cs).replace('1.0.*', "$(Get-Date -format yyyy.MM.dd).$env:appveyor_build_number") | Set-Content CommonAssemblyInfo.cs
   # by default, all script lines are interpreted as batch
   # - echo This is batch
   # to run script as a PowerShell command prepend it with ps:
