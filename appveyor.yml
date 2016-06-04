@@ -116,6 +116,7 @@ cache:
 
 # scripts that run after cloning repository
 install:
+  # Update the CommonAssemblyInfo file with the right version infomation...
   - ps: (Get-Content CommonAssemblyInfo.cs).replace('1.0.*', "$(Get-Date -format yyyy.MM.dd).$env:appveyor_build_number") | Set-Content CommonAssemblyInfo.cs
   # by default, all script lines are interpreted as batch
   # - echo This is batch

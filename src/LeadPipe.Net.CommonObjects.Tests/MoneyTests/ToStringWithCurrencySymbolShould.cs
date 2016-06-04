@@ -36,7 +36,7 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
 
                 var moneyAsString = money.ToStringWithCurrencySymbol();
 
-                Console.WriteLine(moneyAsString);
+                //Console.WriteLine(moneyAsString);
 
                 // Assert
 
@@ -73,7 +73,7 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
 
                 var moneyAsString = money.ToStringWithCurrencySymbol();
 
-                Console.WriteLine($"Culture Name: {cultureInfo.Name}\t\tCurrency Symbol: {currencySymbol}\t\tToString: {moneyAsString}");
+                //Console.WriteLine($"Culture Name: {cultureInfo.Name}\t\tCurrency Symbol: {currencySymbol}\t\tToString: {moneyAsString}");
 
                 // Assert
 

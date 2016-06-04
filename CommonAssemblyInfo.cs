@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Lead Pipe Software")]
 [assembly: AssemblyProduct("LeadPipe.Net")]
-[assembly: AssemblyCopyright("Copyright � Lead Pipe Software")]
+[assembly: AssemblyCopyright("Copyright (C) Lead Pipe Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

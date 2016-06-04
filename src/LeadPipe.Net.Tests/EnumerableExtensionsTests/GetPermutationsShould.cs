@@ -24,13 +24,13 @@ namespace LeadPipe.Net.Tests.EnumerableExtensionsTests
 
             var l = new List<int> { 1, 2, 3, 4 };
 
-            Console.WriteLine(l.GetPermutationCount().ToString().FormattedWith("There should be {0} permutations."));
+            //Console.WriteLine(l.GetPermutationCount().ToString().FormattedWith("There should be {0} permutations."));
 
             // Act
 
             var permutations = l.GetPermutations();
 
-            Console.WriteLine(permutations.Count().ToString().FormattedWith("There are {0} permutations."));
+            //Console.WriteLine(permutations.Count().ToString().FormattedWith("There are {0} permutations."));
 
             foreach (var item in permutations)
             {
@@ -40,7 +40,7 @@ namespace LeadPipe.Net.Tests.EnumerableExtensionsTests
                     Console.Write(" ");
                 }
 
-                Console.WriteLine();
+                //Console.WriteLine();
             }
 
             // Assert

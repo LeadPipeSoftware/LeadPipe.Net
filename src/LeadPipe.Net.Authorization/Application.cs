@@ -156,6 +156,15 @@ namespace LeadPipe.Net.Authorization
         }
 
         /// <summary>
+        /// The domain id.
+        /// </summary>
+        public string DomainId
+        {
+            get { return domainId; }
+            set { domainId = value; }
+        }
+
+        /// <summary>
         /// Adds the administrator.
         /// </summary>
         /// <param name="user">The user.</param>
