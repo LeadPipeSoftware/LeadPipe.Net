@@ -63,6 +63,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// Tests that Start increments and decrements the nest level when starting multiple units of work across methods when nesting is enabled.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void IncrementAndDecrementNestLevelWhenStartingMultipleUnitsOfWorkAcrossMethodsGivenNestingEnabled()
         {
             // Arrange

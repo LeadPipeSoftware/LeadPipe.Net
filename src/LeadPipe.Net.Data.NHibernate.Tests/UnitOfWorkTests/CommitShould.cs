@@ -22,6 +22,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
         [TestCase(UnitOfWorkBatchMode.Singular)]
         [TestCase(UnitOfWorkBatchMode.Nested)]
+        [Category("RequiresDatabase")]
         public void IncrementAndDecrementNestLevelWhenStartingMultipleUnitsOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode)
         {
             // Arrange
