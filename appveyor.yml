@@ -19,6 +19,7 @@ branches:
   # whitelist
   only:
     - master
+    - development
  
   # # blacklist
   # except:
@@ -322,8 +323,9 @@ after_build:
     skip_symbols: true
     #symbol_server: https://your.symbol.server/feed
     artifact: /.*\.nupkg/
-    # on:
-    #   appveor_repo_tag: true
+    on:
+      branch: master
+      #appveor_repo_tag: true
 
     # Deploy to GitHub Releases
   # - provider: GitHub
