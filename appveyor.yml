@@ -226,7 +226,7 @@ test:
 #---------------------------------#
 
 artifacts:
-  - path: '**\*.nupkg'
+  - path: '**\LeadPipe.Net.*.nupkg'
   # pushing a single file
   # - path: test.zip
 
