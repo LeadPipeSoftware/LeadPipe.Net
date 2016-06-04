@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("Lead Pipe Software")]
 [assembly: AssemblyProduct("LeadPipe.Net")]
-[assembly: AssemblyCopyright("Copyright © Lead Pipe Software")]
+[assembly: AssemblyCopyright("Copyright ï¿½ Lead Pipe Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyInformationalVersion("2016.05.31.1")]
+[assembly: AssemblyInformationalVersion("1.0.*")]
