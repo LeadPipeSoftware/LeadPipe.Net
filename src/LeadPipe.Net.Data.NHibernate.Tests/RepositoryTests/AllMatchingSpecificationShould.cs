@@ -18,6 +18,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that AllMatchingSpecification does not return objects that do not match.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void NotReturnNonMatchingObjects()
         {
             // Arrange
@@ -54,6 +55,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that AllMatchingSpecification returns all matching objects.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjects()
         {
             // Arrange
@@ -90,6 +92,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that AllMatchingSpecification returns all matching objects given an AndSpecification.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjectsGivenAndSpecification()
         {
             // Arrange
@@ -126,6 +129,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that AllMatchingSpecification returns all matching objects given a NotSpecification.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjectsGivenNotSpecification()
         {
             // Arrange
@@ -162,6 +166,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that AllMatchingSpecification returns all matching objects given an OrSpecification.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjectsGivenOrSpecification()
         {
             // Arrange
@@ -198,6 +203,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that AllMatchingSpecification returns an empty enumeration when no matching objects are found.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnsEmptyEnumerationGivenNoMatchingObjects()
         {
             // Arrange

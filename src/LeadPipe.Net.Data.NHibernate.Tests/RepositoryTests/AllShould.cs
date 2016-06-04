@@ -19,6 +19,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that All property returns matching objects when using Fetch.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjectsGivenFetch()
         {
             // Arrange

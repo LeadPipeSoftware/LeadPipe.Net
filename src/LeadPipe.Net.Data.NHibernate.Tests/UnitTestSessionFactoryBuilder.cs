@@ -93,7 +93,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests
             mapper.AddMapping<TestChildMap>();
             mapper.AddMapping<AggregateRootTestModelMap>();
 
-            //var mapping = mapper.CompileMappingFor(new[] { typeof(TestModel), typeof(TestChildModel) });
             var mapping = mapper.CompileMappingFor(new[] { typeof(TestModel), typeof(TestChildModel), typeof(AggregateRootTestModel) });
 
             return mapping;

@@ -68,6 +68,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that Create does persist an object if the unit of work is not committed.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void NotPersistGivenUnitOfWorkNotCommitted()
         {
             // Arrange
@@ -101,6 +102,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that Create does persist an object if the unit of work is rolled back.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void NotPersistGivenUnitOfWorkRolledBack()
         {
             // Arrange
@@ -156,7 +158,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that Create persists an object.
         /// </summary>
         [Test]
-        [Ignore("This test will occasionally fail due to what seems to be a race condition")]
+        [Category("RequiresDatabase")]
         public void PersistNewObject()
         {
             // Arrange
@@ -190,6 +192,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that Create persists an object with a lazy reference to another mapped object.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void PersistNewObjectWithLazyReference()
         {
             // Arrange

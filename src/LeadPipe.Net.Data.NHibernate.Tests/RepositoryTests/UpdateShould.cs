@@ -18,6 +18,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that Update updates a list of existing objects.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void UpdateAListOfExistingObjects()
         {
             // Arrange

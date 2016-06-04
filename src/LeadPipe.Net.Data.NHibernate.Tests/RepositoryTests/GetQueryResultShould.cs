@@ -18,6 +18,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that all matching objects are returned.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjects()
         {
             // Arrange
