@@ -175,9 +175,9 @@ namespace LeadPipe.Net.Data
         /// <returns>The matching object.</returns>
         public virtual T Load(object id)
         {
-            return this.DataCommandProvider.Load<T>(id);
-
             EnforceStrictMode();
+
+            return this.DataCommandProvider.Load<T>(id);
         }
 
         /// <summary>
