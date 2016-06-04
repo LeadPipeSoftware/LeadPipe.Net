@@ -18,6 +18,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that All property returns matching objects when using Fetch.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void EnforceAggregateRootConstraintWhenUsingStrictMode()
         {
             // Arrange
@@ -43,6 +44,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that All property returns matching objects when using Fetch.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void NotEnforceAggregateRootConstraintWhenUsingOpenMode()
         {
             // Arrange
@@ -133,6 +135,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         [Test]
+        [Category("RequiresDatabase")]
         public void NotThrowWhenAggregateRootConstraintIsMet()
         {
             // Arrange
@@ -236,6 +239,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// </summary>
         [Test]
         [ExpectedException(typeof(LeadPipeNetDataException), ExpectedMessage = "There is no NHibernate session. Did you start a Unit of Work?")]
+        [Category("RequiresDatabase")]
         public void ThrowExceptionGivenNoUnitOfWork()
         {
             // Arrange

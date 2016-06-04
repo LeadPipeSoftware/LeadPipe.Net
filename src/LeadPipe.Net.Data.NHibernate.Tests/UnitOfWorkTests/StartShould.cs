@@ -20,6 +20,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// Tests that Start starts a Unit of Work.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void CreateUnitOfWork()
         {
             // Arrange
@@ -39,6 +40,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// Tests that Start decrements the nest level when disposing a nested units of work when nesting is enabled.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void DecrementNestLevelWhenDisposingNestedUnitOfWorkGivenNestingEnabled()
         {
             // Arrange
@@ -107,6 +109,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         /// Tests that Start increments the nest level when starting multiple units of work when nesting is enabled.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void IncrementNestLevelWhenStartingMultipleUnitsOfWorkGivenNestingEnabled()
         {
             // Arrange

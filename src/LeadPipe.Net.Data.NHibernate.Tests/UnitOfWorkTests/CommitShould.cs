@@ -67,6 +67,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         [Test]
+        [Category("RequiresDatabase")]
         public void InvokeAfterCommitAction()
         {
             // Arrange
@@ -91,6 +92,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         [Test]
+        [Category("RequiresDatabase")]
         public void InvokeBeforeCommitAction()
         {
             // Arrange
@@ -115,6 +117,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         [Test]
+        [Category("RequiresDatabase")]
         public void InvokeOnCommitExceptionAction()
         {
             // Arrange
@@ -150,6 +153,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
         }
 
         [Test]
+        [Category("RequiresDatabase")]
         public void InvokeOnRollbackAction()
         {
             // Arrange
