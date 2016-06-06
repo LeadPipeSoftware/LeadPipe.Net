@@ -62,11 +62,10 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
         /// Tests to make sure that an exception is thrown when trying to remove a state that is in use.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(StateInUseException))]
         public void ThrowExceptionGivenStateInUse()
         {
             // Act
-            this.machine.RemoveState(this.openState);
+            Assert.Throws<StateInUseException>(() => this.machine.RemoveState(this.openState));
         }
 
         /// <summary>

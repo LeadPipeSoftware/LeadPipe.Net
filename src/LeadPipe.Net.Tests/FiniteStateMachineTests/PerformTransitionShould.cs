@@ -110,7 +110,6 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
         /// Tests to make sure that the current state does not change if the transition says it can't transition via delegate.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ApplicationException))]
         public void NotChangeStateGivenTransitionCanTransitionDelegateReturnsFalse()
         {
             // Arrange
@@ -126,18 +125,14 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
 
             this.openState.RegisterTransition(this.closeTransition);
 
-            // Act
-            this.machine.PerformTransition(this.closeTransition);
-
-            // Assert
-            Assert.IsTrue(this.machine.CurrentState.Name.Equals("Open"));
+            // Act & Assert
+            Assert.Throws<ApplicationException>(() => this.machine.PerformTransition(this.closeTransition));
         }
 
         /// <summary>
         /// Tests to make sure that the current state does not change if the transition says it can't transition.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ApplicationException))]
         public void NotChangeStateGivenTransitionCanTransitionReturnsFalse()
         {
             // Arrange
@@ -152,29 +147,24 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
             this.openState.RegisterTransition(mock.Object);
 
             // Act
-            this.machine.PerformTransition(mock.Object);
-
-            // Assert
-            Assert.IsTrue(this.machine.CurrentState.Name.Equals("Open"));
+            Assert.Throws<ApplicationException>(() => this.machine.PerformTransition(mock.Object));
         }
 
         /// <summary>
         /// Tests to make sure that an exception is thrown when the transition is null.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         [Ignore("Currently broken due to the generic implementation.")]
         public void ThrowExceptionGivenNullTransition()
         {
             // Act
-            this.machine.PerformTransition((FiniteStateTransition)null);
+            Assert.Throws<ArgumentNullException>(() => this.machine.PerformTransition((FiniteStateTransition)null));
         }
 
         /// <summary>
         /// Tests to make sure that an exception is thrown when the transition returns a state that isn't registered.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(StateNotRegisteredException))]
         public void ThrowExceptionGivenTransitionReturnsUnregisteredState()
         {
             // Arrange
@@ -192,18 +182,17 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
             this.openState.RegisterTransition(this.closeTransition);
 
             // Act
-            this.machine.PerformTransition(this.closeTransition);
+            Assert.Throws<StateNotRegisteredException>(() => this.machine.PerformTransition(this.closeTransition));
         }
 
         /// <summary>
         /// Tests to make sure that an exception is thrown when the transition is not available.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(TransitionNotAvailableException))]
         public void ThrowExceptionGivenUnavailableTransition()
         {
             // Act
-            this.machine.PerformTransition(this.openTransition);
+            Assert.Throws<TransitionNotAvailableException>(() => this.machine.PerformTransition(this.openTransition));
         }
 
         /// <summary>
