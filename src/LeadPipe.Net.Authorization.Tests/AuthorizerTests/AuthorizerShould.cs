@@ -62,7 +62,6 @@ namespace LeadPipe.Net.Authorization.Tests.AuthorizerTests
         /// Tests to ensure that the authorizer will throw an exception if the user is not authorized.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(LeadPipeNetAccessDeniedException))]
         public void ThrowExceptionGivenUserIsNotAuthorized()
         {
             // Arrange
@@ -74,18 +73,14 @@ namespace LeadPipe.Net.Authorization.Tests.AuthorizerTests
             var application = new Application("FakeApplication");
             var activity = new Activity("FakeActivity", application);
 
-            // Act
-            var result = authorizer.Will.ThrowAccessDeniedException().When.User(user).Can.Not.ExecuteAnyOfTheseActivities(new[] { activity }).In(application);
-
-            // Assert
-            Assert.IsTrue(result);
+            // Act & Assert
+            Assert.Throws<LeadPipeNetAccessDeniedException>(() => authorizer.Will.ThrowAccessDeniedException().When.User(user).Can.Not.ExecuteAnyOfTheseActivities(new[] { activity }).In(application));
         }
 
         /// <summary>
         /// Tests to ensure that the authorizer will throw an exception if the user is not authorized for three or more activities.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(LeadPipeNetAccessDeniedException))]
         public void ThrowExceptionGivenUserIsNotAuthorizedForThreeOrMoreActivities()
         {
             // Arrange
@@ -99,18 +94,14 @@ namespace LeadPipe.Net.Authorization.Tests.AuthorizerTests
             var activity2 = new Activity("FakeActivity2", application);
             var activity3 = new Activity("FakeActivity3", application);
 
-            // Act
-            var result = authorizer.Will.ThrowAccessDeniedException().When.User(user).Can.Not.ExecuteAnyOfTheseActivities(new[] { activity1, activity2, activity3 }).In(application);
-
-            // Assert
-            Assert.IsTrue(result);
+            // Act & Assert
+            Assert.Throws<LeadPipeNetAccessDeniedException>(() => authorizer.Will.ThrowAccessDeniedException().When.User(user).Can.Not.ExecuteAnyOfTheseActivities(new[] { activity1, activity2, activity3 }).In(application));
         }
 
         /// <summary>
         /// Tests to ensure that the authorizer will throw an exception if the user is not authorized for two activities.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(LeadPipeNetAccessDeniedException))]
         public void ThrowExceptionGivenUserIsNotAuthorizedForTwoActivities()
         {
             // Arrange
@@ -124,10 +115,7 @@ namespace LeadPipe.Net.Authorization.Tests.AuthorizerTests
             var activity2 = new Activity("FakeActivity2", application);
 
             // Act
-            var result = authorizer.Will.ThrowAccessDeniedException().When.User(user).Can.Not.ExecuteAnyOfTheseActivities(new[] { activity1, activity2 }).In(application);
-
-            // Assert
-            Assert.IsTrue(result);
+            Assert.Throws<LeadPipeNetAccessDeniedException>(() => authorizer.Will.ThrowAccessDeniedException().When.User(user).Can.Not.ExecuteAnyOfTheseActivities(new[] { activity1, activity2 }).In(application));
         }
 
         /////// <summary>
