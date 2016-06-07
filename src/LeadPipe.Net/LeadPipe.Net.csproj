@@ -52,6 +52,7 @@
     <Compile Include="Commands\CommandExecutionStatus.cs" />
     <Compile Include="Commands\CommandExecutionStatusChangedEventArgs.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
+    <Compile Include="Commands\CommandHandlerNotFoundException.cs" />
     <Compile Include="Commands\CommandHandlerResponse.cs" />
     <Compile Include="Commands\CommandMediator.cs" />
     <Compile Include="Commands\ICommand.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Commands\ICommandMediator.cs" />
     <Compile Include="Commands\IQuery.cs" />
     <Compile Include="Commands\IQueryHandler.cs" />
+    <Compile Include="Commands\ISupportValidation.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\ConfigurationSetting.cs" />
     <Compile Include="Configuration\ContextAwareApplicationSettingService.cs" />
