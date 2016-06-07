@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LeadPipe.Net.Slack</id>
+    <version>$version$</version>
+    <title>LeadPipe.Net.Slack</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>http://github.com/LeadPipeSoftware/LeadPipe.Net/tree/master/src/LeadPipe.Net.Slack</projectUrl>
+    <iconUrl>http://www.leadpipesoftware.com/assets/img/LeadPipeSoftwareLogoColor_32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>LeadPipe.Net.Slack provides a fluent interface to make sending Slack messages quick and easy.</summary>
+    <description>
+      LeadPipe.Net.Slack provides a fluent interface to make sending Slack messages quick and easy.
+      
+      LeadPipe.Net is an open source collection of useful tools for .NET development. Read more about the LeadPipe.Net library at http://github.com/LeadPipeSoftware/LeadPipe.Net
+    </description>
+    <copyright>Copyright © Lead Pipe Software - All rights reserved.</copyright>
+    <tags>Lead Pipe notification slack slack.com</tags>
+    <dependencies>
+      <dependency id="LeadPipe.Net" />
+    </dependencies>
+  </metadata>
+</package>
