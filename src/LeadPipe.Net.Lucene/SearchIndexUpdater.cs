@@ -101,8 +101,6 @@ namespace LeadPipe.Net.Lucene
         /// <summary>
         /// Adds an entity to the index.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id">The identifier.</param>
         /// <param name="searchData">The search data.</param>
         /// <param name="indexWriter">The index writer.</param>
         private void AddEntityToIndex(TSearchData searchData, IndexWriter indexWriter)

@@ -126,7 +126,7 @@ namespace LeadPipe.Net.FiniteStateMachine
         /// Gets or sets the transition code.
         /// </summary>
         /// <value>The code.</value>
-        public virtual int Code { get; set; }
+        public virtual int Code { get; }
 
         /// <summary>
         /// Gets or sets the end state.
@@ -266,6 +266,20 @@ namespace LeadPipe.Net.FiniteStateMachine
         }
 
         /// <summary>
+        /// Inidcates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="obj">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+
+            if (ReferenceEquals(this, obj)) return true;
+
+            return obj.GetType() == this.GetType() && Equals((FiniteStateTransition)obj);
+        }
+
+        /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
@@ -273,6 +287,15 @@ namespace LeadPipe.Net.FiniteStateMachine
         public bool Equals(FiniteStateTransition other)
         {
             return this.Code.Equals(other.Code);
+        }
+
+        /// <summary>
+        /// Gets the hash code for this object.
+        /// </summary>
+        /// <returns>The hash code.</returns>
+        public override int GetHashCode()
+        {
+            return Code.GetHashCode();
         }
 
         /// <summary>

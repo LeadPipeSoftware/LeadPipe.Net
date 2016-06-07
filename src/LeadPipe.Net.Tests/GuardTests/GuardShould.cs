@@ -174,7 +174,6 @@ namespace LeadPipe.Net.Tests.GuardTests
         public void ThrowAnInvalidOperationExceptionWithRelationshipIdGivenNullObjectAndNowCalled()
         {
             // Arrange
-            string nullString = null;
             string relationship = "TEST";
 
             // Act

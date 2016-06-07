@@ -168,7 +168,7 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
         public void ThrowExceptionGivenTransitionReturnsUnregisteredState()
         {
             // Arrange
-            var unregisteredState = new FiniteState(0, "Unregistered");
+            var unregisteredState = new FiniteState(99, "Unregistered");
 
             this.openState.RemoveTransition(this.closeTransition);
 

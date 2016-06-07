@@ -122,11 +122,34 @@ namespace LeadPipe.Net.FiniteStateMachine
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
+        /// <param name="obj">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+
+            if (ReferenceEquals(this, obj)) return true;
+
+            return obj.GetType() == this.GetType() && Equals((FiniteStateMachineTransitionReason)obj);
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
         public bool Equals(FiniteStateMachineTransitionReason other)
         {
             return this.Code.Equals(other.Code);
+        }
+
+        /// <summary>
+        /// Gets the hash code for this object.
+        /// </summary>
+        /// <returns>The hash code.</returns>
+        public override int GetHashCode()
+        {
+            return Code?.GetHashCode() ?? 0;
         }
     }
 }

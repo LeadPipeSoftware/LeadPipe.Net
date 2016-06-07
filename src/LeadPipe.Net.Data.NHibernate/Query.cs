@@ -15,6 +15,9 @@ namespace LeadPipe.Net.Data.NHibernate
     /// <typeparam name="TResultType">The type of the result.</typeparam>
     public abstract class Query<TResultType> : IQuery<IEnumerable<TResultType>>
     {
+        /// <summary>
+        /// The data command provider.
+        /// </summary>
         protected readonly DataCommandProvider dataCommandProvider;
 
         /// <summary>

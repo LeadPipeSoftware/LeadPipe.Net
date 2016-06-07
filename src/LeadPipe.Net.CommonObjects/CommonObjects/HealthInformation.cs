@@ -13,14 +13,6 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
         /// <summary>
         /// The blood type.
         /// </summary>
-        private BloodType bloodType;
-
-        /// <summary>
-        /// The blood type.
-        /// </summary>
-        public virtual BloodType BloodType
-        {
-            get { return bloodType; }
-        }
+        public virtual BloodType BloodType { get; set; }
     }
 }

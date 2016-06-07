@@ -287,6 +287,10 @@ namespace LeadPipe.Net.Data.NHibernate
             }
         }
 
+        /// <summary>
+        /// Start the unit of work with the default flush mode.
+        /// </summary>
+        /// <returns>The started unit of work.</returns>
         public IUnitOfWork Start()
         {
             return this.Start(this.defaultFlushMode);
