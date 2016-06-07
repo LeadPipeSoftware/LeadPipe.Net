@@ -5,6 +5,7 @@
 
 using LeadPipe.Net.Commands;
 using System.Diagnostics;
+using System.Threading;
 
 namespace LeadPipe.Net.Tests.CommandTests
 {
@@ -19,6 +20,7 @@ namespace LeadPipe.Net.Tests.CommandTests
         /// <param name="command">The command.</param>
         protected override void OnHandle(DebugWriteCommand command)
         {
+            Thread.Sleep(51); // Guarantees that this command will take more than 50 milliseconds
             Debug.Write(command.TextToWrite);
         }
     }

@@ -28,6 +28,14 @@ namespace LeadPipe.Net.Commands
         /// <value>The exception.</value>
         public virtual Exception Exception { get; set; }
 
+        /// <summary>
+        /// The command execution time in milliseconds.
+        /// </summary>
+        public virtual long ExecutionTimeInMilliseconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command validation results.
+        /// </summary>
         public virtual IEnumerable<ValidationResult> ValidationResults { get; set; }
 
         /// <summary>

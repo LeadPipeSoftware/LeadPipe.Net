@@ -172,7 +172,7 @@ build:
   include_nuget_references: false # add -IncludeReferencedProjects option while packaging NuGet artifacts
 
   # MSBuild verbosity level
-  verbosity: normal # quiet|minimal|normal|detailed
+  verbosity: quiet # quiet|minimal|normal|detailed
 
 # scripts to run before build
 before_build:

@@ -154,7 +154,13 @@ namespace LeadPipe.Net.Commands
         {
             var func = createCommandDelegates.GetOrAdd(Tuple.Create(commandType, typeof(TResponseData)), GenerateCommandDelegate);
 
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             response.Data = (TResponseData)func(this, command);
+
+            watch.Stop();
+
+            response.ExecutionTimeInMilliseconds = watch.ElapsedMilliseconds;
 
             response.CommandExecutionResult = CommandExecutionResult.Succeeded;
         }

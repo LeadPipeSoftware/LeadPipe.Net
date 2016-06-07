@@ -39,6 +39,28 @@ namespace LeadPipe.Net.Tests.CommandTests
         }
 
         /// <summary>
+        /// Tests to ensure that a response is returned for a command when at least one handler is registered.
+        /// </summary>
+        [Test]
+        public void ReturnResponseWithExecutionTime()
+        {
+            // Arrange
+            var ioc = new InversionOfControl();
+            ioc.Register<ICommandMediator, CommandMediator>();
+            ioc.Register<ICommandHandler<DebugWriteCommand, UnitType>, DebugWriteCommandHandler>();
+
+            var mediator = new CommandMediator(ioc.Resolve);
+
+            const string StringToWrite = "This is a test!";
+
+            // Act
+            var response = mediator.Submit(new DebugWriteCommand { TextToWrite = StringToWrite });
+
+            // Assert
+            Assert.GreaterOrEqual(response.ExecutionTimeInMilliseconds, 50);
+        }
+
+        /// <summary>
         /// Tests to ensure that the response contains the exception when the command throws an exception.
         /// </summary>
         [Test]
