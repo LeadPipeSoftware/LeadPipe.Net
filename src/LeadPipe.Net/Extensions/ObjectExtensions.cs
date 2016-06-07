@@ -139,24 +139,5 @@ namespace LeadPipe.Net.Extensions
 
             fi.SetValue(obj, value);
         }
-
-        /// <summary>
-        /// Returns the object as a dictionary of properties and values.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <returns>A dictionary of properties and values.</returns>
-        public static IDictionary<string, object> ToDictionary(this object obj)
-        {
-            IDictionary<string, object> result = new Dictionary<string, object>();
-
-            var properties = TypeDescriptor.GetProperties(obj);
-
-            foreach (PropertyDescriptor property in properties)
-            {
-                result.Add(property.Name, property.GetValue(obj));
-            }
-
-            return result;
-        }
     }
 }
