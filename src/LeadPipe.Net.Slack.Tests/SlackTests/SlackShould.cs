@@ -17,7 +17,7 @@ namespace LeadPipe.Net.Slack.Tests.SlackTests
         /// Test to make sure that an action is invoked AND exception is thrown when an assertion fails.
         /// </summary>
         [Test]
-        public void InvokeActionAndThrowExceptionGivenAssertionFails()
+        public void ReturnBuiltUpMessage()
         {
             // Arrange
             const string TestMessageText = "This is an example";
