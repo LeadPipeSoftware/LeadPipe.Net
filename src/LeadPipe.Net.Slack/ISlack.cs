@@ -8,10 +8,7 @@ namespace LeadPipe.Net.Slack
     /// <summary>
     /// The Slack client.
     /// </summary>
-    /// <seealso cref="LeadPipe.Net.Slack.ISlackMessageText" />
-    /// <seealso cref="LeadPipe.Net.Slack.ISlackAttachmentValues" />
-    /// <seealso cref="LeadPipe.Net.Slack.ISlackOptionalValues" />
-    public interface ISlack : ISlackMessageText, ISlackAttachmentValues, ISlackOptionalValues
+    public interface ISlack : ISlackBuild, ISlackMessageText, ISlackAttachmentValues, ISlackOptionalValues
     {
     }
 
@@ -21,117 +18,131 @@ namespace LeadPipe.Net.Slack
     public interface ISlackAttachmentValues
     {
         /// <summary>
-        /// Attaches this instance.
+        /// Attaches the Slack message attachment.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackOptionalValues Attach();
 
         /// <summary>
-        /// Includings the field.
+        /// Includes a field on the Slack message attachment.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="value">The value.</param>
         /// <param name="isShort">if set to <c>true</c> [is short].</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues IncludingField(string title, string value, bool isShort = false);
 
         /// <summary>
-        /// Withes the author icon.
+        /// Adds an author icon to the Slack message attachment.
         /// </summary>
         /// <param name="authorIcon">The author icon.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithAuthorIcon(string authorIcon);
 
         /// <summary>
-        /// Withes the author link.
+        /// Adds an author link to the Slack message attachment.
         /// </summary>
         /// <param name="authorLink">The author link.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithAuthorLink(string authorLink);
 
         /// <summary>
-        /// Withes the name of the author.
+        /// Adds the author name to the Slack message attachment.
         /// </summary>
         /// <param name="authorName">Name of the author.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithAuthorName(string authorName);
 
         /// <summary>
-        /// Withes the color.
+        /// Assigns a color to the Slack message attachment.
         /// </summary>
         /// <param name="color">The color.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithColor(string color);
 
         /// <summary>
-        /// Withes the fallback text.
+        /// Assigns fallback text to the Slack message attachment.
         /// </summary>
         /// <param name="fallbackText">The fallback text.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithFallbackText(string fallbackText);
 
         /// <summary>
-        /// Withes the footer.
+        /// Adds a footer to the Slack message attachment.
         /// </summary>
         /// <param name="footer">The footer.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithFooter(string footer);
 
         /// <summary>
-        /// Withes the footer icon.
+        /// Adds a footer icon to the Slack message attachment.
         /// </summary>
         /// <param name="footerIcon">The footer icon.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithFooterIcon(string footerIcon);
 
         /// <summary>
-        /// Withes the image URL.
+        /// Adds an image URL to the Slack message attachment.
         /// </summary>
         /// <param name="imageUrl">The image URL.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithImageUrl(string imageUrl);
 
         /// <summary>
-        /// Withes the pretext.
+        /// Adds pre-text to the Slack message attachment.
         /// </summary>
         /// <param name="pretext">The pretext.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithPretext(string pretext);
 
         /// <summary>
-        /// Withes the priority.
+        /// Assigns a priority to the Slack message attachment.
         /// </summary>
         /// <param name="priority">The priority.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithPriority(SlackMessagePriority priority);
 
         /// <summary>
-        /// Withes the thumb URL.
+        /// Adds an thumb URL to the Slack message attachment.
         /// </summary>
         /// <param name="thumbUrl">The thumb URL.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithThumbUrl(string thumbUrl);
 
         /// <summary>
-        /// Withes the timestamp.
+        /// Adds a timestamp to the Slack message attachment.
         /// </summary>
         /// <param name="timeStamp">The time stamp.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithTimestamp(int timeStamp);
 
         /// <summary>
-        /// Withes the title.
+        /// Adds a title to the Slack message attachment.
         /// </summary>
         /// <param name="title">The title.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithTitle(string title);
 
         /// <summary>
-        /// Withes the title link.
+        /// Adds a title link to the Slack message attachment.
         /// </summary>
         /// <param name="titleLink">The title link.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues WithTitleLink(string titleLink);
+    }
+
+    /// <summary>
+    /// The Slack Build interface.
+    /// </summary>
+    public interface ISlackBuild
+    {
+        /// <summary>
+        /// Starts building a Slack message.
+        /// </summary>
+        /// <value>
+        /// The client.
+        /// </value>
+        ISlackMessageText Build { get; }
     }
 
     /// <summary>
@@ -140,10 +151,10 @@ namespace LeadPipe.Net.Slack
     public interface ISlackMessageText
     {
         /// <summary>
-        /// Messages the specified message.
+        /// Sets the message text.
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackOptionalValues Message(string message);
     }
 
@@ -153,50 +164,47 @@ namespace LeadPipe.Net.Slack
     public interface ISlackOptionalValues
     {
         /// <summary>
-        /// Gets the with attachment.
+        /// Adds a Slack message attachment.
         /// </summary>
-        /// <value>
-        /// The with attachment.
-        /// </value>
         ISlackAttachmentValues WithAttachment { get; }
 
         /// <summary>
-        /// Ases the name of the user.
+        /// Sends the Slack message as a particular user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackOptionalValues AsUserName(string userName);
 
         /// <summary>
-        /// Gets the message.
+        /// Gets the built-up Slack message.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The built-up Slack message</returns>
         SlackMessage GetMessage();
 
         /// <summary>
-        /// Sends the now.
+        /// Sends the message.
         /// </summary>
         void SendNow();
 
         /// <summary>
-        /// To the channel.
+        /// Assigns the message to a specific Slack channel.
         /// </summary>
         /// <param name="channel">The channel.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackOptionalValues ToChannel(string channel);
 
         /// <summary>
-        /// Withes the icon emoji.
+        /// Assigns an icon emoji to the Slack message.
         /// </summary>
         /// <param name="iconEmoji">The icon emoji.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackOptionalValues WithIconEmoji(string iconEmoji);
 
         /// <summary>
-        /// Withes the message level.
+        /// Assigns a message level to the Slack message.
         /// </summary>
         /// <param name="messageLevel">The message level.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackOptionalValues WithMessageLevel(SlackMessageLevel messageLevel);
     }
 }

@@ -14,12 +14,7 @@ namespace LeadPipe.Net.Slack
     /// <summary>
     /// Sends Slack messages.
     /// </summary>
-    /// <seealso cref="LeadPipe.Net.Slack.ISlackMessageText" />
-    /// <seealso cref="LeadPipe.Net.Slack.ISlackAttachmentValues" />
-    /// <seealso cref="LeadPipe.Net.Slack.ISlackOptionalValues" />
-    public class Slack : ISlackMessageText,
-                         ISlackAttachmentValues,
-                         ISlackOptionalValues
+    public class Slack : ISlack
     {
         private readonly ISlackConfiguration configuration;
         private readonly Encoding encoding = new UTF8Encoding();
@@ -30,7 +25,7 @@ namespace LeadPipe.Net.Slack
         /// <summary>
         /// Initializes a new instance of the <see cref="Slack"/> class.
         /// </summary>
-        /// <param name="slackConfiguration">The slack configuration.</param>
+        /// <param name="slackConfiguration">The Slack configuration.</param>
         public Slack(ISlackConfiguration slackConfiguration)
         {
             configuration = slackConfiguration;
@@ -42,18 +37,18 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Gets the build.
+        /// Starts building a Slack message.
         /// </summary>
         /// <value>
-        /// The build.
+        /// The client.
         /// </value>
         public ISlackMessageText Build { get { return this; } }
 
         /// <summary>
-        /// Gets the with attachment.
+        /// Adds a Slack attachment to the message.
         /// </summary>
         /// <value>
-        /// The with attachment.
+        /// The client.
         /// </value>
         public ISlackAttachmentValues WithAttachment
         {
@@ -66,10 +61,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Ases the name of the user.
+        /// Sends the message as a particular user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackOptionalValues AsUserName(string userName)
         {
             pendingSlackMessage.UserName = userName;
@@ -78,9 +73,9 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Attaches this instance.
+        /// Attaches the Slack message attachment.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackOptionalValues Attach()
         {
             pendingSlackMessage.AddAttachment(pendingSlackMessageAttachment);
@@ -91,9 +86,9 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Gets the message.
+        /// Gets the Slack message instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The Slack message.</returns>
         public SlackMessage GetMessage()
         {
             SetDefaultMessageValues();
@@ -102,12 +97,12 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Includings the field.
+        /// Includes an attachment field on the Slack message attachment.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="value">The value.</param>
         /// <param name="isShort">if set to <c>true</c> [is short].</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues ISlackAttachmentValues.IncludingField(string title, string value, bool isShort)
         {
             var field = new SlackMessageAttachmentField(title, value, isShort);
@@ -118,10 +113,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the fallback text.
+        /// Adds fallback text to the Slack attachment.
         /// </summary>
         /// <param name="fallbackText">The fallback text.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues ISlackAttachmentValues.WithFallbackText(string fallbackText)
         {
             pendingSlackMessageAttachment.Fallback = fallbackText;
@@ -130,10 +125,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the title.
+        /// Adds a title to the Slack attachment.
         /// </summary>
         /// <param name="title">The title.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues ISlackAttachmentValues.WithTitle(string title)
         {
             pendingSlackMessageAttachment.Title = title;
@@ -142,10 +137,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the title link.
+        /// Adds a title link to the Slack attachment.
         /// </summary>
         /// <param name="titleLink">The title link.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         ISlackAttachmentValues ISlackAttachmentValues.WithTitleLink(string titleLink)
         {
             pendingSlackMessageAttachment.TitleLink = titleLink;
@@ -154,10 +149,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Messages the specified message.
+        /// Sets the Slack message text.
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackOptionalValues Message(string message)
         {
             pendingSlackMessage.Text = message;
@@ -166,7 +161,7 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Sends the now.
+        /// Sends the Slack message.
         /// </summary>
         public void SendNow()
         {
@@ -176,10 +171,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// To the channel.
+        /// Assigns the Slack message to the specified channel.
         /// </summary>
         /// <param name="channel">The channel.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackOptionalValues ToChannel(string channel)
         {
             pendingSlackMessage.Channel = channel;
@@ -188,10 +183,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the author icon.
+        /// Adds an author icon to the Slack message attachment.
         /// </summary>
         /// <param name="authorIcon">The author icon.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithAuthorIcon(string authorIcon)
         {
             pendingSlackMessageAttachment.AuthorIcon = authorIcon;
@@ -200,10 +195,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the author link.
+        /// Adds an author link to the Slack message attachment.
         /// </summary>
         /// <param name="authorLink">The author link.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithAuthorLink(string authorLink)
         {
             pendingSlackMessageAttachment.AuthorLink = authorLink;
@@ -212,10 +207,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the name of the author.
+        /// Adds an author name to the Slack message attachment.
         /// </summary>
         /// <param name="authorName">Name of the author.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithAuthorName(string authorName)
         {
             pendingSlackMessageAttachment.AuthorName = authorName;
@@ -224,10 +219,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the color.
+        /// Assigns a color to the Slack message attachment.
         /// </summary>
         /// <param name="color">The color.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithColor(string color)
         {
             pendingSlackMessageAttachment.Color = color;
@@ -236,7 +231,7 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the footer.
+        /// Adds a footer to the Slack message attachment.
         /// </summary>
         /// <param name="footer">The footer.</param>
         /// <returns></returns>
@@ -248,10 +243,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the footer icon.
+        /// Adds a footer icon to the Slack message attachment.
         /// </summary>
         /// <param name="footerIcon">The footer icon.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithFooterIcon(string footerIcon)
         {
             pendingSlackMessageAttachment.FooterIcon = footerIcon;
@@ -260,10 +255,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the icon emoji.
+        /// Adds an icon emoji to the message.
         /// </summary>
         /// <param name="iconEmoji">The icon emoji.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackOptionalValues WithIconEmoji(string iconEmoji)
         {
             pendingSlackMessage.IconEmoji = iconEmoji;
@@ -272,10 +267,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the image URL.
+        /// Adds an image URL to the Slack message attachment.
         /// </summary>
         /// <param name="imageUrl">The image URL.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithImageUrl(string imageUrl)
         {
             pendingSlackMessageAttachment.ImageUrl = imageUrl;
@@ -284,10 +279,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the message level.
+        /// Assigns a message level to the Slack message.
         /// </summary>
         /// <param name="messageLevel">The message level.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackOptionalValues WithMessageLevel(SlackMessageLevel messageLevel)
         {
             this.messageLevel = messageLevel;
@@ -296,10 +291,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the pretext.
+        /// Adds pre-text to the Slack message attachment.
         /// </summary>
         /// <param name="pretext">The pretext.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithPretext(string pretext)
         {
             pendingSlackMessageAttachment.Pretext = pretext;
@@ -308,10 +303,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the priority.
+        /// Assigns a priority to the Slack message attachment.
         /// </summary>
         /// <param name="priority">The priority.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithPriority(SlackMessagePriority priority)
         {
             pendingSlackMessageAttachment.AddField("Priority", priority.DisplayName, true);
@@ -320,10 +315,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the thumb URL.
+        /// Adds an image thumbnail to the Slack message attachment.
         /// </summary>
         /// <param name="thumbUrl">The thumb URL.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithThumbUrl(string thumbUrl)
         {
             pendingSlackMessageAttachment.ThumbUrl = thumbUrl;
@@ -332,10 +327,10 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Withes the timestamp.
+        /// Adds a timestamp to the Slack message attachment.
         /// </summary>
         /// <param name="timestamp">The timestamp.</param>
-        /// <returns></returns>
+        /// <returns>The client.</returns>
         public ISlackAttachmentValues WithTimestamp(int timestamp)
         {
             pendingSlackMessageAttachment.Timestamp = timestamp;
