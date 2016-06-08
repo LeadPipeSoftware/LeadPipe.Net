@@ -20,10 +20,11 @@ namespace LeadPipe.Net.Slack.Tests.SlackTests
         public void ReturnBuiltUpMessage()
         {
             // Arrange
-            const string TestMessageText = "This is an example";
+            Bootstrapper.Start();
 
-            var configuration = new SlackConfiguration();
-            var slack = new Slack(configuration, new SlackMessagePoster(configuration));
+            var slack = Bootstrapper.Container.GetInstance<ISlack>();
+
+            const string TestMessageText = "This is an example";
 
             // Act
             var message = slack.Send.Message(TestMessageText).ToSlackMessageObject();
