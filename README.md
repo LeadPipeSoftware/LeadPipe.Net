@@ -65,3 +65,7 @@ Head [over here](src/LeadPipe.Net.Authorization/README.md) for more information!
 The validation library provides a suite of attributes that extend Microsoft's own System.ComponentModel.DataAnnotations library. In addition, there are handy extension methods and a stand-alone validator.
 
 Head [over here](src/LeadPipe.Net.Validation/README.md) for more information!
+
+## LeadPipe.Net.Slack
+
+Need to post a message to Slack? The LeadPipe.Net.Slack library provides a fluent API to make it easy! Head [over here](src/LeadPipe.Net.Slack/README.md) for more information!
