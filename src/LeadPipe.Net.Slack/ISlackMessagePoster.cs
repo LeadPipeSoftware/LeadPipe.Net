@@ -14,6 +14,6 @@ namespace LeadPipe.Net.Slack
         /// Posts the supplied message to Slack.
         /// </summary>
         /// <param name="message">The message to post.</param>
-        void PostMessage(SlackMessage message);
+        string PostMessage(SlackMessage message);
     }
 }

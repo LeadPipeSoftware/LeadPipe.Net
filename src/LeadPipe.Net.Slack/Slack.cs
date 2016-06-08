@@ -86,6 +86,19 @@ namespace LeadPipe.Net.Slack
             return this;
         }
 
+        /// <summary>
+        /// Adds a Slack attachment to the message.
+        /// </summary>
+        public ISlackAttachmentValues MessageWithAttachment
+        {
+            get
+            {
+                pendingSlackMessageAttachment = new SlackMessageAttachment();
+
+                return this;
+            }
+        }
+
         // ****************************************************************************************
         // Optional Values
         // ****************************************************************************************
@@ -129,22 +142,6 @@ namespace LeadPipe.Net.Slack
         // ****************************************************************************************
         // Attachment Values
         // ****************************************************************************************
-
-        /// <summary>
-        /// Adds a Slack attachment to the message.
-        /// </summary>
-        /// <value>
-        /// The client.
-        /// </value>
-        public ISlackAttachmentValues WithAttachment
-        {
-            get
-            {
-                pendingSlackMessageAttachment = new SlackMessageAttachment();
-
-                return this;
-            }
-        }
 
         /// <summary>
         /// Adds fallback text to the Slack attachment.
@@ -291,6 +288,18 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
+        /// Adds optional text that appears within the attachment.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns>The client.</returns>
+        public ISlackAttachmentValues WithText(string text)
+        {
+            pendingSlackMessageAttachment.Text = text;
+
+            return this;
+        }
+
+        /// <summary>
         /// Adds an image thumbnail to the Slack message attachment.
         /// </summary>
         /// <param name="thumbUrl">The thumb URL.</param>
@@ -355,6 +364,8 @@ namespace LeadPipe.Net.Slack
         {
             SetDefaultMessageValues();
 
+            Result = null;
+
             return pendingSlackMessage;
         }
 
@@ -365,7 +376,7 @@ namespace LeadPipe.Net.Slack
         {
             var messageToPost = ToSlackMessageObject();
 
-            poster.PostMessage(messageToPost);
+            Result = poster.PostMessage(messageToPost);
         }
 
         /// <summary>
@@ -379,8 +390,13 @@ namespace LeadPipe.Net.Slack
 
             var messageToPost = ToSlackMessageObject();
 
-            poster.PostMessage(messageToPost);
+            Result = poster.PostMessage(messageToPost);
         }
+
+        /// <summary>
+        /// Gets or sets the result of the Slack API call.
+        /// </summary>
+        public string Result { get; protected set; }
 
         // ****************************************************************************************
         // Dirty Work

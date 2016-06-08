@@ -47,6 +47,10 @@ namespace LeadPipe.Net.Slack
     /// </summary>
     public interface ISlack : ISlackSend
     {
+        /// <summary>
+        /// Gets the result of the Slack API call.
+        /// </summary>
+        string Result { get; }
     }
 
     /// <summary>
@@ -66,11 +70,17 @@ namespace LeadPipe.Net.Slack
     public interface ISlackMessageText
     {
         /// <summary>
-        /// Sets the message text.
+        /// Prepares a simple message.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns>The client.</returns>
         ISlackOptionalValues Message(string message);
+
+        /// <summary>
+        /// Prepares a message with a message attachment.
+        /// </summary>
+        /// <returns>The client.</returns>
+        ISlackAttachmentValues MessageWithAttachment { get; }
     }
 
     // ****************************************************************************************
@@ -82,11 +92,6 @@ namespace LeadPipe.Net.Slack
     /// </summary>
     public interface ISlackOptionalValues
     {
-        /// <summary>
-        /// Adds a Slack message attachment.
-        /// </summary>
-        ISlackAttachmentValues WithAttachment { get; }
-
         /// <summary>
         /// Sends the Slack message as a particular user.
         /// </summary>
@@ -151,63 +156,63 @@ namespace LeadPipe.Net.Slack
         ISlackAttachmentValues IncludingField(string title, string value, bool isShort = false);
 
         /// <summary>
-        /// Adds an author icon to the Slack message attachment.
+        /// A valid URL that displays a small 16x16px image to the left of the author name. Will only work if author name is present.
         /// </summary>
         /// <param name="authorIcon">The author icon.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithAuthorIcon(string authorIcon);
 
         /// <summary>
-        /// Adds an author link to the Slack message attachment.
+        /// A valid URL that will hyperlink the author name text. Will only work if author name is present.
         /// </summary>
         /// <param name="authorLink">The author link.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithAuthorLink(string authorLink);
 
         /// <summary>
-        /// Adds the author name to the Slack message attachment.
+        /// Small text used to display the author's name.
         /// </summary>
         /// <param name="authorName">Name of the author.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithAuthorName(string authorName);
 
         /// <summary>
-        /// Assigns a color to the Slack message attachment.
+        /// An optional value that can either be one of good, warning, danger, or any hex color code (eg. #439FE0). This value is used to color the border along the left side of the message attachment.
         /// </summary>
         /// <param name="color">The color.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithColor(string color);
 
         /// <summary>
-        /// Assigns fallback text to the Slack message attachment.
+        /// A plain-text summary of the attachment. This text will be used in clients that don't show formatted text and should not contain any markup.
         /// </summary>
         /// <param name="fallbackText">The fallback text.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithFallbackText(string fallbackText);
 
         /// <summary>
-        /// Adds a footer to the Slack message attachment.
+        /// Add some brief text to help contextualize and identify an attachment. Limited to 300 characters and may be truncated further when displayed to users in environments with limited screen real estate.
         /// </summary>
         /// <param name="footer">The footer.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithFooter(string footer);
 
         /// <summary>
-        /// Adds a footer icon to the Slack message attachment.
+        /// Renders a small icon beside the footer text, provide a publicly accessible URL string in the footer icon field. You must also provide a footer for the field to be recognized.
         /// </summary>
         /// <param name="footerIcon">The footer icon.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithFooterIcon(string footerIcon);
 
         /// <summary>
-        /// Adds an image URL to the Slack message attachment.
+        /// A valid URL to an image file that will be displayed inside a message attachment. Slack currently supports the following formats: GIF, JPEG, PNG, and BMP.
         /// </summary>
         /// <param name="imageUrl">The image URL.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithImageUrl(string imageUrl);
 
         /// <summary>
-        /// Adds pre-text to the Slack message attachment.
+        /// This is optional text that appears above the message attachment block.
         /// </summary>
         /// <param name="pretext">The pretext.</param>
         /// <returns>The client.</returns>
@@ -221,28 +226,36 @@ namespace LeadPipe.Net.Slack
         ISlackAttachmentValues WithPriority(SlackMessagePriority priority);
 
         /// <summary>
-        /// Adds an thumb URL to the Slack message attachment.
+        /// This is the main text in a message attachment, and can contain standard message markup.
+        /// </summary>
+        /// <remarks>The content will automatically collapse if it contains 700+ characters or 5+ linebreaks, and will display a "Show more..." link to expand the content.</remarks>
+        /// <param name="text">The text.</param>
+        /// <returns>The client.</returns>
+        ISlackAttachmentValues WithText(string text);
+
+        /// <summary>
+        /// A valid URL to an image file that will be displayed as a thumbnail on the right side of a message attachment. Slack currently supports the following formats: GIF, JPEG, PNG, and BMP.
         /// </summary>
         /// <param name="thumbUrl">The thumb URL.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithThumbUrl(string thumbUrl);
 
         /// <summary>
-        /// Adds a timestamp to the Slack message attachment.
+        /// Adds a timestamp (Epoch time) to the Slack message attachment.
         /// </summary>
         /// <param name="timeStamp">The time stamp.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithTimestamp(int timeStamp);
 
         /// <summary>
-        /// Adds a title to the Slack message attachment.
+        /// The title is displayed as larger, bold text near the top of a message attachment.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithTitle(string title);
 
         /// <summary>
-        /// Adds a title link to the Slack message attachment.
+        /// The title link will turn the title into a hyperlink.
         /// </summary>
         /// <param name="titleLink">The title link.</param>
         /// <returns>The client.</returns>

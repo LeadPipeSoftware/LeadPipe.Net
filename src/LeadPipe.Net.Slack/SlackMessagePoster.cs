@@ -27,9 +27,9 @@ namespace LeadPipe.Net.Slack
         /// Posts the supplied message to Slack.
         /// </summary>
         /// <param name="message">The message.</param>
-        public void PostMessage(SlackMessage message)
+        public string PostMessage(SlackMessage message)
         {
-            if (configuration.Enabled.IsFalse()) return;
+            if (configuration.Enabled.IsFalse()) return null;
 
             var payloadJson = JsonConvert.SerializeObject(message);
 
@@ -40,7 +40,7 @@ namespace LeadPipe.Net.Slack
                 var response = client.UploadValues(configuration.UrlWithAccessToken, "POST", data);
 
                 // The response text is usually "ok"
-                var responseText = encoding.GetString(response);
+                return encoding.GetString(response);
             }
         }
     }
