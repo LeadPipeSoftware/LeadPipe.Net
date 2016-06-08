@@ -22,13 +22,11 @@ namespace LeadPipe.Net.Slack.Tests.SlackTests
             // Arrange
             const string TestMessageText = "This is an example";
 
-            var ioc = new InversionOfControl();
-            ioc.Register<ISlackConfiguration, SlackConfiguration>();
-
-            var slack = new Slack(ioc.Resolve<ISlackConfiguration>());
+            var configuration = new SlackConfiguration();
+            var slack = new Slack(configuration, new SlackMessagePoster(configuration));
 
             // Act
-            var message = slack.Build.Message(TestMessageText).GetMessage();
+            var message = slack.Send.Message(TestMessageText).ToSlackMessageObject();
 
             // Assert
             Assert.That(message.Text.Equals(TestMessageText));

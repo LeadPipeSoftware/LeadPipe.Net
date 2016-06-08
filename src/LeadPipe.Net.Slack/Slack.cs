@@ -4,20 +4,48 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
-using Newtonsoft.Json;
-using System.Collections.Specialized;
-using System.Net;
-using System.Text;
+
+/*
+ *
+ *            ___________    ____
+ *     ______/   \__//   \__/____\
+ *   _/   \_/  :           //____\\
+ *  /|      :  :  ..      /        \
+ * | |     ::     ::      \        /
+ * | |     :|     ||     \ \______/
+ * | |     ||     ||      |\  /  |
+ *  \|     ||     ||      |   / | \
+ *   |     ||     ||      |  / /_\ \
+ *   | ___ || ___ ||      | /  /    \
+ *    \_-_/  \_-_/ | ____ |/__/      \
+ *                 _\_--_/    \      /
+ *                /____             /
+ *               /     \           /
+ *               \______\_________/
+ *
+ *
+ *   _   _  ____            _    _ _______ ____
+ *  | \ | |/ __ \      /\  | |  | |__   __/ __ \
+ *  |  \| | |  | |    /  \ | |  | |  | | | |  | |
+ *  | . ` | |  | |   / /\ \| |  | |  | | | |  | |
+ *  | |\  | |__| |  / ____ \ |__| |  | | | |__| |
+ *  |_|_\_|\____/ _/_/_  _\_\____/   |_|__\____/_____ _____ _   _  _____
+ *  |  ____/ __ \|  __ \|  \/  |   /\|__   __|__   __|_   _| \ | |/ ____|
+ *  | |__ | |  | | |__) | \  / |  /  \  | |     | |    | | |  \| | |  __
+ *  |  __|| |  | |  _  /| |\/| | / /\ \ | |     | |    | | | . ` | | |_ |
+ *  | |   | |__| | | \ \| |  | |/ ____ \| |     | |   _| |_| |\  | |__| |
+ *  |_|    \____/|_|  \_\_|  |_/_/    \_\_|     |_|  |_____|_| \_|\_____|
+ *
+ */
 
 namespace LeadPipe.Net.Slack
 {
     /// <summary>
     /// Sends Slack messages.
     /// </summary>
-    public class Slack : ISlack
+    public class Slack : ISlack, ISlackMessageText, ISlackOptionalValues, ISlackAttachmentValues
     {
-        private readonly ISlackConfiguration configuration;
-        private readonly Encoding encoding = new UTF8Encoding();
+        private readonly ISlackMessagePoster poster;
         private readonly SlackMessage pendingSlackMessage;
         private SlackMessageLevel messageLevel;
         private SlackMessageAttachment pendingSlackMessageAttachment;
@@ -26,23 +54,81 @@ namespace LeadPipe.Net.Slack
         /// Initializes a new instance of the <see cref="Slack"/> class.
         /// </summary>
         /// <param name="slackConfiguration">The Slack configuration.</param>
-        public Slack(ISlackConfiguration slackConfiguration)
+        /// <param name="poster">The Slack message poster.</param>
+        public Slack(ISlackConfiguration slackConfiguration, ISlackMessagePoster poster)
         {
-            configuration = slackConfiguration;
+            this.poster = poster;
 
             // Set default values...
             messageLevel = SlackMessageLevel.Info;
 
-            pendingSlackMessage = new SlackMessage(configuration.DefaultChannel);
+            pendingSlackMessage = new SlackMessage(slackConfiguration.DefaultChannel);
         }
+
+        // ****************************************************************************************
+        // Initialize
+        // ****************************************************************************************
 
         /// <summary>
         /// Starts building a Slack message.
         /// </summary>
-        /// <value>
-        /// The client.
-        /// </value>
-        public ISlackMessageText Build { get { return this; } }
+        public ISlackMessageText Send { get { return this; } }
+
+        /// <summary>
+        /// Sets the Slack message text.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns>The client.</returns>
+        public ISlackOptionalValues Message(string message)
+        {
+            pendingSlackMessage.Text = message;
+
+            return this;
+        }
+
+        // ****************************************************************************************
+        // Optional Values
+        // ****************************************************************************************
+
+        /// <summary>
+        /// Sends the message as a particular user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns>The client.</returns>
+        public ISlackOptionalValues AsUserName(string userName)
+        {
+            pendingSlackMessage.UserName = userName;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an icon emoji to the message.
+        /// </summary>
+        /// <param name="iconEmoji">The icon emoji.</param>
+        /// <returns>The client.</returns>
+        public ISlackOptionalValues WithIconEmoji(string iconEmoji)
+        {
+            pendingSlackMessage.IconEmoji = iconEmoji;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Assigns a message level to the Slack message.
+        /// </summary>
+        /// <param name="messageLevel">The message level.</param>
+        /// <returns>The client.</returns>
+        public ISlackOptionalValues WithMessageLevel(SlackMessageLevel messageLevel)
+        {
+            this.messageLevel = messageLevel;
+
+            return this;
+        }
+
+        // ****************************************************************************************
+        // Attachment Values
+        // ****************************************************************************************
 
         /// <summary>
         /// Adds a Slack attachment to the message.
@@ -58,58 +144,6 @@ namespace LeadPipe.Net.Slack
 
                 return this;
             }
-        }
-
-        /// <summary>
-        /// Sends the message as a particular user.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns>The client.</returns>
-        public ISlackOptionalValues AsUserName(string userName)
-        {
-            pendingSlackMessage.UserName = userName;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Attaches the Slack message attachment.
-        /// </summary>
-        /// <returns>The client.</returns>
-        public ISlackOptionalValues Attach()
-        {
-            pendingSlackMessage.AddAttachment(pendingSlackMessageAttachment);
-
-            pendingSlackMessageAttachment = null;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Gets the Slack message instance.
-        /// </summary>
-        /// <returns>The Slack message.</returns>
-        public SlackMessage GetMessage()
-        {
-            SetDefaultMessageValues();
-
-            return pendingSlackMessage;
-        }
-
-        /// <summary>
-        /// Includes an attachment field on the Slack message attachment.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="isShort">if set to <c>true</c> [is short].</param>
-        /// <returns>The client.</returns>
-        ISlackAttachmentValues ISlackAttachmentValues.IncludingField(string title, string value, bool isShort)
-        {
-            var field = new SlackMessageAttachmentField(title, value, isShort);
-
-            pendingSlackMessageAttachment.AddField(field);
-
-            return this;
         }
 
         /// <summary>
@@ -144,40 +178,6 @@ namespace LeadPipe.Net.Slack
         ISlackAttachmentValues ISlackAttachmentValues.WithTitleLink(string titleLink)
         {
             pendingSlackMessageAttachment.TitleLink = titleLink;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the Slack message text.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns>The client.</returns>
-        public ISlackOptionalValues Message(string message)
-        {
-            pendingSlackMessage.Text = message;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Sends the Slack message.
-        /// </summary>
-        public void SendNow()
-        {
-            var messageToSend = GetMessage();
-
-            if (configuration.Enabled) PostMessage(messageToSend);
-        }
-
-        /// <summary>
-        /// Assigns the Slack message to the specified channel.
-        /// </summary>
-        /// <param name="channel">The channel.</param>
-        /// <returns>The client.</returns>
-        public ISlackOptionalValues ToChannel(string channel)
-        {
-            pendingSlackMessage.Channel = channel;
 
             return this;
         }
@@ -255,18 +255,6 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Adds an icon emoji to the message.
-        /// </summary>
-        /// <param name="iconEmoji">The icon emoji.</param>
-        /// <returns>The client.</returns>
-        public ISlackOptionalValues WithIconEmoji(string iconEmoji)
-        {
-            pendingSlackMessage.IconEmoji = iconEmoji;
-
-            return this;
-        }
-
-        /// <summary>
         /// Adds an image URL to the Slack message attachment.
         /// </summary>
         /// <param name="imageUrl">The image URL.</param>
@@ -274,18 +262,6 @@ namespace LeadPipe.Net.Slack
         public ISlackAttachmentValues WithImageUrl(string imageUrl)
         {
             pendingSlackMessageAttachment.ImageUrl = imageUrl;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Assigns a message level to the Slack message.
-        /// </summary>
-        /// <param name="messageLevel">The message level.</param>
-        /// <returns>The client.</returns>
-        public ISlackOptionalValues WithMessageLevel(SlackMessageLevel messageLevel)
-        {
-            this.messageLevel = messageLevel;
 
             return this;
         }
@@ -339,23 +315,76 @@ namespace LeadPipe.Net.Slack
         }
 
         /// <summary>
-        /// Posts the message.
+        /// Includes an attachment field on the Slack message attachment.
         /// </summary>
-        /// <param name="message">The message.</param>
-        private void PostMessage(SlackMessage message)
+        /// <param name="title">The title.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="isShort">if set to <c>true</c> [is short].</param>
+        /// <returns>The client.</returns>
+        ISlackAttachmentValues ISlackAttachmentValues.IncludingField(string title, string value, bool isShort)
         {
-            var payloadJson = JsonConvert.SerializeObject(message);
+            var field = new SlackMessageAttachmentField(title, value, isShort);
 
-            using (var client = new WebClient())
-            {
-                var data = new NameValueCollection { ["payload"] = payloadJson };
+            pendingSlackMessageAttachment.AddField(field);
 
-                var response = client.UploadValues(configuration.UrlWithAccessToken, "POST", data);
-
-                // The response text is usually "ok"
-                var responseText = encoding.GetString(response);
-            }
+            return this;
         }
+
+        /// <summary>
+        /// Attaches the Slack message attachment.
+        /// </summary>
+        /// <returns>The client.</returns>
+        public ISlackOptionalValues Attach()
+        {
+            pendingSlackMessage.AddAttachment(pendingSlackMessageAttachment);
+
+            pendingSlackMessageAttachment = null;
+
+            return this;
+        }
+
+        // ****************************************************************************************
+        // Finalize
+        // ****************************************************************************************
+
+        /// <summary>
+        /// Gets the Slack message instance.
+        /// </summary>
+        /// <returns>The Slack message.</returns>
+        public SlackMessage ToSlackMessageObject()
+        {
+            SetDefaultMessageValues();
+
+            return pendingSlackMessage;
+        }
+
+        /// <summary>
+        /// Sends the Slack message to the default channel.
+        /// </summary>
+        public void ToDefaultChannel()
+        {
+            var messageToPost = ToSlackMessageObject();
+
+            poster.PostMessage(messageToPost);
+        }
+
+        /// <summary>
+        /// Assigns the Slack message to the specified channel.
+        /// </summary>
+        /// <param name="channel">The channel.</param>
+        /// <returns>The client.</returns>
+        public void ToChannel(string channel)
+        {
+            pendingSlackMessage.Channel = channel;
+
+            var messageToPost = ToSlackMessageObject();
+
+            poster.PostMessage(messageToPost);
+        }
+
+        // ****************************************************************************************
+        // Dirty Work
+        // ****************************************************************************************
 
         /// <summary>
         /// Sets the default message values.

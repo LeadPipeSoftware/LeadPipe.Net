@@ -3,14 +3,132 @@
 // Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+/*
+ *
+ *            ___________    ____
+ *     ______/   \__//   \__/____\
+ *   _/   \_/  :           //____\\
+ *  /|      :  :  ..      /        \
+ * | |     ::     ::      \        /
+ * | |     :|     ||     \ \______/
+ * | |     ||     ||      |\  /  |
+ *  \|     ||     ||      |   / | \
+ *   |     ||     ||      |  / /_\ \
+ *   | ___ || ___ ||      | /  /    \
+ *    \_-_/  \_-_/ | ____ |/__/      \
+ *                 _\_--_/    \      /
+ *                /____             /
+ *               /     \           /
+ *               \______\_________/
+ *
+ *
+ *   _   _  ____            _    _ _______ ____
+ *  | \ | |/ __ \      /\  | |  | |__   __/ __ \
+ *  |  \| | |  | |    /  \ | |  | |  | | | |  | |
+ *  | . ` | |  | |   / /\ \| |  | |  | | | |  | |
+ *  | |\  | |__| |  / ____ \ |__| |  | | | |__| |
+ *  |_|_\_|\____/ _/_/_  _\_\____/   |_|__\____/_____ _____ _   _  _____
+ *  |  ____/ __ \|  __ \|  \/  |   /\|__   __|__   __|_   _| \ | |/ ____|
+ *  | |__ | |  | | |__) | \  / |  /  \  | |     | |    | | |  \| | |  __
+ *  |  __|| |  | |  _  /| |\/| | / /\ \ | |     | |    | | | . ` | | |_ |
+ *  | |   | |__| | | \ \| |  | |/ ____ \| |     | |   _| |_| |\  | |__| |
+ *  |_|    \____/|_|  \_\_|  |_/_/    \_\_|     |_|  |_____|_| \_|\_____|
+ *
+ */
+
 namespace LeadPipe.Net.Slack
 {
+    // ****************************************************************************************
+    // Initialize
+    // ****************************************************************************************
+
     /// <summary>
-    /// The Slack client.
+    /// The Slack message client.
     /// </summary>
-    public interface ISlack : ISlackBuild, ISlackMessageText, ISlackAttachmentValues, ISlackOptionalValues
+    public interface ISlack : ISlackSend
     {
     }
+
+    /// <summary>
+    /// The Slack Build interface.
+    /// </summary>
+    public interface ISlackSend
+    {
+        /// <summary>
+        /// Starts building a Slack message.
+        /// </summary>
+        ISlackMessageText Send { get; }
+    }
+
+    /// <summary>
+    /// The Slack Message Text interface.
+    /// </summary>
+    public interface ISlackMessageText
+    {
+        /// <summary>
+        /// Sets the message text.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <returns>The client.</returns>
+        ISlackOptionalValues Message(string message);
+    }
+
+    // ****************************************************************************************
+    // Optional Values
+    // ****************************************************************************************
+
+    /// <summary>
+    /// The Slack optional values.
+    /// </summary>
+    public interface ISlackOptionalValues
+    {
+        /// <summary>
+        /// Adds a Slack message attachment.
+        /// </summary>
+        ISlackAttachmentValues WithAttachment { get; }
+
+        /// <summary>
+        /// Sends the Slack message as a particular user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns>The client.</returns>
+        ISlackOptionalValues AsUserName(string userName);
+
+        /// <summary>
+        /// Assigns an icon emoji to the Slack message.
+        /// </summary>
+        /// <param name="iconEmoji">The icon emoji.</param>
+        /// <returns>The client.</returns>
+        ISlackOptionalValues WithIconEmoji(string iconEmoji);
+
+        /// <summary>
+        /// Assigns a message level to the Slack message.
+        /// </summary>
+        /// <param name="messageLevel">The message level.</param>
+        /// <returns>The client.</returns>
+        ISlackOptionalValues WithMessageLevel(SlackMessageLevel messageLevel);
+
+        /// <summary>
+        /// Sends the message to a specific Slack channel.
+        /// </summary>
+        /// <param name="channel">The channel.</param>
+        void ToChannel(string channel);
+
+        /// <summary>
+        /// Sends the message to the default Slack channel.
+        /// </summary>
+        void ToDefaultChannel();
+
+        /// <summary>
+        /// Gets the built-up Slack message object instead of sending.
+        /// </summary>
+        /// <returns>The built-up Slack message</returns>
+        SlackMessage ToSlackMessageObject();
+    }
+
+    // ****************************************************************************************
+    // Attachment Values
+    // ****************************************************************************************
 
     /// <summary>
     /// The Slack attachment interface.
@@ -129,82 +247,5 @@ namespace LeadPipe.Net.Slack
         /// <param name="titleLink">The title link.</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues WithTitleLink(string titleLink);
-    }
-
-    /// <summary>
-    /// The Slack Build interface.
-    /// </summary>
-    public interface ISlackBuild
-    {
-        /// <summary>
-        /// Starts building a Slack message.
-        /// </summary>
-        /// <value>
-        /// The client.
-        /// </value>
-        ISlackMessageText Build { get; }
-    }
-
-    /// <summary>
-    /// The Slack Message Text interface.
-    /// </summary>
-    public interface ISlackMessageText
-    {
-        /// <summary>
-        /// Sets the message text.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns>The client.</returns>
-        ISlackOptionalValues Message(string message);
-    }
-
-    /// <summary>
-    /// The Slack optional values.
-    /// </summary>
-    public interface ISlackOptionalValues
-    {
-        /// <summary>
-        /// Adds a Slack message attachment.
-        /// </summary>
-        ISlackAttachmentValues WithAttachment { get; }
-
-        /// <summary>
-        /// Sends the Slack message as a particular user.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns>The client.</returns>
-        ISlackOptionalValues AsUserName(string userName);
-
-        /// <summary>
-        /// Gets the built-up Slack message.
-        /// </summary>
-        /// <returns>The built-up Slack message</returns>
-        SlackMessage GetMessage();
-
-        /// <summary>
-        /// Sends the message.
-        /// </summary>
-        void SendNow();
-
-        /// <summary>
-        /// Assigns the message to a specific Slack channel.
-        /// </summary>
-        /// <param name="channel">The channel.</param>
-        /// <returns>The client.</returns>
-        ISlackOptionalValues ToChannel(string channel);
-
-        /// <summary>
-        /// Assigns an icon emoji to the Slack message.
-        /// </summary>
-        /// <param name="iconEmoji">The icon emoji.</param>
-        /// <returns>The client.</returns>
-        ISlackOptionalValues WithIconEmoji(string iconEmoji);
-
-        /// <summary>
-        /// Assigns a message level to the Slack message.
-        /// </summary>
-        /// <param name="messageLevel">The message level.</param>
-        /// <returns>The client.</returns>
-        ISlackOptionalValues WithMessageLevel(SlackMessageLevel messageLevel);
     }
 }

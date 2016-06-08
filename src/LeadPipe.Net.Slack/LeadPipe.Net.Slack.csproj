@@ -60,12 +60,14 @@
     </Compile>
     <Compile Include="ISlack.cs" />
     <Compile Include="ISlackConfiguration.cs" />
+    <Compile Include="ISlackMessagePoster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Slack.cs" />
     <Compile Include="SlackMessage.cs" />
     <Compile Include="SlackMessageAttachment.cs" />
     <Compile Include="SlackMessageAttachmentField.cs" />
     <Compile Include="SlackMessageLevel.cs" />
+    <Compile Include="SlackMessagePoster.cs" />
     <Compile Include="SlackMessagePriority.cs" />
   </ItemGroup>
   <ItemGroup>
