@@ -3,7 +3,6 @@
 // Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace LeadPipe.Net.Authorization
     /// <summary>
     /// The user grant.
     /// </summary>
-    public class UserGrant : PersistableObject<Guid>, IEntity, IValidatableObject
+    public class UserGrant : PersistableObject<Guid>, IValidatableObject
     {
         /// <summary>
         /// Gets or sets the granted activity.
@@ -76,17 +75,6 @@ namespace LeadPipe.Net.Authorization
         /// Gets or sets the granting user.
         /// </summary>
         public virtual string GrantingUser { get; set; }
-
-        /// <summary>
-        /// Gets the natural id.
-        /// </summary>
-        public virtual string Key
-        {
-            get
-            {
-                return this.Sid.ToString();
-            }
-        }
 
         /// <summary>
         /// Gets or sets the role.

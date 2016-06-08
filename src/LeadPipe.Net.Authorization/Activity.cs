@@ -16,11 +16,6 @@ namespace LeadPipe.Net.Authorization
     public class Activity : PersistableObject<Guid>, IEntity
     {
         /// <summary>
-        /// The domain id.
-        /// </summary>
-        private string domainId;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Activity" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -71,7 +66,7 @@ namespace LeadPipe.Net.Authorization
 
             set
             {
-                this.domainId = value;
+                this.Name = value;
             }
         }
 
@@ -90,5 +85,16 @@ namespace LeadPipe.Net.Authorization
         /// Gets or sets the activity's users.
         /// </summary>
         public virtual IList<User> Users { get; protected set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return $"{Application}:{Name}}}";
+        }
     }
 }

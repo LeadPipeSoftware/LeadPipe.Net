@@ -19,11 +19,6 @@ namespace LeadPipe.Net.Authorization
     public class Role : PersistableObject<Guid>, IEntity
     {
         /// <summary>
-        /// The domain id.
-        /// </summary>
-        private string domainId;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Role" /> class.
         /// </summary>
         /// <param name="application">The application.</param>
@@ -88,7 +83,7 @@ namespace LeadPipe.Net.Authorization
 
             set
             {
-                this.domainId = value;
+                this.Name = value;
             }
         }
 
