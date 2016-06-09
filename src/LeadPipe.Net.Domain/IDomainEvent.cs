@@ -14,8 +14,14 @@ namespace LeadPipe.Net.Domain
     {
     }
 
+    /// <summary>
+    /// Defines a domain event with an id.
+    /// </summary>
     public interface IDomainEventWithId : IDomainEvent
     {
+        /// <summary>
+        /// Gets the domain event it.
+        /// </summary>
         Guid DomainEventId { get; }
     }
 }

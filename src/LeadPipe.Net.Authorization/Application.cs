@@ -22,11 +22,6 @@ namespace LeadPipe.Net.Authorization
         private IList<User> administrators;
 
         /// <summary>
-        /// The domain id.
-        /// </summary>
-        private string domainId;
-
-        /// <summary>
         /// The application users.
         /// </summary>
         private IList<ApplicationUser> users;
@@ -153,15 +148,6 @@ namespace LeadPipe.Net.Authorization
             {
                 return this.users;
             }
-        }
-
-        /// <summary>
-        /// The domain id.
-        /// </summary>
-        public string DomainId
-        {
-            get { return domainId; }
-            set { domainId = value; }
         }
 
         /// <summary>

@@ -38,16 +38,18 @@
       <HintPath>..\..\packages\Moq.4.5.8\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>$(SolutionDir)packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -56,12 +58,14 @@
     </Compile>
     <Compile Include="BoolExtensionsTests\IsFalseShould.cs" />
     <Compile Include="BoolExtensionsTests\IsTrueShould.cs" />
+    <Compile Include="CommandTests\DebugWriteWithValidationCommandHandler.cs" />
+    <Compile Include="CommandTests\DebugWriteWithValidationCommand.cs" />
     <Compile Include="CommandTests\DebugWriteCommand.cs" />
-    <Compile Include="CommandTests\DebugWriterCommandHandler.cs" />
+    <Compile Include="CommandTests\DebugWriteCommandHandler.cs" />
     <Compile Include="CommandTests\ExplodingTestCommand.cs" />
     <Compile Include="CommandTests\ExplodingTestCommandHandler.cs" />
     <Compile Include="CommandTests\InversionOfControl.cs" />
-    <Compile Include="CommandTests\RequestShould.cs" />
+    <Compile Include="CommandTests\SubmitShould.cs" />
     <Compile Include="CommandTests\TestQuery.cs" />
     <Compile Include="CommandTests\TestQueryHandler.cs" />
     <Compile Include="ConfigurationTests\ConfigurationSettingShould.cs" />

@@ -17,7 +17,7 @@ namespace LeadPipe.Net.FiniteStateMachine
         /// Gets or sets the transition code.
         /// </summary>
         /// <value>The code.</value>
-        int Code { get; set; }
+        int Code { get; }
 
         /// <summary>
         /// Gets or sets the end state.

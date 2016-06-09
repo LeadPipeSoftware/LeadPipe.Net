@@ -15,6 +15,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.NHibernateExtensionsTests
     public class AsDynamicListShould
     {
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnResultsAsDynamicList()
         {
             // Arrange

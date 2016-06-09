@@ -13,6 +13,55 @@ namespace LeadPipe.Net.Extensions
     public static class DateTimeExtensions
     {
         /// <summary>
+        /// Returns a DateTime with its value set to Now minus the provided TimeSpan value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static DateTime Ago(this TimeSpan value)
+        {
+            return DateTime.Now.Subtract(value);
+        }
+
+        /// <summary>
+        /// Returns a DateTime with its value set to Now minus the provided TimeSpan value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static DateTime AgoUtc(this TimeSpan value)
+        {
+            return DateTime.UtcNow.Subtract(value);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="DateTime"/> with the specifed hour and, optionally
+        /// provided minutes, seconds, and milliseconds.
+        /// </summary>
+        public static DateTime At(this DateTime date, int hour, int min = 0, int second = 0, int millisecond = 0)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, hour, min, second, millisecond);
+        }
+
+        /// <summary>
+        /// Returns a new instance of DateTime based on the provided date where the time is set to midnight
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime AtMidnight(this DateTime date)
+        {
+            return date.At(0);
+        }
+
+        /// <summary>
+        /// Returns a new instance of DateTime based on the provided date where the time is set to noon
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static DateTime AtNoon(this DateTime date)
+        {
+            return date.At(12);
+        }
+
+        /// <summary>
         /// Combines a date with a time.
         /// </summary>
         /// <param name="datePart">The date part.</param>
@@ -44,6 +93,37 @@ namespace LeadPipe.Net.Extensions
         public static DateTime FirstDayInMonth(DateTime date)
         {
             return new DateTime(date.Year, date.Month, 1);
+        }
+
+        /// <summary>
+        /// Returns a DateTime with its value set to Now plus the provided TimeSpan value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static DateTime FromNow(this TimeSpan value)
+        {
+            return DateTime.Now.Add(value);
+        }
+
+        /// <summary>
+        /// Returns a DateTime with its value set to Now plus the provided TimeSpan value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static DateTime FromNowUtc(this TimeSpan value)
+        {
+            return DateTime.UtcNow.Add(value);
+        }
+
+        /// <summary>
+        /// Returns a new instance of DateTime based on the provided date where the year is set to the provided year
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public static DateTime In(this DateTime date, int year)
+        {
+            return new DateTime(year, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond);
         }
 
         /// <summary>

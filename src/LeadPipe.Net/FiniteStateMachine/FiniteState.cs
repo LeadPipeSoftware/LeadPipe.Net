@@ -79,7 +79,7 @@ namespace LeadPipe.Net.FiniteStateMachine
         /// Gets or sets the code.
         /// </summary>
         /// <value>The code.</value>
-        public virtual int Code { get; set; }
+        public virtual int Code { get; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -159,6 +159,66 @@ namespace LeadPipe.Net.FiniteStateMachine
         }
 
         /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="obj">An object to compare with this instance.</param>
+        /// <returns>A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref name="obj" />. Zero This instance is equal to <paramref name="obj" />. Greater than zero This instance is greater than <paramref name="obj" />.</returns>
+        public int CompareTo(object obj)
+        {
+            var state = obj as IFiniteState;
+
+            if (state != null)
+            {
+                return this.CompareTo(state);
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="state">A state to compare with this instance.</param>
+        /// <returns>A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref name="state" />. Zero This instance is equal to <paramref name="state" />. Greater than zero This instance is greater than <paramref name="state" />.</returns>
+        public int CompareTo(IFiniteState state)
+        {
+            return this.Code.CompareTo(state.Code);
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="obj">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the <paramref name="obj" /> parameter; otherwise, false.</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+
+            if (ReferenceEquals(this, obj)) return true;
+
+            return obj.GetType() == this.GetType() && Equals((FiniteState)obj);
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+        public bool Equals(FiniteState other)
+        {
+            return this.Code.Equals(other.Code);
+        }
+
+        /// <summary>
+        /// Gets the hash code for this object.
+        /// </summary>
+        /// <returns>The hash code.</returns>
+        public override int GetHashCode()
+        {
+            return Code.GetHashCode();
+        }
+
+        /// <summary>
         /// Gets the name of the transition by.
         /// </summary>
         /// <param name="transitionName">Name of the transition.</param>
@@ -198,43 +258,6 @@ namespace LeadPipe.Net.FiniteStateMachine
             {
                 this.registeredTransitions.Remove(transition);
             }
-        }
-
-        /// <summary>
-        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref name="obj" />. Zero This instance is equal to <paramref name="obj" />. Greater than zero This instance is greater than <paramref name="obj" />.</returns>
-        public int CompareTo(object obj)
-        {
-            var state = obj as IFiniteState;
-
-            if (state != null)
-            {
-                return this.CompareTo(state);
-            }
-
-            return -1;
-        }
-
-        /// <summary>
-        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
-        /// </summary>
-        /// <param name="state">A state to compare with this instance.</param>
-        /// <returns>A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref name="state" />. Zero This instance is equal to <paramref name="state" />. Greater than zero This instance is greater than <paramref name="state" />.</returns>
-        public int CompareTo(IFiniteState state)
-        {
-            return this.Code.CompareTo(state.Code);
-        }
-
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-        public bool Equals(FiniteState other)
-        {
-            return this.Code.Equals(other.Code);
         }
     }
 }

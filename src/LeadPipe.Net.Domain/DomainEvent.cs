@@ -12,11 +12,17 @@ namespace LeadPipe.Net.Domain
     /// </summary>
     public abstract class DomainEvent : IDomainEventWithId
     {
+        /// <summary>
+        /// Initializes a new instance of DomainEvent.
+        /// </summary>
         public DomainEvent()
         {
             DomainEventId = Guid.NewGuid();
         }
 
+        /// <summary>
+        /// The domain event id.
+        /// </summary>
         public Guid DomainEventId { get; protected set; }
     }
 }

@@ -8,8 +8,15 @@ using StructureMap.Graph;
 
 namespace LeadPipe.Net.Data.NHibernate.StructureMap
 {
+    /// <summary>
+    /// StructureMap registration extensions.
+    /// </summary>
     public static class StructureMapExtensions
     {
+        /// <summary>
+        /// Registers all of the command and query handlers.
+        /// </summary>
+        /// <param name="assemblyScanner"></param>
         public static void RegisterAllLeadPipeCommandAndQueryHandlers(this IAssemblyScanner assemblyScanner)
         {
             assemblyScanner.ConnectImplementationsToTypesClosing(typeof(ICommandHandler<>));

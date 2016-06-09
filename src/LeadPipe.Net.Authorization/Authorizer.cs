@@ -235,7 +235,7 @@ namespace LeadPipe.Net.Authorization
         /// <summary>
         /// Sets the application name and performs the authorization assertion.
         /// </summary>
-        /// <param name="applicationName">
+        /// <param name="application">
         /// Name of the application.
         /// </param>
         /// <returns>

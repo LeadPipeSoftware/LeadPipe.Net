@@ -62,12 +62,13 @@ namespace LeadPipe.Net.Tests.FiniteStateMachineTests
         /// Tests to make sure that an exception is thrown when trying to remove a state that is in use.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(StateAlreadyRegisteredException))]
         public void ThrowExceptionGivenStateAlreadyRegistered()
         {
             // Act
             this.machine.RegisterState(this.openState);
-            this.machine.RegisterState(this.openState);
+
+            // Assert
+            Assert.Throws<StateAlreadyRegisteredException>(() => this.machine.RegisterState(this.openState));
         }
 
         /// <summary>

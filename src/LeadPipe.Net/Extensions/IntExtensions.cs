@@ -13,6 +13,18 @@ namespace LeadPipe.Net.Extensions
     /// </summary>
     public static class IntExtensions
     {
+        private const long Exabyte = Petabyte * 1024;
+        private const long Gigabyte = Megabyte * 1024;
+        private const long Kilobyte = 1024;
+        private const long Megabyte = Kilobyte * 1024;
+        private const long Petabyte = Terabyte * 1024;
+        private const long Terabyte = Gigabyte * 1024;
+
+        public static long Bytes(this int number)
+        {
+            return number;
+        }
+
         /// <summary>
         /// Returns a TimeSpan that represents the integer in days.
         /// </summary>
@@ -23,6 +35,11 @@ namespace LeadPipe.Net.Extensions
             //// TODO: [GBM] Write unit tests.
 
             return TimeSpan.FromDays(value);
+        }
+
+        public static long Exabytes(this int number)
+        {
+            return number * Exabyte;
         }
 
         /// <summary>
@@ -110,6 +127,11 @@ namespace LeadPipe.Net.Extensions
             return factorial(value);
         }
 
+        public static long Gigabytes(this int number)
+        {
+            return number * Gigabyte;
+        }
+
         /// <summary>
         /// Returns a TimeSpan that represents the integer in hours.
         /// </summary>
@@ -180,6 +202,16 @@ namespace LeadPipe.Net.Extensions
             return (value % 2) != 0;
         }
 
+        public static long Kilobytes(this int number)
+        {
+            return number * Kilobyte;
+        }
+
+        public static long Megabytes(this int number)
+        {
+            return number * Megabyte;
+        }
+
         /// <summary>
         /// Returns a TimeSpan that represents the integer in milliseconds.
         /// </summary>
@@ -204,6 +236,11 @@ namespace LeadPipe.Net.Extensions
             return TimeSpan.FromMinutes(value);
         }
 
+        public static long Petabytes(this int number)
+        {
+            return number * Petabyte;
+        }
+
         /// <summary>
         /// Returns a TimeSpan that represents the integer in seconds.
         /// </summary>
@@ -216,6 +253,29 @@ namespace LeadPipe.Net.Extensions
             return TimeSpan.FromSeconds(value);
         }
 
+        public static long Terabytes(this int number)
+        {
+            return number * Terabyte;
+        }
+
+        /// <summary>
+        /// Performs the specified action for the specified number of times.
+        /// </summary>
+        /// /// <code>
+        /// 5.Times(() => { DoSomething(); });
+        /// </code>
+        /// <param name="value">The value.</param>
+        /// <param name="action">The action.</param>
+        public static void Times(this int value, Action action)
+        {
+            if (action == null) return;
+
+            for (var i = 0; i < value; i++)
+            {
+                action();
+            }
+        }
+
         /// <summary>
         /// Performs the specified action for the specified number of times passing in the iterator each time.
         /// </summary>
@@ -226,7 +286,7 @@ namespace LeadPipe.Net.Extensions
         /// <param name="action">The action.</param>
         public static void Times(this int value, Action<int> action)
         {
-            //// TODO: [GBM] Write unit tests.
+            if (action == null) return;
 
             for (var c = 0; c < value; c++)
             {

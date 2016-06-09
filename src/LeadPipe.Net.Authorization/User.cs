@@ -19,11 +19,6 @@ namespace LeadPipe.Net.Authorization
     public class User : PersistableObject<Guid>, IEntity
     {
         /// <summary>
-        /// The domain id.
-        /// </summary>
-        private string domainId;
-
-        /// <summary>
         /// The user's expiration date.
         /// </summary>
         private DateTime? expirationDate;
@@ -181,7 +176,7 @@ namespace LeadPipe.Net.Authorization
 
             set
             {
-                this.domainId = value;
+                this.Name = value;
             }
         }
 

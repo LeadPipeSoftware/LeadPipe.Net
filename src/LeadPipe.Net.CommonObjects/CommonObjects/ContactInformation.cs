@@ -16,22 +16,22 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
         /// <summary>
         /// The contact's addresses.
         /// </summary>
-        private Dictionary<string, Address> addresses;
+        private readonly Dictionary<string, Address> addresses;
 
         /// <summary>
         /// The contact's email addresses.
         /// </summary>
-        private Dictionary<string, string> emails;
+        private readonly Dictionary<string, string> emails;
 
         /// <summary>
         /// The contact's phone numbers.
         /// </summary>
-        private Dictionary<string, PhoneNumber> phoneNumbers;
+        private readonly Dictionary<string, PhoneNumber> phoneNumbers;
 
         /// <summary>
         /// The contact's websites.
         /// </summary>
-        private Dictionary<string, string> websites;
+        private readonly Dictionary<string, string> websites;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactInformation"/> class.
@@ -39,6 +39,7 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
         /// <param name="phoneNumbers">The phone numbers.</param>
         /// <param name="addresses">The addresses.</param>
         public ContactInformation(Dictionary<string, PhoneNumber> phoneNumbers, Dictionary<string, Address> addresses)
+            : this()
         {
             this.phoneNumbers = phoneNumbers;
             this.addresses = addresses;
@@ -49,6 +50,8 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
         /// </summary>
         public ContactInformation()
         {
+            this.emails = new Dictionary<string, string>();
+            this.websites = new Dictionary<string, string>();
         }
 
         /// <summary>

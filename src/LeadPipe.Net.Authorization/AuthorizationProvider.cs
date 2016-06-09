@@ -14,6 +14,17 @@ namespace LeadPipe.Net.Authorization
     /// </summary>
     public class AuthorizationProvider : IAuthorizationProvider
     {
+        private readonly IAuthorizationLogger authorizationLogger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorizationProvider"/> class.
+        /// </summary>
+        /// <param name="authorizationLogger">The authorization logger.</param>
+        public AuthorizationProvider(IAuthorizationLogger authorizationLogger)
+        {
+            this.authorizationLogger = authorizationLogger;
+        }
+
         /// <summary>
         /// Performs an authorization request.
         /// </summary>
@@ -35,15 +46,13 @@ namespace LeadPipe.Net.Authorization
             var isGranted = false;
 
             // For each of the activity names in the request...
-            foreach (var activityName in authorizationRequest.Activities)
+            foreach (var activity in authorizationRequest.Activities)
             {
                 // Check to see if the user has been granted the activity...
-                isGranted = grantedActivities.Any(x => x.Name.Equals(activityName));
-
-                // TODO: Fire a domain event here to handle this.
+                isGranted = grantedActivities.Any(x => x.Name.Equals(activity.Name, StringComparison.OrdinalIgnoreCase));
 
                 // Log the request...
-                var authorizationRequestLogEntry = new AuthorizationRequestLogEntry() { Activity = activityName, User = authorizationRequest.ApplicationUser.User, RequestedOn = DateTime.Now, Granted = isGranted };
+                authorizationLogger.LogAuthorizationRequest(new AuthorizationRequestLogEntry() { Activity = activity, User = authorizationRequest.ApplicationUser.User, RequestedOn = DateTime.Now, Granted = isGranted });
 
                 // If the user is authorized then we may as well stop here...
                 if (isGranted && authorizationRequest.AuthorizeAll.IsFalse())

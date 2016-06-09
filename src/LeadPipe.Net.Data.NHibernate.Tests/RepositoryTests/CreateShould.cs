@@ -238,7 +238,6 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         /// Tests that Create throws an exception if not in a Unit of Work.
         /// </summary>
         [Test]
-        [ExpectedException(typeof(LeadPipeNetDataException), ExpectedMessage = "There is no NHibernate session. Did you start a Unit of Work?")]
         [Category("RequiresDatabase")]
         public void ThrowExceptionGivenNoUnitOfWork()
         {
@@ -251,7 +250,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
             var testModel = new TestModel(Key);
 
             // Assert
-            repository.Create(testModel);
+            Assert.Throws<LeadPipeNetDataException>(() => repository.Create(testModel));
         }
     }
 }

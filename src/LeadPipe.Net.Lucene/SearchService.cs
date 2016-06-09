@@ -26,7 +26,6 @@ namespace LeadPipe.Net.Lucene
         private readonly ISearchIndexUpdater<TEntity, TSearchData> searchIndexUpdater;
 
         private readonly ISearchScoreExplainer searchScoreExplainer;
-        private readonly string writeLockSemaphoreFile;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchService{TEntity, TSearchData}" /> class.

@@ -59,6 +59,8 @@
     <Compile Include="AuthorizationRequest.cs" />
     <Compile Include="AuthorizationRequestLogEntry.cs" />
     <Compile Include="Authorizer.cs" />
+    <Compile Include="DebugAuthorizationLogger.cs" />
+    <Compile Include="IAuthorizationLogger.cs" />
     <Compile Include="IAuthorizationProvider.cs" />
     <Compile Include="IAuthorizer.cs" />
     <Compile Include="LeadPipeNetAccessDeniedException.cs" />

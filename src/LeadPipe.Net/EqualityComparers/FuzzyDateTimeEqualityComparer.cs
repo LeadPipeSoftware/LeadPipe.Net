@@ -32,7 +32,7 @@ namespace LeadPipe.Net.EqualityComparers
         /// <returns>
         ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(object x, object y)
+        public new bool Equals(object x, object y)
         {
             if (x == null || y == null)
             {
