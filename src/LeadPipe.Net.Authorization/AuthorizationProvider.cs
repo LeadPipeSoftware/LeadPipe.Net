@@ -37,7 +37,7 @@ namespace LeadPipe.Net.Authorization
         public bool Authorize(AuthorizationRequest authorizationRequest)
         {
             Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply a user context.").When(authorizationRequest.ApplicationUser.User == null);
-            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply a name in the user context.").When(string.IsNullOrEmpty(authorizationRequest.ApplicationUser.User.Name));
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply a name in the user context.").When(string.IsNullOrEmpty(authorizationRequest.ApplicationUser.User.Login));
             Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply activity names.").When(authorizationRequest.Activities == null);
             Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply an application name.").When(string.IsNullOrEmpty(authorizationRequest.ApplicationUser.Application.Name));
 

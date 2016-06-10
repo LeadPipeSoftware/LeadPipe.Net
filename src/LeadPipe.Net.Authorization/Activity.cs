@@ -16,6 +16,21 @@ namespace LeadPipe.Net.Authorization
     public class Activity : PersistableObject<Guid>, IEntity
     {
         /// <summary>
+        /// The users.
+        /// </summary>
+        protected IList<User> users;
+
+        /// <summary>
+        /// The roles.
+        /// </summary>
+        protected IList<Role> roles;
+
+        /// <summary>
+        /// The activity groups.
+        /// </summary>
+        protected IList<ActivityGroup> activityGroups;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Activity" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -34,15 +49,18 @@ namespace LeadPipe.Net.Authorization
         }
 
         /// <summary>
-        /// Gets or sets the activity's activity groups.
+        /// Gets the activity's activity groups.
         /// </summary>
-        public virtual IList<ActivityGroup> ActivityGroups { get; protected set; }
+        public virtual IEnumerable<ActivityGroup> ActivityGroups
+        {
+            get { return activityGroups; }
+        }
 
         /// <summary>
         /// Gets or sets the activity's application.
         /// </summary>
         [Required]
-        public virtual Application Application { get; set; }
+        public virtual Application Application { get; protected set; }
 
         /// <summary>
         /// Gets or sets the authorization request log entries.
@@ -52,7 +70,7 @@ namespace LeadPipe.Net.Authorization
         /// <summary>
         /// Gets or sets Description.
         /// </summary>
-        public virtual string Description { get; set; }
+        public virtual string Description { get; protected set; }
 
         /// <summary>
         /// Gets or sets the Key.
@@ -64,27 +82,63 @@ namespace LeadPipe.Net.Authorization
                 return this.Name;
             }
 
-            set
+            protected set
             {
                 this.Name = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets Name.
+        /// Gets the name of the activity.
         /// </summary>
         [Required]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the activity's roles.
+        /// Gets the activity's roles.
         /// </summary>
-        public virtual IList<Role> Roles { get; protected set; }
+        public virtual IEnumerable<Role> Roles
+        {
+            get { return roles; }
+        }
 
         /// <summary>
-        /// Gets or sets the activity's users.
+        /// Gets the activity's users.
         /// </summary>
-        public virtual IList<User> Users { get; protected set; }
+        public virtual IEnumerable<User> Users
+        {
+            get { return users; }
+        }
+
+        /// <summary>
+        /// Deletes the description.
+        /// </summary>
+        public virtual void DeleteDescription()
+        {
+            this.Description = null;
+        }
+
+        /// <summary>
+        /// Updates the description.
+        /// </summary>
+        /// <param name="newDescription">The new description.</param>
+        public virtual void UpdateDescription(string newDescription)
+        {
+            Guard.Will.ProtectAgainstNullOrEmptyStringArgument(() => newDescription);
+
+            this.Description = newDescription;
+        }
+
+        /// <summary>
+        /// Updates the name.
+        /// </summary>
+        /// <param name="newName">The new name.</param>
+        public virtual void UpdateName(string newName)
+        {
+            Guard.Will.ProtectAgainstNullOrEmptyStringArgument(() => newName);
+
+            this.Name = newName;
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

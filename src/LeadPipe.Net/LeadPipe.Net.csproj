@@ -60,7 +60,6 @@
     <Compile Include="Commands\ICommandMediator.cs" />
     <Compile Include="Commands\IQuery.cs" />
     <Compile Include="Commands\IQueryHandler.cs" />
-    <Compile Include="Commands\ISupportValidation.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\ConfigurationSetting.cs" />
     <Compile Include="Configuration\ContextAwareApplicationSettingService.cs" />

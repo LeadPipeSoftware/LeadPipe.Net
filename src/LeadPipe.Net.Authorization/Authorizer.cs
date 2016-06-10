@@ -318,7 +318,7 @@ namespace LeadPipe.Net.Authorization
                 {
                     var exceptionMessage = new StringBuilder();
 
-                    exceptionMessage.Append(this.user.Name.FormattedWith("{0} is not authorized to perform "));
+                    exceptionMessage.Append(this.user.Login.FormattedWith("{0} is not authorized to perform "));
 
                     if (authorizationRequest.Activities != null)
                     {

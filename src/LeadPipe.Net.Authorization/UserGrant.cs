@@ -99,7 +99,7 @@ namespace LeadPipe.Net.Authorization
             if (this.Activity.IsNull() && this.ActivityGroup.IsNull() && this.Role.IsNull())
             {
                 yield return
-                    new ValidationResult("Either an Activity, Activity Group or a Role is required to create a user grant.");
+                    new ValidationResult("Either an Activity, Activity Group, or a Role is required to create a user grant.");
             }
         }
     }

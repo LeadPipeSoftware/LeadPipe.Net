@@ -8,23 +8,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using LeadPipe.Net.Authorization.Commands;
 
 namespace LeadPipe.Net.Authorization
 {
     /// <summary>
     /// The application.
     /// </summary>
-    public class Application : PersistableObject<Guid>, IEntity
+    public class Application : PersistableObject<Guid>, IAggregateRoot
     {
-        /// <summary>
-        /// The application administrators.
-        /// </summary>
         private IList<User> administrators;
-
-        /// <summary>
-        /// The application users.
-        /// </summary>
-        private IList<ApplicationUser> users;
+        private IList<ApplicationUser> applicationUsers;
+        private IList<Activity> activities;
+        private IList<ActivityGroup> activityGroups;
+        private IList<Role> roles;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Application" /> class.
@@ -33,6 +30,8 @@ namespace LeadPipe.Net.Authorization
         public Application(string name)
             : this()
         {
+            Guard.Will.ProtectAgainstNullOrEmptyStringArgument(() => name);
+
             this.Name = name;
         }
 
@@ -41,24 +40,30 @@ namespace LeadPipe.Net.Authorization
         /// </summary>
         protected Application()
         {
-            this.Activities = new List<Activity>();
-            this.ActivityGroups = new List<ActivityGroup>();
+            this.activities = new List<Activity>();
+            this.activityGroups = new List<ActivityGroup>();
             this.administrators = new List<User>();
-            this.Roles = new List<Role>();
-            this.users = new List<ApplicationUser>();
+            this.roles = new List<Role>();
+            this.applicationUsers = new List<ApplicationUser>();
         }
 
         /// <summary>
-        /// Gets or sets the application's activities.
+        /// Gets the application's activities.
         /// </summary>
         /// <value>The activities.</value>
-        public virtual IList<Activity> Activities { get; protected set; }
+        public virtual IEnumerable<Activity> Activities
+        {
+            get { return activities; }
+        }
 
         /// <summary>
-        /// Gets or sets the application's activity groups.
+        /// Gets the application's activity groups.
         /// </summary>
         /// <value>The activity groups.</value>
-        public virtual IList<ActivityGroup> ActivityGroups { get; protected set; }
+        public virtual IEnumerable<ActivityGroup> ActivityGroups
+        {
+            get { return activityGroups; }
+        }
 
         /// <summary>
         /// Gets the application's administrators.
@@ -133,10 +138,13 @@ namespace LeadPipe.Net.Authorization
         public virtual string Name { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the application's roles.
+        /// Gets the application's roles.
         /// </summary>
         /// <value>The roles.</value>
-        public virtual IList<Role> Roles { get; protected set; }
+        public virtual IEnumerable<Role> Roles
+        {
+            get { return roles; }
+        }
 
         /// <summary>
         /// Gets the application's users.
@@ -146,36 +154,45 @@ namespace LeadPipe.Net.Authorization
         {
             get
             {
-                return this.users;
+                return this.applicationUsers;
             }
         }
 
         /// <summary>
-        /// Adds the administrator.
+        /// Adds an administrator to the application.
         /// </summary>
-        /// <param name="user">The user.</param>
-        public virtual void AddAdministrator(User user)
+        /// <param name="command">The command.</param>
+        public virtual void AddAdministrator(AddAdministratorCommand command)
         {
+            Guard.Will.ProtectAgainstNullArgument(() => command);
+
+            if (Administrators.Any(admins => admins.Login.Equals(command.Login, StringComparison.OrdinalIgnoreCase))) return;
+
+            var user = new User(command.Login);
+
             this.administrators.Add(user);
         }
 
         /// <summary>
-        /// Adds the user to the application.
+        /// Adds a user to the application.
         /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="expirationDate">The expiration date.</param>
-        public virtual void AddUser(User user, DateTime? expirationDate)
+        /// <param name="command">The command.</param>
+        public virtual void AddUser(AddUserCommand command)
         {
-            var applicationUser = new ApplicationUser { User = user, ExpirationDate = expirationDate, Application = this, CreatedOn = DateTime.Now };
+            Guard.Will.ProtectAgainstNullArgument(() => command);
 
-            this.users.Add(applicationUser);
+            var user = new User(command.Login);
+
+            var applicationUser = new ApplicationUser { User = user, ExpirationDate = command.ExpirationDate, Application = this, CreatedOn = DateTime.Now };
+
+            this.applicationUsers.Add(applicationUser);
         }
 
         /// <summary>
-        /// Clients the versions match.
+        /// Determines if the client versions match.
         /// </summary>
         /// <param name="versionToCheck">The version to check.</param>
-        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
+        /// <returns><c>true</c> if the client versions match, <c>false</c> otherwise</returns>
         public virtual bool ClientVersionsMatch(string versionToCheck)
         {
             // If we have something to compare to...
@@ -193,32 +210,36 @@ namespace LeadPipe.Net.Authorization
         }
 
         /// <summary>
-        /// Removes the user.
+        /// Removes an application administrator.
         /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        public virtual void RemoveAdministrator(string userName)
+        /// <param name="command">The command.</param>
+        public virtual void RemoveAdministrator(RemoveAdministratorCommand command)
         {
-            var existingAdmin = this.administrators.FirstOrDefault(x => x.Name.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            Guard.Will.ProtectAgainstNullArgument(() => command);
+
+            var existingAdmin = this.administrators.FirstOrDefault(x => x.Login.Equals(command.Login, StringComparison.OrdinalIgnoreCase));
 
             this.administrators.Remove(existingAdmin);
         }
 
         /// <summary>
-        /// Removes the user.
+        /// Removes the user from the application.
         /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        public virtual void RemoveUser(string userName)
+        /// <param name="command">The command.</param>
+        public virtual void RemoveUser(RemoveUserCommand command)
         {
-            var existingUser = this.users.FirstOrDefault(x => x.User.Name.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            Guard.Will.ProtectAgainstNullArgument(() => command);
 
-            this.users.Remove(existingUser);
+            var existingUser = this.applicationUsers.FirstOrDefault(x => x.User.Login.Equals(command.Login, StringComparison.OrdinalIgnoreCase));
+
+            this.applicationUsers.Remove(existingUser);
         }
 
         /// <summary>
         /// Determines whether a version matches the current version.
         /// </summary>
         /// <param name="versionToCheck">The version to check.</param>
-        /// <returns><c>true</c> if [is version out of date] [the specified version to check]; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the versions match; otherwise, <c>false</c>.</returns>
         public virtual bool VersionsMatch(string versionToCheck)
         {
             var match = true;

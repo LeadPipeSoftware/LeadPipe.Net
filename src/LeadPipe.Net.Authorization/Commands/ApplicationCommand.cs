@@ -7,27 +7,27 @@ using LeadPipe.Net.Commands;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace LeadPipe.Net.Tests.CommandTests
+namespace LeadPipe.Net.Authorization.Commands
 {
     /// <summary>
-    /// A command that writes to the debug console for unit testing.
+    /// A command for use with the Application object.
     /// </summary>
-    public class DebugWriteWithValidationCommand : ICommand<UnitType>, IValidatableObject
+    public abstract class ApplicationCommand : ICommand, IValidatableObject
     {
         /// <summary>
-        /// Gets or sets the text to write.
+        /// Gets or sets the name of the application.
         /// </summary>
-        /// <value>The text to write.</value>
-        public string TextToWrite { get; set; }
+        [Required]
+        public string ApplicationName { get; set; }
 
         /// <summary>
         /// Validates the specified validation context.
         /// </summary>
         /// <param name="validationContext">The validation context.</param>
         /// <returns>The validation results.</returns>
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            yield return new ValidationResult("You must supply a value for TextToWrite!");
+            yield return ValidationResult.Success;
         }
     }
 }

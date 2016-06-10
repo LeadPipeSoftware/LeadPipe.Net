@@ -77,9 +77,9 @@ namespace LeadPipe.Net.Commands
 
             try
             {
-                if (command is ISupportValidation)
+                if (command is IValidatableObject)
                 {
-                    var validationResults = Validate((ISupportValidation)command);
+                    var validationResults = Validate((IValidatableObject)command);
 
                     if (validationResults.Any())
                     {
@@ -129,11 +129,15 @@ namespace LeadPipe.Net.Commands
         /// </summary>
         /// <param name="command">The command to validate.</param>
         /// <returns>An enumeration of validation results.</returns>
-        public IEnumerable<ValidationResult> Validate(ISupportValidation command)
+        public IEnumerable<ValidationResult> Validate(IValidatableObject command)
         {
-            return command.IsNull()
-                ? null
-                : command.Validate();
+            if (command.IsNull()) return null;
+
+            var validationResult = new List<ValidationResult>();
+
+            Validator.TryValidateObject(command, new ValidationContext(command, null, null), validationResult, true);
+
+            return validationResult;
         }
 
         /// <summary>

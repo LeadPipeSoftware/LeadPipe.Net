@@ -14,7 +14,7 @@ using System.Linq;
 namespace LeadPipe.Net.Authorization
 {
     /// <summary>
-    /// An application user.
+    /// A user.
     /// </summary>
     public class User : PersistableObject<Guid>, IEntity
     {
@@ -31,15 +31,11 @@ namespace LeadPipe.Net.Authorization
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastName">The last name.</param>
-        public User(string userName, string firstName, string lastName)
+        /// <param name="login">The user's login.</param>
+        public User(string login)
+            : this()
         {
-            this.Name = userName;
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.UserGrants = new List<UserGrant>();
+            this.Login = login;
         }
 
         /// <summary>
@@ -171,12 +167,12 @@ namespace LeadPipe.Net.Authorization
         {
             get
             {
-                return this.Name;
+                return this.Login;
             }
 
             set
             {
-                this.Name = value;
+                this.Login = value;
             }
         }
 
@@ -191,20 +187,13 @@ namespace LeadPipe.Net.Authorization
         public virtual string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets the user's name (ex: AMERICAS\majorgb).
+        /// Gets or sets the user's login.
         /// </summary>
-        /// <value>The name.</value>
+        /// <value>The login.</value>
         [Required]
         [NoTrailingWhitespace]
         [NoLeadingWhitespace]
-        public virtual string Name { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the user's hashed password.
-        /// </summary>
-        /// <value>The password hash.</value>
-        public virtual string PasswordHash { get; set; }
-
+        public virtual string Login { get; protected set; }
         /// <summary>
         /// Gets or sets the title.
         /// </summary>

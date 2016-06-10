@@ -36,6 +36,6 @@ namespace LeadPipe.Net.Commands
         /// </summary>
         /// <param name="command">The command to validate.</param>
         /// <returns>An enumeration of validation results.</returns>
-        IEnumerable<ValidationResult> Validate(ISupportValidation command);
+        IEnumerable<ValidationResult> Validate(IValidatableObject command);
     }
 }

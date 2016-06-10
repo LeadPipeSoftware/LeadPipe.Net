@@ -26,7 +26,7 @@ namespace LeadPipe.Net.Authorization
             this.ActivityGroupName = userGrant.ActivityGroup.IsNotNull() ? userGrant.ActivityGroup.Name : null;
             this.RoleName = userGrant.Role.IsNotNull() ? userGrant.Role.Name : null;
 
-            this.UserName = userGrant.User.Name;
+            this.UserName = userGrant.User.Login;
             this.GrantingUser = userGrant.GrantingUser;
             this.GrantedOn = DateTime.Now;
         }
