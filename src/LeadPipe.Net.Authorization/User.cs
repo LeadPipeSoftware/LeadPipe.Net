@@ -18,24 +18,20 @@ namespace LeadPipe.Net.Authorization
     /// </summary>
     public class User : PersistableObject<Guid>, IEntity
     {
-        /// <summary>
-        /// The user's expiration date.
-        /// </summary>
         private DateTime? expirationDate;
-
-        /// <summary>
-        /// Determines if the user is active.
-        /// </summary>
         private bool isActive;
+        private IList<UserGrant> userGrants;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
         /// <param name="login">The user's login.</param>
-        public User(string login)
+        /// <param name="application">The application.</param>
+        public User(string login, Application application)
             : this()
         {
             this.Login = login;
+            this.Application = application;
         }
 
         /// <summary>
@@ -43,26 +39,34 @@ namespace LeadPipe.Net.Authorization
         /// </summary>
         protected User()
         {
-            this.UserGrants = new List<UserGrant>();
+            this.userGrants = new List<UserGrant>();
         }
 
         /// <summary>
-        /// Gets or sets the administered applications.
+        /// Gets or sets the application the user is associated with.
         /// </summary>
-        /// <value>The administered applications.</value>
-        public virtual IList<Application> AdministeredApplications { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the user's applications.
-        /// </summary>
-        /// <value>The applications.</value>
-        public virtual IList<ApplicationUser> Applications { get; protected set; }
+        public virtual Application Application { get; protected set; }
 
         /// <summary>
         /// Gets or sets the authorization request log entries.
         /// </summary>
         /// <value>The authorization request log entries.</value>
         public virtual IList<AuthorizationRequestLogEntry> AuthorizationRequestLogEntries { get; protected set; }
+
+        /// <summary>
+        /// Gets the effective activities.
+        /// </summary>
+        public virtual IEnumerable<Activity> EffectiveActivities
+        {
+            get
+            {
+                var validUserGrants = this.UserGrants.Where(x => x.ExpirationDate.IsNull() || x.ExpirationDate >= DateTime.Now);
+
+                var effectiveActivities = validUserGrants.SelectMany(x => x.EffectiveActivities);
+
+                return effectiveActivities;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the user's expiration date.
@@ -86,26 +90,6 @@ namespace LeadPipe.Net.Authorization
                 }
             }
         }
-
-        /// <summary>
-        /// Gets or sets the user's first name (ex: Greg).
-        /// </summary>
-        /// <value>The first name.</value>
-        [Required]
-        [NoTrailingWhitespace]
-        [NoLeadingWhitespace]
-        [Alpha(" ", "'", "-")]
-        public virtual string FirstName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user's initials (ex: GBM).
-        /// </summary>
-        /// <value>The initials.</value>
-        [Alpha]
-        [NoLowerCase]
-        [NoTrailingWhitespace]
-        [NoLeadingWhitespace]
-        public virtual string Initials { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the user is active.
@@ -154,15 +138,8 @@ namespace LeadPipe.Net.Authorization
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user is a super administrator (SA).
-        /// </summary>
-        /// <value><c>true</c> if this instance is super administrator; otherwise, <c>false</c>.</value>
-        public virtual bool IsSuperAdministrator { get; set; }
-
-        /// <summary>
         /// Gets or sets the natural id.
         /// </summary>
-        /// <value>The key.</value>
         public virtual string Key
         {
             get
@@ -177,49 +154,76 @@ namespace LeadPipe.Net.Authorization
         }
 
         /// <summary>
-        /// Gets or sets the user's last name (ex: Major).
-        /// </summary>
-        /// <value>The last name.</value>
-        [Required]
-        [NoTrailingWhitespace]
-        [NoLeadingWhitespace]
-        [Alpha(" ", "'", "-", ".")]
-        public virtual string LastName { get; set; }
-
-        /// <summary>
         /// Gets or sets the user's login.
         /// </summary>
-        /// <value>The login.</value>
         [Required]
         [NoTrailingWhitespace]
         [NoLeadingWhitespace]
         public virtual string Login { get; protected set; }
-        /// <summary>
-        /// Gets or sets the title.
-        /// </summary>
-        /// <value>The title.</value>
-        public virtual string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the user grants.
+        /// Gets the user grants for the user.
         /// </summary>
-        /// <value>The user grants.</value>
-        public virtual IList<UserGrant> UserGrants { get; protected set; }
-
-        /// <summary>
-        /// Gets the effective permissions.
-        /// </summary>
-        /// <param name="application">The application.</param>
-        /// <returns>The list of effective permissions.</returns>
-        public virtual IList<Activity> GetEffectiveActivities(Application application)
+        public virtual IEnumerable<UserGrant> UserGrants
         {
-            Guard.Will.ThrowArgumentNullException("Application").When(application.IsNull());
+            get { return userGrants; }
+        }
 
-            var validUserGrants = this.UserGrants.Where(x => x.ExpirationDate.IsNull() || x.ExpirationDate >= DateTime.Now);
+        /// <summary>
+        /// Expires the user immediately.
+        /// </summary>
+        public virtual void ExpireNow()
+        {
+            ExpirationDate = DateTime.Now.Subtract(5.Seconds()); // We fudge just a little to avoid a race condition
+        }
 
-            var effectiveActivities = validUserGrants.SelectMany(x => x.EffectiveActivities);
+        /// <summary>
+        /// Grants the user the ability to perform an activity.
+        /// </summary>
+        /// <param name="activity">The activity.</param>
+        /// <param name="grantingUserLogin">The granting user's login.</param>
+        public virtual void GrantUserActivity(Activity activity, string grantingUserLogin)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => activity);
 
-            return application.Activities.Intersect(effectiveActivities).ToList();
+            AddUserGrant(new UserGrant(this, activity, grantingUserLogin));
+        }
+
+        /// <summary>
+        /// Grants a user the ability to perform any of the activities in an activity group.
+        /// </summary>
+        /// <param name="activityGroup">The activity group.</param>
+        /// <param name="grantingUserLogin">The granting user's login.</param>
+        public virtual void GrantUserActivityGroup(ActivityGroup activityGroup, string grantingUserLogin)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => activityGroup);
+
+            AddUserGrant(new UserGrant(this, activityGroup, grantingUserLogin));
+        }
+
+        /// <summary>
+        /// Grants a user the ability to perform any of the activities in a role.
+        /// </summary>
+        /// <param name="role">The role.</param>
+        /// <param name="grantingUserLogin">The granting user's login.</param>
+        public virtual void GrantUserRole(Role role, string grantingUserLogin)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => role);
+
+            AddUserGrant(new UserGrant(this, role, grantingUserLogin));
+        }
+
+        /// <summary>
+        /// Adds a user grant.
+        /// </summary>
+        /// <param name="userGrant">The user grant.</param>
+        protected virtual void AddUserGrant(UserGrant userGrant)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => userGrant);
+
+            if (userGrants.Contains(userGrant)) return;
+
+            userGrants.Add(userGrant);
         }
     }
 }

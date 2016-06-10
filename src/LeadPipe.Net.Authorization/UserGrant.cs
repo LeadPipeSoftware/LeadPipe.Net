@@ -3,11 +3,11 @@
 // Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using LeadPipe.Net.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using LeadPipe.Net.Extensions;
 
 namespace LeadPipe.Net.Authorization
 {
@@ -17,42 +17,97 @@ namespace LeadPipe.Net.Authorization
     public class UserGrant : PersistableObject<Guid>, IValidatableObject
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="UserGrant"/> class.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="activity">The activity.</param>
+        /// <param name="grantingUserLogin">The granting user's login.</param>
+        public UserGrant(User user, Activity activity, string grantingUserLogin)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => user);
+            Guard.Will.ProtectAgainstNullArgument(() => activity);
+
+            User = user;
+            Activity = activity;
+            GrantingUserLogin = grantingUserLogin;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserGrant"/> class.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="activityGroup">The activity group.</param>
+        /// <param name="grantingUserLogin">The granting user's login.</param>
+        public UserGrant(User user, ActivityGroup activityGroup, string grantingUserLogin)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => user);
+            Guard.Will.ProtectAgainstNullArgument(() => activityGroup);
+
+            User = user;
+            ActivityGroup = activityGroup;
+            GrantingUserLogin = grantingUserLogin;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserGrant"/> class.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="grantingUserLogin">The granting user's login.</param>
+        public UserGrant(User user, Role role, string grantingUserLogin)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => user);
+            Guard.Will.ProtectAgainstNullArgument(() => role);
+
+            User = user;
+            Role = role;
+            GrantingUserLogin = grantingUserLogin;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserGrant"/> class.
+        /// </summary>
+        protected UserGrant()
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the granted activity.
         /// </summary>
-        public virtual Activity Activity { get; set; }
+        public virtual Activity Activity { get; protected set; }
 
         /// <summary>
         /// Gets or sets the granted activity group.
         /// </summary>
-        public virtual ActivityGroup ActivityGroup { get; set; }
+        public virtual ActivityGroup ActivityGroup { get; protected set; }
 
         /// <summary>
         /// Gets the effective activities.
         /// </summary>
-        public virtual IList<Activity> EffectiveActivities
+        public virtual IEnumerable<Activity> EffectiveActivities
         {
             get
             {
                 var effectiveActivities = new List<Activity>();
 
-                if (this.Activity != null)
+                if (Activity != null)
                 {
-                    effectiveActivities.Add(this.Activity);
+                    effectiveActivities.Add(Activity);
                 }
-                else if (this.ActivityGroup.IsNotNull() && this.ActivityGroup.Activities.Any())
+                else if (ActivityGroup.IsNotNull() && ActivityGroup.Activities.Any())
                 {
-                    effectiveActivities.AddRange(this.ActivityGroup.Activities);
+                    effectiveActivities.AddRange(ActivityGroup.Activities);
                 }
-                else if (this.Role.IsNotNull())
+                else if (Role.IsNotNull())
                 {
-                    if (this.Role.Activities.Any())
+                    if (Role.Activities.Any())
                     {
-                        effectiveActivities.AddRange(this.Role.Activities);
+                        effectiveActivities.AddRange(Role.Activities);
                     }
 
-                    if (this.Role.ActivityGroups.Any())
+                    if (Role.ActivityGroups.Any())
                     {
-                        foreach (ActivityGroup activityGroup in this.Role.ActivityGroups)
+                        foreach (ActivityGroup activityGroup in Role.ActivityGroups)
                         {
                             if (activityGroup.Activities.Any())
                             {
@@ -69,23 +124,32 @@ namespace LeadPipe.Net.Authorization
         /// <summary>
         /// Gets or sets the grant's expiration date.
         /// </summary>
-        public virtual DateTime? ExpirationDate { get; set; }
+        public virtual DateTime? ExpirationDate { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the granting user.
+        /// Gets or sets the granting user's login.
         /// </summary>
-        public virtual string GrantingUser { get; set; }
+        public virtual string GrantingUserLogin { get; protected set; }
 
         /// <summary>
         /// Gets or sets the role.
         /// </summary>
-        public virtual Role Role { get; set; }
+        public virtual Role Role { get; protected set; }
 
         /// <summary>
         /// Gets or sets the user.
         /// </summary>
         [Required]
-        public virtual User User { get; set; }
+        public virtual User User { get; protected set; }
+
+        /// <summary>
+        /// Sets the expiration date for the user grant.
+        /// </summary>
+        /// <param name="expirationDate">The expiration date.</param>
+        public virtual void SetExpirationDate(DateTime expirationDate)
+        {
+            this.ExpirationDate = expirationDate;
+        }
 
         /// <summary>
         /// Determines whether the specified object is valid.
@@ -96,7 +160,7 @@ namespace LeadPipe.Net.Authorization
         /// </returns>
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (this.Activity.IsNull() && this.ActivityGroup.IsNull() && this.Role.IsNull())
+            if (Activity.IsNull() && ActivityGroup.IsNull() && Role.IsNull())
             {
                 yield return
                     new ValidationResult("Either an Activity, Activity Group, or a Role is required to create a user grant.");

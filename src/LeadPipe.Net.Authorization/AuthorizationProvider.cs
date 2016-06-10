@@ -36,12 +36,10 @@ namespace LeadPipe.Net.Authorization
         /// </returns>
         public bool Authorize(AuthorizationRequest authorizationRequest)
         {
-            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply a user context.").When(authorizationRequest.ApplicationUser.User == null);
-            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply a name in the user context.").When(string.IsNullOrEmpty(authorizationRequest.ApplicationUser.User.Login));
-            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply activity names.").When(authorizationRequest.Activities == null);
-            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must supply an application name.").When(string.IsNullOrEmpty(authorizationRequest.ApplicationUser.Application.Name));
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must include a user.").When(authorizationRequest.User.IsNull());
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>("Authorization requests must include one or more activities.").When(authorizationRequest.Activities.IsNullOrEmpty());
 
-            var grantedActivities = authorizationRequest.ApplicationUser.GetEffectivePermissions();
+            var grantedActivities = authorizationRequest.User.EffectiveActivities;
 
             var isGranted = false;
 
@@ -52,7 +50,7 @@ namespace LeadPipe.Net.Authorization
                 isGranted = grantedActivities.Any(x => x.Name.Equals(activity.Name, StringComparison.OrdinalIgnoreCase));
 
                 // Log the request...
-                authorizationLogger.LogAuthorizationRequest(new AuthorizationRequestLogEntry() { Activity = activity, User = authorizationRequest.ApplicationUser.User, RequestedOn = DateTime.Now, Granted = isGranted });
+                authorizationLogger.LogAuthorizationRequest(new AuthorizationRequestLogEntry() { Activity = activity, User = authorizationRequest.User, RequestedOn = DateTime.Now, Granted = isGranted });
 
                 // If the user is authorized then we may as well stop here...
                 if (isGranted && authorizationRequest.AuthorizeAll.IsFalse())

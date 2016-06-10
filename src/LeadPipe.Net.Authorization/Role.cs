@@ -14,7 +14,7 @@ namespace LeadPipe.Net.Authorization
     /// The role.
     /// </summary>
     /// <remarks>
-    /// An Role is a group of Users that can perform the same actions.
+    /// An Role is a group of Users that can perform the same activities.
     /// </remarks>
     public class Role : PersistableObject<Guid>, IEntity
     {

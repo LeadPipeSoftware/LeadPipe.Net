@@ -247,15 +247,9 @@ namespace LeadPipe.Net.Authorization
 
             this.application = application;
 
-            var applicationUser = new ApplicationUser
-            {
-                Application = this.application,
-                User = this.user
-            };
-
             var authorizationRequest = new AuthorizationRequest
                 {
-                    ApplicationUser = applicationUser,
+                    User = this.user,
                     Activities = this.activities,
                     AuthorizeAll = this.authorizeAllActivities
                 };
@@ -347,7 +341,7 @@ namespace LeadPipe.Net.Authorization
                         }
                     }
 
-                    exceptionMessage.Append(authorizationRequest.ApplicationUser.Application.Name.FormattedWith(" in {0}."));
+                    exceptionMessage.Append(this.application.Name.FormattedWith(" in {0}."));
 
                     this.exception = new LeadPipeNetAccessDeniedException(exceptionMessage.ToString());
                 }

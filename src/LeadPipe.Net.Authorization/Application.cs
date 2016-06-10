@@ -18,7 +18,7 @@ namespace LeadPipe.Net.Authorization
     public class Application : PersistableObject<Guid>, IAggregateRoot
     {
         private IList<User> administrators;
-        private IList<ApplicationUser> applicationUsers;
+        private IList<User> users;
         private IList<Activity> activities;
         private IList<ActivityGroup> activityGroups;
         private IList<Role> roles;
@@ -44,7 +44,7 @@ namespace LeadPipe.Net.Authorization
             this.activityGroups = new List<ActivityGroup>();
             this.administrators = new List<User>();
             this.roles = new List<Role>();
-            this.applicationUsers = new List<ApplicationUser>();
+            this.users = new List<User>();
         }
 
         /// <summary>
@@ -76,36 +76,6 @@ namespace LeadPipe.Net.Authorization
                 return this.administrators;
             }
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [allow mismatched client versions].
-        /// </summary>
-        /// <value><c>true</c> if [allow mismatched client versions]; otherwise, <c>false</c>.</value>
-        public virtual bool AllowMismatchedClientVersions { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [allow mismatched versions].
-        /// </summary>
-        /// <value><c>true</c> if [allow mismatched versions]; otherwise, <c>false</c>.</value>
-        public virtual bool AllowMismatchedVersions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the client (if applicable).
-        /// </summary>
-        /// <value>The name of the client (if applicable).</value>
-        public virtual string ClientName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the client's current version.
-        /// </summary>
-        /// <value>The client's current version.</value>
-        public virtual string CurrentClientVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets the current version.
-        /// </summary>
-        /// <value>The current version.</value>
-        public virtual string CurrentVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -150,11 +120,11 @@ namespace LeadPipe.Net.Authorization
         /// Gets the application's users.
         /// </summary>
         /// <value>The users.</value>
-        public virtual IEnumerable<ApplicationUser> Users
+        public virtual IEnumerable<User> Users
         {
             get
             {
-                return this.applicationUsers;
+                return this.users;
             }
         }
 
@@ -168,7 +138,7 @@ namespace LeadPipe.Net.Authorization
 
             if (Administrators.Any(admins => admins.Login.Equals(command.Login, StringComparison.OrdinalIgnoreCase))) return;
 
-            var user = new User(command.Login);
+            var user = new User(command.Login, this);
 
             this.administrators.Add(user);
         }
@@ -181,32 +151,60 @@ namespace LeadPipe.Net.Authorization
         {
             Guard.Will.ProtectAgainstNullArgument(() => command);
 
-            var user = new User(command.Login);
+            var user = new User(command.Login, this);
 
-            var applicationUser = new ApplicationUser { User = user, ExpirationDate = command.ExpirationDate, Application = this, CreatedOn = DateTime.Now };
-
-            this.applicationUsers.Add(applicationUser);
+            this.users.Add(user);
         }
 
         /// <summary>
-        /// Determines if the client versions match.
+        /// Grants a user the ability to perform an activity.
         /// </summary>
-        /// <param name="versionToCheck">The version to check.</param>
-        /// <returns><c>true</c> if the client versions match, <c>false</c> otherwise</returns>
-        public virtual bool ClientVersionsMatch(string versionToCheck)
+        /// <param name="command">The command.</param>
+        public virtual void GrantUserActivity(GrantUserActivityCommand command)
         {
-            // If we have something to compare to...
-            if (!string.IsNullOrEmpty(this.CurrentClientVersion))
-            {
-                var currentVersion = new Version(this.CurrentClientVersion).ToString(4);
-                var clientVersion = new Version(versionToCheck).ToString(4);
+            Guard.Will.ProtectAgainstNullArgument(() => command);
 
-                var comparisonResult = string.CompareOrdinal(currentVersion, clientVersion);
+            var user = GetUser(command.Login);
 
-                return comparisonResult == 0;
-            }
+            if (user.UserGrants.Any(g => g.Activity.Name.Equals(command.ActivityName, StringComparison.OrdinalIgnoreCase))) return;
 
-            return true;
+            var activity = GetActivity(command.ActivityName);
+
+            user.GrantUserActivity(activity, command.GrantingUserLogin);
+        }
+
+        /// <summary>
+        /// Grants a user the ability to perform any of the activities in an activity group.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        public virtual void GrantUserActivityGroup(GrantUserActivityGroupCommand command)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => command);
+
+            var user = GetUser(command.Login);
+
+            if (user.UserGrants.Any(g => g.ActivityGroup.Name.Equals(command.ActivityGroupName, StringComparison.OrdinalIgnoreCase))) return;
+
+            var activityGroup = GetActivityGroup(command.ActivityGroupName);
+
+            user.GrantUserActivityGroup(activityGroup, command.GrantingUserLogin);
+        }
+
+        /// <summary>
+        /// Grants a user the ability to perform any of the activities in a role.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        public virtual void GrantUserRole(GrantUserRoleCommand command)
+        {
+            Guard.Will.ProtectAgainstNullArgument(() => command);
+
+            var user = GetUser(command.Login);
+
+            if (user.UserGrants.Any(g => g.Role.Name.Equals(command.RoleName, StringComparison.OrdinalIgnoreCase))) return;
+
+            var role = GetRole(command.RoleName);
+
+            user.GrantUserRole(role, command.GrantingUserLogin);
         }
 
         /// <summary>
@@ -230,31 +228,65 @@ namespace LeadPipe.Net.Authorization
         {
             Guard.Will.ProtectAgainstNullArgument(() => command);
 
-            var existingUser = this.applicationUsers.FirstOrDefault(x => x.User.Login.Equals(command.Login, StringComparison.OrdinalIgnoreCase));
+            var existingUser = this.users.FirstOrDefault(x => x.Login.Equals(command.Login, StringComparison.OrdinalIgnoreCase));
 
-            this.applicationUsers.Remove(existingUser);
+            this.users.Remove(existingUser);
         }
 
         /// <summary>
-        /// Determines whether a version matches the current version.
+        /// Gets a user.
         /// </summary>
-        /// <param name="versionToCheck">The version to check.</param>
-        /// <returns><c>true</c> if the versions match; otherwise, <c>false</c>.</returns>
-        public virtual bool VersionsMatch(string versionToCheck)
+        /// <param name="login">The login.</param>
+        /// <returns>The user.</returns>
+        protected virtual User GetUser(string login)
         {
-            var match = true;
+            var user = users.FirstOrDefault(u => u.Login.Equals(login, StringComparison.OrdinalIgnoreCase));
 
-            // If we have something to compare to...
-            if (!string.IsNullOrEmpty(this.CurrentVersion))
-            {
-                // If the two don't match then we'll return false...
-                if (!string.Equals(this.CurrentVersion, versionToCheck, StringComparison.InvariantCulture))
-                {
-                    match = false;
-                }
-            }
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>($"User {login} has not been added as a user of {Name}.");
 
-            return match;
+            return user;
+        }
+
+        /// <summary>
+        /// Gets an activity.
+        /// </summary>
+        /// <param name="activityName">Name of the activity.</param>
+        /// <returns>The activity.</returns>
+        protected virtual Activity GetActivity(string activityName)
+        {
+            var activity = activities.FirstOrDefault(a => a.Name.Equals(activityName, StringComparison.OrdinalIgnoreCase));
+
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>($"{activityName} is not an activity in {Name}.");
+
+            return activity;
+        }
+
+        /// <summary>
+        /// Gets an activity group.
+        /// </summary>
+        /// <param name="activityName">Name of the activity group.</param>
+        /// <returns>The activity group.</returns>
+        protected virtual ActivityGroup GetActivityGroup(string activityName)
+        {
+            var activityGroup = activityGroups.FirstOrDefault(a => a.Name.Equals(activityName, StringComparison.OrdinalIgnoreCase));
+
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>($"{activityName} is not an activity group in {Name}.");
+
+            return activityGroup;
+        }
+
+        /// <summary>
+        /// Gets a role.
+        /// </summary>
+        /// <param name="roleName">Name of the role.</param>
+        /// <returns>The role.</returns>
+        protected virtual Role GetRole(string roleName)
+        {
+            var role = roles.FirstOrDefault(a => a.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase));
+
+            Guard.Will.ThrowExceptionOfType<LeadPipeNetSecurityException>($"{roleName} is not a role in {Name}.");
+
+            return role;
         }
     }
 }

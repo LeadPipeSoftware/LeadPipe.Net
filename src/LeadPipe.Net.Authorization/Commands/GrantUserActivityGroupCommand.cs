@@ -3,31 +3,30 @@
 // Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace LeadPipe.Net.Authorization
+namespace LeadPipe.Net.Authorization.Commands
 {
     /// <summary>
-    /// The authorization request.
+    /// Grants a user the ability to perform any of the activities in an activity group.
     /// </summary>
-    public class AuthorizationRequest
+    public class GrantUserActivityGroupCommand : ApplicationCommand
     {
         /// <summary>
-        /// Gets or sets the name of the activities.
+        /// Gets or sets the name of the activity group.
         /// </summary>
-        public virtual IEnumerable<Activity> Activities { get; set; }
+        [Required]
+        public string ActivityGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the user.
+        /// Gets or sets the granting user's login.
         /// </summary>
-        public virtual User User { get; set; }
+        public string GrantingUserLogin { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether all activities in the list.
+        /// Gets or sets the user's login.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if [authorize all]; otherwise, <c>false</c>.
-        /// </value>
-        public virtual bool AuthorizeAll { get; set; }
+        [Required]
+        public string Login { get; set; }
     }
 }
