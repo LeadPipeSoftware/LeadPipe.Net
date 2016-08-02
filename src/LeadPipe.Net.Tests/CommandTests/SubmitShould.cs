@@ -4,6 +4,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using LeadPipe.Net.Commands;
 using LeadPipe.Net.Extensions;
@@ -100,6 +101,33 @@ namespace LeadPipe.Net.Tests.CommandTests
 
             // Act & Assert
             Assert.Throws<Exception>(() => mediator.Submit(new ExplodingTestCommand { ExceptionMessage = ExpectedExceptionMessage }));
+        }
+
+        /// <summary>
+        /// Tests to ensure that the thrown exception has the original stack trace of the exception
+        /// </summary>
+        [Test]
+        public void NotAlterTheExceptionStackTraceOnThrownExceptions()
+        {
+            // Arrange
+            var ioc = new InversionOfControl();
+            ioc.Register<ICommandMediator, CommandMediator>();
+            ioc.Register<ICommandHandler<ExplodingTestCommand, UnitType>, ExplodingTestCommandHandler>();
+
+            var mediator = new CommandMediator(ioc.Resolve);
+
+            const string ExpectedExceptionMessage = "Kaboom!";
+
+            try
+            {
+                mediator.Submit(new ExplodingTestCommand {ExceptionMessage = ExpectedExceptionMessage});
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace(ex);
+                var topFrame = stackTrace.GetFrame(0);
+                Assert.AreEqual(typeof(ExplodingTestCommandHandler), topFrame.GetMethod().DeclaringType);
+            }
         }
 
         /// <summary>
@@ -205,5 +233,7 @@ namespace LeadPipe.Net.Tests.CommandTests
             Assert.That(response.ValidationResults.Any().IsTrue());
             Assert.That(response.ValidationResults.First().ErrorMessage.Equals(ExpectedValidationMessage));
         }
+
+
     }
 }

@@ -107,6 +107,8 @@ namespace LeadPipe.Net.Commands
                 response.Exception = new CommandHandlerNotFoundException();
 
                 response.CommandExecutionResult = CommandExecutionResult.Failed;
+
+                if (ThrowExceptionOnFailure) throw response.Exception;
             }
             catch (Exception ex)
             {
@@ -115,9 +117,9 @@ namespace LeadPipe.Net.Commands
                 response.Exception = ex;
 
                 response.CommandExecutionResult = CommandExecutionResult.Failed;
-            }
 
-            if (response.HasException() && ThrowExceptionOnFailure) throw response.Exception;
+                if (ThrowExceptionOnFailure) throw;
+            }
 
             this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Finished));
 
