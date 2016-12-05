@@ -6,6 +6,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using LeadPipe.Net.Extensions;
 
 namespace LeadPipe.Net.Slack
 {
@@ -189,6 +190,17 @@ namespace LeadPipe.Net.Slack
             Guard.Will.ProtectAgainstNullArgument(() => field);
 
             fields.Add(field);
+        }
+
+        /// <summary>
+        /// Adds the fields
+        /// </summary>
+        /// <param name="fieldsToAdd">The fields to add.</param>
+        public void AddFields(IEnumerable<SlackMessageAttachmentField> fieldsToAdd)
+        {
+            Guard.Will.ThrowArgumentNullException("fields").When(fieldsToAdd.IsEmpty());
+
+            fields.AddRange(fieldsToAdd);
         }
 
         /// <summary>

@@ -36,6 +36,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace LeadPipe.Net.Slack
 {
     // ****************************************************************************************
@@ -154,6 +156,13 @@ namespace LeadPipe.Net.Slack
         /// <param name="isShort">if set to <c>true</c> [is short].</param>
         /// <returns>The client.</returns>
         ISlackAttachmentValues IncludingField(string title, string value, bool isShort = false);
+
+        /// <summary>
+        /// Includes multiple fields on the Slack message attachment.
+        /// </summary>
+        /// <param name="fields">The fields to include.</param>
+        /// <returns>The client.</returns>
+        ISlackAttachmentValues IncludingFields(IEnumerable<SlackMessageAttachmentField> fields);
 
         /// <summary>
         /// A valid URL that displays a small 16x16px image to the left of the author name. Will only work if author name is present.

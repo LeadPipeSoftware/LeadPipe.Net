@@ -3,6 +3,7 @@
 // Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using LeadPipe.Net.Extensions;
 
 /*
@@ -335,6 +336,20 @@ namespace LeadPipe.Net.Slack
             var field = new SlackMessageAttachmentField(title, value, isShort);
 
             pendingSlackMessageAttachment.AddField(field);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Includes multiple fields on the Slack message attachment.
+        /// </summary>
+        /// <param name="fields">The fields to include.</param>
+        /// <returns>
+        /// The client.
+        /// </returns>
+        ISlackAttachmentValues ISlackAttachmentValues.IncludingFields(IEnumerable<SlackMessageAttachmentField> fields)
+        {
+            pendingSlackMessageAttachment.AddFields(fields);
 
             return this;
         }
