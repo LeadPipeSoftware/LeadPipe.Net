@@ -47,6 +47,7 @@
     </Compile>
     <Compile Include="Abbreviation.cs" />
     <Compile Include="Clock.cs" />
+    <Compile Include="CombGuid.cs" />
     <Compile Include="Commands\CommandExecutionResult.cs" />
     <Compile Include="Commands\CommandExecutionStatus.cs" />
     <Compile Include="Commands\CommandExecutionStatusChangedEventArgs.cs" />
