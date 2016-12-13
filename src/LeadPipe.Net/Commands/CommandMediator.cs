@@ -1,11 +1,14 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CommandMediator.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
+using LeadPipe.Net.Extensions;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace LeadPipe.Net.Commands
@@ -24,13 +27,14 @@ namespace LeadPipe.Net.Commands
     /// </summary>
     public class CommandMediator : ICommandMediator
     {
-        private static ConcurrentDictionary<Tuple<Type, Type>, Func<CommandMediator, ICommand, object>> _createCommandDelegates = new ConcurrentDictionary<Tuple<Type, Type>, Func<CommandMediator, ICommand, object>>();
+        private static ConcurrentDictionary<Tuple<Type, Type>, Func<CommandMediator, ICommand, object>> createCommandDelegates = new ConcurrentDictionary<Tuple<Type, Type>, Func<CommandMediator, ICommand, object>>();
 
         private readonly SingleInstanceFactory singleInstanceFactory;
 
-        public CommandMediator(SingleInstanceFactory singleInstanceFactory)
+        public CommandMediator(SingleInstanceFactory singleInstanceFactory, bool throwExceptionOnFailure = true)
         {
             this.singleInstanceFactory = singleInstanceFactory;
+            this.ThrowExceptionOnFailure = throwExceptionOnFailure;
         }
 
         /// <summary>
@@ -39,28 +43,72 @@ namespace LeadPipe.Net.Commands
         public event CommandExecutingEventHandler CommandExecuting;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the command mediator should throw exceptions that occur during execution (default is true).
+        /// </summary>
+        public bool ThrowExceptionOnFailure { get; set; }
+
+        /// <summary>
         /// Requests execution of the specified command.
         /// </summary>
         /// <typeparam name="TResponseData">The type of the response data.</typeparam>
         /// <param name="command">The command.</param>
         /// <returns>The command response.</returns>
+        [Obsolete("Please use the Submit method instead.")]
         public virtual CommandHandlerResponse<TResponseData> Request<TResponseData>(ICommand<TResponseData> command)
         {
-            this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Executing));
+            return Submit(command);
+        }
 
+        /// <summary>
+        /// Submits the specified command for execution.
+        /// </summary>
+        /// <typeparam name="TResponseData">The type of the response data.</typeparam>
+        /// <param name="command">The command.</param>
+        /// <returns>The command response.</returns>
+        public CommandHandlerResponse<TResponseData> Submit<TResponseData>(ICommand<TResponseData> command)
+        {
             var response = new CommandHandlerResponse<TResponseData>();
 
-            if (command == null) throw new ArgumentNullException(nameof(command));
+            Guard.Will.ProtectAgainstNullArgument(() => command);
+
+            this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Executing));
 
             var commandType = command.GetType();
 
             try
             {
-                var func = _createCommandDelegates.GetOrAdd(Tuple.Create(commandType, typeof(TResponseData)), GenerateCommandDelegate);
+                if (command is IValidatableObject)
+                {
+                    var validationResults = Validate((IValidatableObject)command);
 
-                response.Data = (TResponseData)func(this, command);
+                    if (validationResults.Any())
+                    {
+                        response.ValidationResults = validationResults;
 
-                response.CommandExecutionResult = CommandExecutionResult.Succeeded;
+                        response.CommandExecutionResult = CommandExecutionResult.Failed;
+
+                        this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Failing));
+                    }
+                    else
+                    {
+                        ExecuteCommand(command, commandType, response);
+                    }
+                }
+                else
+                {
+                    ExecuteCommand(command, commandType, response);
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                // This indicates we couldn't find a handler so we gotta bail...
+                this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Failing));
+
+                response.Exception = new CommandHandlerNotFoundException();
+
+                response.CommandExecutionResult = CommandExecutionResult.Failed;
+
+                if (ThrowExceptionOnFailure) throw response.Exception;
             }
             catch (Exception ex)
             {
@@ -69,6 +117,8 @@ namespace LeadPipe.Net.Commands
                 response.Exception = ex;
 
                 response.CommandExecutionResult = CommandExecutionResult.Failed;
+
+                if (ThrowExceptionOnFailure) throw;
             }
 
             this.OnCommandExecuting(new CommandExecutionStatusChangedEventArgs(command, CommandExecutionStatus.Finished));
@@ -77,27 +127,55 @@ namespace LeadPipe.Net.Commands
         }
 
         /// <summary>
+        /// Validates the command.
+        /// </summary>
+        /// <param name="command">The command to validate.</param>
+        /// <returns>An enumeration of validation results.</returns>
+        public IEnumerable<ValidationResult> Validate(IValidatableObject command)
+        {
+            if (command.IsNull()) return null;
+
+            var validationResult = new List<ValidationResult>();
+
+            Validator.TryValidateObject(command, new ValidationContext(command, null, null), validationResult, true);
+
+            return validationResult;
+        }
+
+        /// <summary>
         /// Raises the CommandOrQueryExecuting event.
         /// </summary>
         /// <param name="e">The <see cref="CommandExecutionStatusChangedEventArgs"/> instance containing the event data.</param>
         protected void OnCommandExecuting(CommandExecutionStatusChangedEventArgs e)
         {
-            if (this.CommandExecuting != null)
-            {
-                this.CommandExecuting(this, e);
-            }
+            this.CommandExecuting?.Invoke(this, e);
         }
 
-        private THandler CreateInstance<THandler>()
+        private THandler CreateHandlerInstance<THandler>()
         {
             return (THandler)singleInstanceFactory(typeof(THandler));
+        }
+
+        private void ExecuteCommand<TResponseData>(ICommand<TResponseData> command, Type commandType, CommandHandlerResponse<TResponseData> response)
+        {
+            var func = createCommandDelegates.GetOrAdd(Tuple.Create(commandType, typeof(TResponseData)), GenerateCommandDelegate);
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            response.Data = (TResponseData)func(this, command);
+
+            watch.Stop();
+
+            response.ExecutionTimeInMilliseconds = watch.ElapsedMilliseconds;
+
+            response.CommandExecutionResult = CommandExecutionResult.Succeeded;
         }
 
         private TResponseData ExecuteCreateCommand<TCommand, TResponseData>(TCommand command) where TCommand : ICommand<TResponseData>
         {
             if (command == null) throw new ArgumentNullException(nameof(command));
 
-            var handler = CreateInstance<ICommandHandler<TCommand, TResponseData>>();
+            var handler = CreateHandlerInstance<ICommandHandler<TCommand, TResponseData>>();
 
             var id = handler.Handle(command);
 

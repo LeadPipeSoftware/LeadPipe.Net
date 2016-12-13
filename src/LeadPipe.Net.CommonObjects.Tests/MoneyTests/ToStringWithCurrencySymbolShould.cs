@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ToStringWithCurrencySymbolShould.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.CommonObjects.CommonObjects;
@@ -17,8 +16,6 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
     [TestFixture]
     public class ToStringWithCurrencySymbolShould
     {
-        #region Public Methods
-
         /// <summary>
         /// Tests every supported culture to ensure that the ToStringWithCurrencySymbol is formatted correctly when using the CultureInfo constructor.
         /// </summary>
@@ -39,7 +36,7 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
 
                 var moneyAsString = money.ToStringWithCurrencySymbol();
 
-                Console.WriteLine(moneyAsString);
+                //Console.WriteLine(moneyAsString);
 
                 // Assert
 
@@ -76,14 +73,12 @@ namespace LeadPipe.Net.CommonObjects.Tests.MoneyTests
 
                 var moneyAsString = money.ToStringWithCurrencySymbol();
 
-                Console.WriteLine($"Culture Name: {cultureInfo.Name}\t\tCurrency Symbol: {currencySymbol}\t\tToString: {moneyAsString}");
+                //Console.WriteLine($"Culture Name: {cultureInfo.Name}\t\tCurrency Symbol: {currencySymbol}\t\tToString: {moneyAsString}");
 
                 // Assert
 
                 Assert.That(moneyAsString.Equals(expected));
             }
         }
-
-        #endregion Public Methods
     }
 }

@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfWork.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -27,8 +26,6 @@ namespace LeadPipe.Net.Data.NHibernate
     /// </example>
     public sealed class UnitOfWork : IUnitOfWork
     {
-        #region Constants and Fields
-
         /// <summary>
         /// The active data session manager.
         /// </summary>
@@ -42,12 +39,17 @@ namespace LeadPipe.Net.Data.NHibernate
         /// <summary>
         /// The flush mode.
         /// </summary>
-        private readonly FlushMode defaultFlushMode;
+        private readonly FlushMode flushMode;
 
         /// <summary>
         /// The isolation level.
         /// </summary>
-        private readonly IsolationLevel defaultIsolationLevel;
+        private readonly IsolationLevel isolationLevel;
+
+        /// <summary>
+        /// The action to take on a commit exception.
+        /// </summary>
+        private Action invokeOnCommitException;
 
         /// <summary>
         /// The action to take after a commit.
@@ -60,11 +62,6 @@ namespace LeadPipe.Net.Data.NHibernate
         private Action invokeBeforeCommit;
 
         /// <summary>
-        /// The action to take on a commit exception.
-        /// </summary>
-        private Action _invokeOnCommitException;
-
-        /// <summary>
         /// The action to take on a rollback.
         /// </summary>
         private Action invokeOnRollback;
@@ -73,8 +70,6 @@ namespace LeadPipe.Net.Data.NHibernate
         /// The nest level key.
         /// </summary>
         private string nestLevelKey = "LeadPipe.Net.Data.NHibernate.NestLevelKey";
-
-        #endregion Constants and Fields
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
@@ -93,13 +88,10 @@ namespace LeadPipe.Net.Data.NHibernate
         {
             this.dataSessionProvider = dataSessionProvider;
             this.activeDataSessionManager = activeDataSessionManager;
-            this.defaultFlushMode = flushMode;
-            this.defaultIsolationLevel = isolationLevel;
-
+            this.flushMode = flushMode;
+            this.isolationLevel = isolationLevel;
             this.UnitOfWorkBatchMode = unitOfWorkBatchMode;
         }
-
-        #region Public Properties
 
         /// <summary>
         /// Gets the current NHibernate session.
@@ -140,8 +132,8 @@ namespace LeadPipe.Net.Data.NHibernate
         /// </summary>
         public Action InvokeOnCommitException
         {
-            get { return this._invokeOnCommitException; }
-            set { this._invokeOnCommitException = value; }
+            get { return this.invokeOnCommitException; }
+            set { this.invokeOnCommitException = value; }
         }
 
         /// <summary>
@@ -183,25 +175,21 @@ namespace LeadPipe.Net.Data.NHibernate
         /// <value>The Unit of Work batch mode.</value>
         public UnitOfWorkBatchMode UnitOfWorkBatchMode { get; private set; }
 
-        #endregion Public Properties
-
-        #region Public Methods
-
         /// <summary>
         /// Flushes the unit of work and commits the transaction.
         /// </summary>
         public void Commit()
         {
             /*
-			 * Serializeable   - Lock the entire table until the end of the transaction.
-			 * RepeatableRead  - Read and Write lock rows until the end of the transaction.
-			 * ReadCommitted   - Write lock rows until the end of the transaction, but only Read lock as long as
-			 *                   necessary. This is the SQL Server default.
-			 * ReadUncommitted - Read and Write lock rows only as long as necessary.
-			 * Chaos           - Only the highest priority of writes use locks.
-			 */
+             * Serializeable   - Lock the entire table until the end of the transaction.
+             * RepeatableRead  - Read and Write lock rows until the end of the transaction.
+             * ReadCommitted   - Write lock rows until the end of the transaction, but only Read lock as long as
+             *                   necessary. This is the SQL Server default.
+             * ReadUncommitted - Read and Write lock rows only as long as necessary.
+             * Chaos           - Only the highest priority of writes use locks.
+             */
 
-            this.Commit(defaultIsolationLevel);
+            this.Commit(isolationLevel);
         }
 
         /// <summary>
@@ -227,7 +215,7 @@ namespace LeadPipe.Net.Data.NHibernate
             {
                 try
                 {
-                    if (this._invokeOnCommitException.IsNotNull()) _invokeOnCommitException.Invoke();
+                    if (this.invokeOnCommitException.IsNotNull()) invokeOnCommitException.Invoke();
                 }
                 finally
                 {
@@ -251,6 +239,7 @@ namespace LeadPipe.Net.Data.NHibernate
                 return;
             }
 
+            this.CurrentTransaction.Dispose();
             this.activeDataSessionManager.ClearActiveDataSession();
         }
 
@@ -297,9 +286,13 @@ namespace LeadPipe.Net.Data.NHibernate
             }
         }
 
+        /// <summary>
+        /// Start the unit of work with the default flush mode.
+        /// </summary>
+        /// <returns>The started unit of work.</returns>
         public IUnitOfWork Start()
         {
-            return this.Start(this.defaultFlushMode);
+            return this.Start(this.flushMode);
         }
 
         /// <summary>
@@ -331,7 +324,7 @@ namespace LeadPipe.Net.Data.NHibernate
                 }
 
                 // Use the default flush mode if the caller didn't supply one...
-                this.CurrentSession.FlushMode = flushMode == this.defaultFlushMode ? this.defaultFlushMode : flushMode;
+                this.CurrentSession.FlushMode = flushMode == this.flushMode ? this.flushMode : flushMode;
 
                 this.NestLevel = 0;
             }
@@ -342,11 +335,9 @@ namespace LeadPipe.Net.Data.NHibernate
 
             // If this is the first time we've been started or we've been instructed to create
             // nested transactions then begin a transaction...
-            if (this.NestLevel == 0 || this.UnitOfWorkBatchMode.Equals(UnitOfWorkBatchMode.Nested)) this.CurrentTransaction = this.CurrentSession.BeginTransaction(defaultIsolationLevel);
+            if (this.NestLevel == 0 || this.UnitOfWorkBatchMode.Equals(UnitOfWorkBatchMode.Nested)) this.CurrentTransaction = this.CurrentSession.BeginTransaction(isolationLevel);
 
             return this;
         }
-
-        #endregion Public Methods
     }
 }

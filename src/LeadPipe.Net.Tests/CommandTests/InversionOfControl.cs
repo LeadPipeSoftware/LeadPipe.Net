@@ -1,4 +1,9 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -6,27 +11,26 @@ namespace LeadPipe.Net.Tests.CommandTests
 {
     public class InversionOfControl
     {
-
-        private readonly IDictionary<Type, object> _registrations = new ConcurrentDictionary<Type, object>();
+        private readonly IDictionary<Type, object> registrations = new ConcurrentDictionary<Type, object>();
 
         public void Register<TFrom, TTo>()
         {
-            _registrations[typeof (TFrom)] = typeof (TTo);
+            registrations[typeof(TFrom)] = typeof(TTo);
         }
 
         public void Register<TFrom>(TFrom instance)
         {
-            _registrations[typeof (TFrom)] = instance;
+            registrations[typeof(TFrom)] = instance;
         }
 
         public T Resolve<T>() where T : class
         {
-            return (T) Resolve(typeof (T));
+            return (T)Resolve(typeof(T));
         }
 
         public object Resolve(Type type)
         {
-            var result = _registrations[type];
+            var result = registrations[type];
 
             if (ReferenceEquals(result, null)) return null;
 

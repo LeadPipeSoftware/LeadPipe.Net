@@ -1,28 +1,25 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AllShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
 using NHibernate.Linq;
 using NUnit.Framework;
-using StructureMap;
+using System.Linq;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
-	/// <summary>
-	/// The Repository All property tests.
-	/// </summary>
-	[TestFixture]
-	public class AllShould
-	{
-        #region Public Methods and Operators
-
+    /// <summary>
+    /// The Repository All property tests.
+    /// </summary>
+    [TestFixture]
+    public class AllShould
+    {
         /// <summary>
         /// Tests that All property returns matching objects when using Fetch.
         /// </summary>
         [Test]
+        [Category("RequiresDatabase")]
         public void ReturnAllMatchingObjectsGivenFetch()
         {
             // Arrange
@@ -59,7 +56,5 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
                 Assert.That(foundModel.Count.Equals(1));
             }
         }
-        #endregion
-
     }
 }

@@ -1,4 +1,9 @@
-﻿using NHibernate.Transform;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
+// --------------------------------------------------------------------------------------------------------------------
+
+using NHibernate.Transform;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;

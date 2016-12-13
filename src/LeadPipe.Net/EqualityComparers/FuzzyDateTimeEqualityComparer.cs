@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FuzzyDateTimeEqualityComparer.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -33,7 +32,7 @@ namespace LeadPipe.Net.EqualityComparers
         /// <returns>
         ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(object x, object y)
+        public new bool Equals(object x, object y)
         {
             if (x == null || y == null)
             {
@@ -41,11 +40,11 @@ namespace LeadPipe.Net.EqualityComparers
             }
 
             if (!(x is DateTime) || !(y is DateTime)) return x.Equals(y);
-            
+
             var dt1 = (DateTime)x;
             var dt2 = (DateTime)y;
             var duration = (dt1 - dt2).Duration();
-            
+
             return duration < maxDifference;
         }
 
@@ -54,7 +53,7 @@ namespace LeadPipe.Net.EqualityComparers
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public int GetHashCode(object obj)

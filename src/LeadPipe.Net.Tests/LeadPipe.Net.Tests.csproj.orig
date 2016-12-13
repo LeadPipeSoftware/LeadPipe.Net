@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{10FEB13F-2FDC-472F-BE87-EDEA8C4595EB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LeadPipe.Net.Tests</RootNamespace>
+    <AssemblyName>LeadPipe.Net.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.5.8.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Moq.4.5.8\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="BoolExtensionsTests\IsFalseShould.cs" />
+    <Compile Include="BoolExtensionsTests\IsTrueShould.cs" />
+<<<<<<< HEAD
+    <Compile Include="CombGuidParseShould.cs" />
+    <Compile Include="CombGuidNewGuidShould.cs" />
+=======
+    <Compile Include="CommandTests\DebugWriteWithValidationCommandHandler.cs" />
+    <Compile Include="CommandTests\DebugWriteWithValidationCommand.cs" />
+>>>>>>> d3c1e8cfc19dcd28e3765b994686ee972ce20aad
+    <Compile Include="CommandTests\DebugWriteCommand.cs" />
+    <Compile Include="CommandTests\DebugWriteCommandHandler.cs" />
+    <Compile Include="CommandTests\ExplodingTestCommand.cs" />
+    <Compile Include="CommandTests\ExplodingTestCommandHandler.cs" />
+    <Compile Include="CommandTests\InversionOfControl.cs" />
+    <Compile Include="CommandTests\SubmitShould.cs" />
+    <Compile Include="CommandTests\TestQuery.cs" />
+    <Compile Include="CommandTests\TestQueryHandler.cs" />
+    <Compile Include="ConfigurationTests\ConfigurationSettingShould.cs" />
+    <Compile Include="ConfigurationTests\ExampleConfiguration.cs" />
+    <Compile Include="ConfigurationTests\ExampleConfigurationSetting.cs" />
+    <Compile Include="ConfigurationTests\ExampleContextAwareConfigurationSetting.cs" />
+    <Compile Include="ConfigurationTests\ExampleParsedConfigurationSetting.cs" />
+    <Compile Include="ConfigurationTests\GetConnectionStringSettingsShould.cs" />
+    <Compile Include="DecimalExtensionsTests\PercentageOfShould.cs" />
+    <Compile Include="DecimalExtensionsTests\PercentOfShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\CreateRandomStringShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\GetAlphabetAfterShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\GetAlphabetBeforeShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\GetAlphabetShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\GetExtendedCharacterShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\GetLetterIndexShould.cs" />
+    <Compile Include="EnglishAlphabetProviderTests\GetPrintableCharacterShould.cs" />
+    <Compile Include="EnumerableExtensionsTests\GetPermutationsShould.cs" />
+    <Compile Include="ExceptionExtensionTests\GetFirstExceptionOfTypeShould.cs" />
+    <Compile Include="ExceptionExtensionTests\IsOrContainsExceptionOfTypeShould.cs" />
+    <Compile Include="FiniteStateMachineTests\AvailableTransitionsShould.cs" />
+    <Compile Include="FiniteStateMachineTests\CurrentTransitionsShould.cs" />
+    <Compile Include="FiniteStateMachineTests\FiniteStateTests\TransitionsShould.cs" />
+    <Compile Include="FiniteStateMachineTests\FiniteStateTransitionTests\TransitionShould.cs" />
+    <Compile Include="FiniteStateMachineTests\GarageDoor.cs" />
+    <Compile Include="FiniteStateMachineTests\GarageDoorShould.cs" />
+    <Compile Include="FiniteStateMachineTests\PerformTransitionShould.cs" />
+    <Compile Include="FiniteStateMachineTests\RegisterStateShould.cs" />
+    <Compile Include="FiniteStateMachineTests\RemoveStateShould.cs" />
+    <Compile Include="FiniteStateMachineTests\SimpleFiniteStateMachineTests\GarageDoor.cs" />
+    <Compile Include="FiniteStateMachineTests\SimpleFiniteStateMachineTests\GarageDoorShould.cs" />
+    <Compile Include="FiniteStateMachineTests\StatesShould.cs" />
+    <Compile Include="GuardTests\GuardShould.cs" />
+    <Compile Include="IntExtensionsTests\GetDigitCountShould.cs" />
+    <Compile Include="IntExtensionsTests\InRangeShould.cs" />
+    <Compile Include="IntExtensionsTests\IsBetweenShould.cs" />
+    <Compile Include="LinqExtensionsTests\ToCommaDelimitedStringShould.cs" />
+    <Compile Include="ObjectExtensionsTests\GetPropertyValueShould.cs" />
+    <Compile Include="ObjectExtensionsTests\IsNotNullShould.cs" />
+    <Compile Include="ObjectExtensionsTests\IsNullShould.cs" />
+    <Compile Include="ObjectExtensionsTests\OrElseShould.cs" />
+    <Compile Include="ObjectExtensionsTests\ToDictionaryShould.cs" />
+    <Compile Include="PollerTests\PollerShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomSocialSecurityNumberShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomPhoneNumberShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomIpV4Should.cs" />
+    <Compile Include="RandomValueProviderTests\RandomFullNameShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomFirstNameShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomEmailAddressShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomAgeShould.cs" />
+    <Compile Include="RandomValueProviderTests\RandomDateShould.cs" />
+    <Compile Include="StackedListTests\CountShould.cs" />
+    <Compile Include="StackedListTests\PeekShould.cs" />
+    <Compile Include="StackedListTests\PopShould.cs" />
+    <Compile Include="StackedListTests\PushShould.cs" />
+    <Compile Include="StackedListTests\RemoveShould.cs" />
+    <Compile Include="StringExtensionsTests\ContainsLeadingWhiteSpaceShould.cs" />
+    <Compile Include="StringExtensionsTests\ContainsLowerCaseCharactersShould.cs" />
+    <Compile Include="StringExtensionsTests\ContainsTrailingWhiteSpaceShould.cs" />
+    <Compile Include="StringExtensionsTests\ContainsUpperCaseCharactersShould.cs" />
+    <Compile Include="StringExtensionsTests\ContainsWhiteSpaceShould.cs" />
+    <Compile Include="StringExtensionsTests\FirstUnmatchedIndexOfShould.cs" />
+    <Compile Include="StringExtensionsTests\FormattedWithShould.cs" />
+    <Compile Include="StringExtensionsTests\GetOccurrenceCountShould.cs" />
+    <Compile Include="StringExtensionsTests\GetOccurrencesShould.cs" />
+    <Compile Include="StringExtensionsTests\IsAlphanumericShould.cs" />
+    <Compile Include="StringExtensionsTests\IsExtendedCharacterShould.cs" />
+    <Compile Include="StringExtensionsTests\IsValidSocialSecurityNumberShould.cs" />
+    <Compile Include="StringExtensionsTests\IsValidEmailAddressShould.cs" />
+    <Compile Include="StringExtensionsTests\IsNumericShould.cs" />
+    <Compile Include="StringExtensionsTests\IsPrintableCharacterShould.cs" />
+    <Compile Include="StringExtensionsTests\ReduceShould.cs" />
+    <Compile Include="StringExtensionsTests\RemoveExtraWhitespaceShould.cs" />
+    <Compile Include="StringExtensionsTests\ToFriendlyNameShould.cs" />
+    <Compile Include="StringExtensionsTests\ToMD5HashShould.cs" />
+    <Compile Include="StringExtensionsTests\ToTitleCaseShould.cs" />
+    <Compile Include="StringExtensionsTests\WordWrapShould.cs" />
+    <Compile Include="StringExtensionsTests\WrapEachWithShould.cs" />
+    <Compile Include="TrackingObservableCollectionTests\GetTrackingStateShould.cs" />
+    <Compile Include="TrackingObservableCollectionTests\TrackingObservableCollectionShould.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeadPipe.Net\LeadPipe.Net.csproj">
+      <Project>{07eaabc8-d86d-4b6b-b153-77ee0e5526a5}</Project>
+      <Name>LeadPipe.Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CombGuidTests\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

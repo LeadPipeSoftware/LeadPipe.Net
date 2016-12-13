@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IntExtensions.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -14,64 +13,33 @@ namespace LeadPipe.Net.Extensions
     /// </summary>
     public static class IntExtensions
     {
-        #region Public Methods
+        private const long Exabyte = Petabyte * 1024;
+        private const long Gigabyte = Megabyte * 1024;
+        private const long Kilobyte = 1024;
+        private const long Megabyte = Kilobyte * 1024;
+        private const long Petabyte = Terabyte * 1024;
+        private const long Terabyte = Gigabyte * 1024;
 
-        /// <summary>
-        /// Determines whether the integer is between two numbers.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="lower">The lower value.</param>
-        /// <param name="upper">The upper value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified lower is between the lower and upper values; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsBetween(this int value, int lower, int upper)
+        public static long Bytes(this int number)
         {
-            // Return whether the value is between the lower and upper values...
-            return value > lower && value < upper;
+            return number;
         }
 
         /// <summary>
-        /// Determines whether the integer is in a range.
+        /// Returns a TimeSpan that represents the integer in days.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <param name="lower">The lower value.</param>
-        /// <param name="upper">The upper value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified lower is in the range; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool InRange(this int value, int lower, int upper)
-        {
-            // Return whether the value is in the range...
-            return value >= lower && value <= upper;
-        }
-
-        /// <summary>
-        /// Determines whether the specified value is an even number.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified value is even; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsEven(this int value)
+        /// <returns>A TimeSpan of the integer in days.</returns>
+        public static TimeSpan Days(this int value)
         {
             //// TODO: [GBM] Write unit tests.
 
-            return (value % 2) == 0;
+            return TimeSpan.FromDays(value);
         }
 
-        /// <summary>
-        /// Determines whether the specified integer is an odd number.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified value is odd; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsOdd(this int value)
+        public static long Exabytes(this int number)
         {
-            //// TODO: [GBM] Write unit tests.
-
-            return (value % 2) != 0;
+            return number * Exabyte;
         }
 
         /// <summary>
@@ -159,6 +127,91 @@ namespace LeadPipe.Net.Extensions
             return factorial(value);
         }
 
+        public static long Gigabytes(this int number)
+        {
+            return number * Gigabyte;
+        }
+
+        /// <summary>
+        /// Returns a TimeSpan that represents the integer in hours.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>A TimeSpan of the integer in hours.</returns>
+        public static TimeSpan Hours(this int value)
+        {
+            //// TODO: [GBM] Write unit tests.
+
+            return TimeSpan.FromHours(value);
+        }
+
+        /// <summary>
+        /// Determines whether the integer is in a range.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="lower">The lower value.</param>
+        /// <param name="upper">The upper value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified lower is in the range; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool InRange(this int value, int lower, int upper)
+        {
+            // Return whether the value is in the range...
+            return value >= lower && value <= upper;
+        }
+
+        /// <summary>
+        /// Determines whether the integer is between two numbers.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="lower">The lower value.</param>
+        /// <param name="upper">The upper value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified lower is between the lower and upper values; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsBetween(this int value, int lower, int upper)
+        {
+            // Return whether the value is between the lower and upper values...
+            return value > lower && value < upper;
+        }
+
+        /// <summary>
+        /// Determines whether the specified value is an even number.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is even; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsEven(this int value)
+        {
+            //// TODO: [GBM] Write unit tests.
+
+            return (value % 2) == 0;
+        }
+
+        /// <summary>
+        /// Determines whether the specified integer is an odd number.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified value is odd; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsOdd(this int value)
+        {
+            //// TODO: [GBM] Write unit tests.
+
+            return (value % 2) != 0;
+        }
+
+        public static long Kilobytes(this int number)
+        {
+            return number * Kilobyte;
+        }
+
+        public static long Megabytes(this int number)
+        {
+            return number * Megabyte;
+        }
+
         /// <summary>
         /// Returns a TimeSpan that represents the integer in milliseconds.
         /// </summary>
@@ -183,28 +236,9 @@ namespace LeadPipe.Net.Extensions
             return TimeSpan.FromMinutes(value);
         }
 
-        /// <summary>
-        /// Returns a TimeSpan that represents the integer in hours.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>A TimeSpan of the integer in hours.</returns>
-        public static TimeSpan Hours(this int value)
+        public static long Petabytes(this int number)
         {
-            //// TODO: [GBM] Write unit tests.
-
-            return TimeSpan.FromHours(value);
-        }
-
-        /// <summary>
-        /// Returns a TimeSpan that represents the integer in days.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>A TimeSpan of the integer in days.</returns>
-        public static TimeSpan Days(this int value)
-        {
-            //// TODO: [GBM] Write unit tests.
-
-            return TimeSpan.FromDays(value);
+            return number * Petabyte;
         }
 
         /// <summary>
@@ -219,6 +253,29 @@ namespace LeadPipe.Net.Extensions
             return TimeSpan.FromSeconds(value);
         }
 
+        public static long Terabytes(this int number)
+        {
+            return number * Terabyte;
+        }
+
+        /// <summary>
+        /// Performs the specified action for the specified number of times.
+        /// </summary>
+        /// /// <code>
+        /// 5.Times(() => { DoSomething(); });
+        /// </code>
+        /// <param name="value">The value.</param>
+        /// <param name="action">The action.</param>
+        public static void Times(this int value, Action action)
+        {
+            if (action == null) return;
+
+            for (var i = 0; i < value; i++)
+            {
+                action();
+            }
+        }
+
         /// <summary>
         /// Performs the specified action for the specified number of times passing in the iterator each time.
         /// </summary>
@@ -229,7 +286,7 @@ namespace LeadPipe.Net.Extensions
         /// <param name="action">The action.</param>
         public static void Times(this int value, Action<int> action)
         {
-            //// TODO: [GBM] Write unit tests.
+            if (action == null) return;
 
             for (var c = 0; c < value; c++)
             {
@@ -255,7 +312,5 @@ namespace LeadPipe.Net.Extensions
                 action(a);
             }
         }
-
-        #endregion
     }
 }

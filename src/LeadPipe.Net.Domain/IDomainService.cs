@@ -1,16 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDomainService.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace LeadPipe.Net.Domain
 {
-	/// <summary>
-	/// A marker interface that indicates the object is a domain service. Usage is completely optional.
-	/// </summary>
-	/// <remarks>Page 107 - Evans, Eric. Domain Driven Design. 2004. Addison-Wesley. March 2009</remarks>
-	public interface IDomainService
-	{
-	}
+    /// <summary>
+    /// A marker interface that indicates the object is a domain service. Usage is completely optional.
+    /// </summary>
+    /// <remarks>Page 107 - Evans, Eric. Domain Driven Design. 2004. Addison-Wesley. March 2009</remarks>
+    public interface IDomainService
+    {
+    }
 }

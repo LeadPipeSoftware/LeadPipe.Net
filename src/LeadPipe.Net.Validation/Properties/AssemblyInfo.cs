@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Reflection;
@@ -9,4 +8,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("LeadPipe.Net.Validation")]
 [assembly: AssemblyDescription("LeadPipe.Net Validation Library")]
-[assembly: Guid("5d3e743d-x2a1-gh0h-8s9e-ggregf672472")]
+[assembly: Guid("1190ff46-1970-415d-834d-db9bf547db0f")]

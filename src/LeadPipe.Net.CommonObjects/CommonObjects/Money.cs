@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Money.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -189,8 +188,6 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
                 : string.Format(cultureInfo, "{0:C}", amount);
         }
 
-        #region Arithmetic Operator Overloads
-
         /// <summary>
         /// Implements the -.
         /// </summary>
@@ -358,7 +355,5 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
 
             return new Money(a + b.Amount);
         }
-
-        #endregion Arithmetic Operator Overloads
     }
 }

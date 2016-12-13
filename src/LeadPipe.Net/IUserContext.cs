@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IUserContext.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Security.Principal;
@@ -13,6 +12,12 @@ namespace LeadPipe.Net
     /// </summary>
     public interface IUserContext : IPrincipal
     {
+        /// <summary>
+        /// Gets the user name without domain name..
+        /// </summary>
+        /// <value>user name without domain name.</value>
+        string AccountName { get; }
+
         /// <summary>
         /// Gets or sets the type of the authentication.
         /// </summary>
@@ -68,12 +73,6 @@ namespace LeadPipe.Net
         /// </summary>
         /// <value>The password hash.</value>
         byte[] PasswordHash { get; set; }
-
-        /// <summary>
-        /// Gets the user name without domain name..
-        /// </summary>
-        /// <value>user name without domain name.</value>
-        string AccountName { get; }
 
         /// <summary>
         /// Gets or sets the title.

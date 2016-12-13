@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HealthInformation.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace LeadPipe.Net.CommonObjects.CommonObjects
@@ -14,14 +13,6 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
         /// <summary>
         /// The blood type.
         /// </summary>
-        private BloodType bloodType;
-
-        /// <summary>
-        /// The blood type.
-        /// </summary>
-        public virtual BloodType BloodType
-        {
-            get { return bloodType; }
-        }
+        public virtual BloodType BloodType { get; set; }
     }
 }

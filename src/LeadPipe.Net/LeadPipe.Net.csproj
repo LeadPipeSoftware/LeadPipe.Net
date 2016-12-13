@@ -34,6 +34,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,7 @@
     <Compile Include="Commands\CommandExecutionStatus.cs" />
     <Compile Include="Commands\CommandExecutionStatusChangedEventArgs.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
+    <Compile Include="Commands\CommandHandlerNotFoundException.cs" />
     <Compile Include="Commands\CommandHandlerResponse.cs" />
     <Compile Include="Commands\CommandMediator.cs" />
     <Compile Include="Commands\ICommand.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Enumeration.cs" />
     <Compile Include="EqualityComparers\FuzzyDateTimeEqualityComparer.cs" />
     <Compile Include="Extensions\BoolExtensions.cs" />
+    <Compile Include="Extensions\ConversionExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />

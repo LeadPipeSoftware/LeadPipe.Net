@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Reflection;
@@ -9,4 +8,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("LeadPipe.Net.Data.NHibernate.CastleWindsor")]
 [assembly: AssemblyDescription("LeadPipe.Net Data NHibernate Castle Windsor Libraries")]
-[assembly: Guid("01973e65-94b8-4bd5-be56-9F5467c828d65")]
+[assembly: Guid("7fd3ce9e-d784-44fe-9c2a-b8594540208e")]

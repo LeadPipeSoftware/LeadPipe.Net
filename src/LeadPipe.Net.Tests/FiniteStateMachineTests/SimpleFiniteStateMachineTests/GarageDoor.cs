@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GarageDoor.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -12,31 +11,31 @@
  * these characteristics and capabilities are granted as well as taking advantage of features such as History. Without
  * a reasonable FSM implementation, business rules, codes, statuses, states, and so forth can become scattered and hard
  * to decipher and debug.
- * 
+ *
  * It should be noted that this particular example is moderately verbose. It isn't necessary to define all of the
  * methods, properties, enumerations, and so forth as shown here. It's also not necessary to put everything into a
  * single class. You may choose to use partial classes or even create your own FSM that the owning type holds a single
  * reference to. Ultimately, you have to decide what's right based on the circumstances.
- * 
+ *
  * Finite State Machine
  * --------------------------------------------------------------------------------------------------------------------
  * A Finite State Machine (FSM) is the mechanism by which we can model an abstract machine by defining a finite number
  * of States as well as the Transitions between those States. For example, a door may be considered an FSM in that it
  * has States (open and closed) as well as Transitions (open and close) that are triggered by Events (opened and
  * closed) that are invoked by object methods (door.Open and door.Close).
- * 
+ *
  * State
  * --------------------------------------------------------------------------------------------------------------------
  * The values of an object's attributes represent State. For example, if a door is anything more than closed then it
  * is considered to be in the open state (Door.PercentOpen > 0).
- * 
+ *
  * Transitions
  * --------------------------------------------------------------------------------------------------------------------
  * When certain Events occur, an object progresses from one State to another. For example, when a door (object) is
  * opened (Event), it changes (Transition) from closed (State) to open (State). Each State defines what is possible by
  * registering Transitions. Each Transition causes the object to arrive at a particular State. Transitions often have
  * one or more business rules that determine if the they can be executed.
- * 
+ *
  * Transition Reasons
  * --------------------------------------------------------------------------------------------------------------------
  * When a Transition occurs, we often want to know why it occurred. For example, when a door transitions from closed to
@@ -45,176 +44,176 @@
  * more explicit reasons such as "Depositing Money", "Withdrawing Money", and "Security Check".
  */
 
-using System.Linq;
 using LeadPipe.Net.FiniteStateMachine;
+using System.Linq;
 
 namespace LeadPipe.Net.Tests.FiniteStateMachineTests.SimpleFiniteStateMachineTests
 {
-	public enum GarageDoorStatus
-	{
-		Open,
-		ClosedAndUnlocked,
-		ClosedAndLocked
-	}
+    public enum GarageDoorStatus
+    {
+        Open,
+        ClosedAndUnlocked,
+        ClosedAndLocked
+    }
 
-	/// <summary>
-	/// The garage door.
-	/// </summary>
-	public class GarageDoor : SimpleFiniteStateMachine<GarageDoorStatus, SimpleFiniteState<GarageDoorStatus>>
-	{
-		public GarageDoor()
-			: base(GarageDoorStatus.Open)
-		{
-		}
+    /// <summary>
+    /// The garage door.
+    /// </summary>
+    public class GarageDoor : SimpleFiniteStateMachine<GarageDoorStatus, SimpleFiniteState<GarageDoorStatus>>
+    {
+        public GarageDoor()
+            : base(GarageDoorStatus.Open)
+        {
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door can close.
-		/// </summary>
-		public bool CanClose
-		{
-			get
-			{
-				return CanTransitionTo(GarageDoorStatus.ClosedAndUnlocked);
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door can close.
+        /// </summary>
+        public bool CanClose
+        {
+            get
+            {
+                return CanTransitionTo(GarageDoorStatus.ClosedAndUnlocked);
+            }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door can lock.
-		/// </summary>
-		public bool CanLock
-		{
-			get
-			{
-				return CanTransitionTo(GarageDoorStatus.ClosedAndLocked);
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door can lock.
+        /// </summary>
+        public bool CanLock
+        {
+            get
+            {
+                return CanTransitionTo(GarageDoorStatus.ClosedAndLocked);
+            }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door can open.
-		/// </summary>
-		public bool CanOpen
-		{
-			get
-			{
-				return CanTransitionTo(GarageDoorStatus.Open);
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door can open.
+        /// </summary>
+        public bool CanOpen
+        {
+            get
+            {
+                return CanTransitionTo(GarageDoorStatus.Open);
+            }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door can be unlocked.
-		/// </summary>
-		public bool CanUnlock
-		{
-			get
-			{
-				return CanTransitionTo(GarageDoorStatus.ClosedAndUnlocked);
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door can be unlocked.
+        /// </summary>
+        public bool CanUnlock
+        {
+            get
+            {
+                return CanTransitionTo(GarageDoorStatus.ClosedAndUnlocked);
+            }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door is closed.
-		/// </summary>
-		public bool IsClosed
-		{
-			get
-			{
-				return Status == GarageDoorStatus.ClosedAndUnlocked || Status == GarageDoorStatus.ClosedAndLocked;
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door is closed.
+        /// </summary>
+        public bool IsClosed
+        {
+            get
+            {
+                return Status == GarageDoorStatus.ClosedAndUnlocked || Status == GarageDoorStatus.ClosedAndLocked;
+            }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door is locked.
-		/// </summary>
-		public bool IsLocked
-		{
-			get
-			{
-				return Status == GarageDoorStatus.ClosedAndLocked;
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door is locked.
+        /// </summary>
+        public bool IsLocked
+        {
+            get
+            {
+                return Status == GarageDoorStatus.ClosedAndLocked;
+            }
+        }
 
-		/// <summary>
-		/// Gets a value indicating whether the garage door is open.
-		/// </summary>
-		public bool IsOpen
-		{
-			get
-			{
-				return Status == GarageDoorStatus.Open;
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether the garage door is open.
+        /// </summary>
+        public bool IsOpen
+        {
+            get
+            {
+                return Status == GarageDoorStatus.Open;
+            }
+        }
 
-		/// <summary>
-		/// Closes the garage door.
-		/// </summary>
-		public void Close()
-		{
-			PerformTransition(GarageDoorStatus.ClosedAndUnlocked, "Closed");
-		}
+        /// <summary>
+        /// Closes the garage door.
+        /// </summary>
+        public void Close()
+        {
+            PerformTransition(GarageDoorStatus.ClosedAndUnlocked, "Closed");
+        }
 
-		/// <summary>
-		/// Locks the garage door.
-		/// </summary>
-		public void Lock()
-		{
-			// If the door isn't closed then close it...
-			if (!IsClosed)
-			{
-				Close();
-			}
+        /// <summary>
+        /// Locks the garage door.
+        /// </summary>
+        public void Lock()
+        {
+            // If the door isn't closed then close it...
+            if (!IsClosed)
+            {
+                Close();
+            }
 
-			PerformTransition(GarageDoorStatus.ClosedAndLocked, "Locked");
-		}
+            PerformTransition(GarageDoorStatus.ClosedAndLocked, "Locked");
+        }
 
-		/// <summary>
-		/// Opens the garage door.
-		/// </summary>
-		public void Open()
-		{
-			PerformTransition(GarageDoorStatus.Open, "Opened");
-		}
+        /// <summary>
+        /// Opens the garage door.
+        /// </summary>
+        public void Open()
+        {
+            PerformTransition(GarageDoorStatus.Open, "Opened");
+        }
 
-		/// <summary>
-		/// Unlocks the garage door.
-		/// </summary>
-		public void Unlock()
-		{
-			PerformTransition(GarageDoorStatus.ClosedAndUnlocked, "Unlocked");
-		}
+        /// <summary>
+        /// Unlocks the garage door.
+        /// </summary>
+        public void Unlock()
+        {
+            PerformTransition(GarageDoorStatus.ClosedAndUnlocked, "Unlocked");
+        }
 
-		/// <summary>
-		/// Initializes the states.
-		/// </summary>
-		protected override void InitializeStates()
-		{
-			var open = new SimpleFiniteState<GarageDoorStatus>(GarageDoorStatus.Open);
-			var closedAndLocked = new SimpleFiniteState<GarageDoorStatus>(GarageDoorStatus.ClosedAndLocked);
-			var closedAndUnlocked = new SimpleFiniteState<GarageDoorStatus>(GarageDoorStatus.ClosedAndUnlocked);
+        protected override SimpleFiniteStateMachineHistoryEntry<GarageDoorStatus> BuildHistoryEntry(GarageDoorStatus newStateName, string reason, string comments)
+        {
+            var entryNumber = 1;
 
-			open.AddTransition(closedAndUnlocked);
+            if (History.Entries.Any())
+            {
+                entryNumber = History.Entries.Max(x => x.EntryNumber) + 1;
+            }
 
-			closedAndUnlocked.AddTransition(closedAndLocked);
-			closedAndUnlocked.AddTransition(open);
+            var historyEntry = new SimpleFiniteStateMachineHistoryEntry<GarageDoorStatus>(entryNumber, newStateName, reason, comments);
 
-			closedAndLocked.AddTransition(closedAndUnlocked);
+            return historyEntry;
+        }
 
-			states.Add(GarageDoorStatus.Open, open);
-			states.Add(GarageDoorStatus.ClosedAndLocked, closedAndLocked);
-			states.Add(GarageDoorStatus.ClosedAndUnlocked, closedAndUnlocked);
-		}
+        /// <summary>
+        /// Initializes the states.
+        /// </summary>
+        protected override void InitializeStates()
+        {
+            var open = new SimpleFiniteState<GarageDoorStatus>(GarageDoorStatus.Open);
+            var closedAndLocked = new SimpleFiniteState<GarageDoorStatus>(GarageDoorStatus.ClosedAndLocked);
+            var closedAndUnlocked = new SimpleFiniteState<GarageDoorStatus>(GarageDoorStatus.ClosedAndUnlocked);
 
-		protected override SimpleFiniteStateMachineHistoryEntry<GarageDoorStatus> BuildHistoryEntry(GarageDoorStatus newStateName, string reason, string comments)
-		{
-			var entryNumber = 1;
+            open.AddTransition(closedAndUnlocked);
 
-			if (History.Entries.Any())
-			{
-				entryNumber = History.Entries.Max(x => x.EntryNumber) + 1;
-			}
+            closedAndUnlocked.AddTransition(closedAndLocked);
+            closedAndUnlocked.AddTransition(open);
 
-			var historyEntry = new SimpleFiniteStateMachineHistoryEntry<GarageDoorStatus>(entryNumber, newStateName, reason, comments);
+            closedAndLocked.AddTransition(closedAndUnlocked);
 
-			return historyEntry;
-		}
-	}
+            states.Add(GarageDoorStatus.Open, open);
+            states.Add(GarageDoorStatus.ClosedAndLocked, closedAndLocked);
+            states.Add(GarageDoorStatus.ClosedAndUnlocked, closedAndUnlocked);
+        }
+    }
 }

@@ -1,36 +1,33 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetQueryResultShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Linq;
 using NUnit.Framework;
-using StructureMap;
+using System.Linq;
 
 namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
-	/// <summary>
-	/// The QueryRunner GetQueryResult tests.
-	/// </summary>
-	[TestFixture]
-	public class GetQueryResultShould
-	{
-		#region Public Methods and Operators
-
-		/// <summary>
-		/// Tests that all matching objects are returned.
-		/// </summary>
-		[Test]
-		public void ReturnAllMatchingObjects()
-		{
-			// Arrange
-			Bootstrapper.Start();
+    /// <summary>
+    /// The QueryRunner GetQueryResult tests.
+    /// </summary>
+    [TestFixture]
+    public class GetQueryResultShould
+    {
+        /// <summary>
+        /// Tests that all matching objects are returned.
+        /// </summary>
+        [Test]
+        [Category("RequiresDatabase")]
+        public void ReturnAllMatchingObjects()
+        {
+            // Arrange
+            Bootstrapper.Start();
 
             var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
             var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-		    var query = Bootstrapper.AmbientContainer.GetInstance<TestModelsWithTestPropertiesThatStartWithABC>();
-			var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var query = Bootstrapper.AmbientContainer.GetInstance<TestModelsWithTestPropertiesThatStartWithABC>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
 
             var testModel01 = new TestModel("ABCDEF");
             var testModel02 = new TestModel("HIJKLM");
@@ -46,15 +43,13 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
                 unitOfWork.Commit();
             }
 
-			// Assert
-			using (unitOfWork.Start())
-			{
-				var foundModel = repository.Find.AllMatchingQuery(query);
+            // Assert
+            using (unitOfWork.Start())
+            {
+                var foundModel = repository.Find.AllMatchingQuery(query);
 
-				Assert.That(foundModel.Count().Equals(2));
-			}
-		}
-
-		#endregion
-	}
+                Assert.That(foundModel.Count().Equals(2));
+            }
+        }
+    }
 }

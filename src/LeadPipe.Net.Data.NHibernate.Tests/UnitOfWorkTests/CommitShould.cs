@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CommitShould.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -17,121 +16,13 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
     [TestFixture]
     public class CommitShould
     {
-        #region Public Methods and Operators
-
-        [Test]
-        public void InvokeBeforeCommitAction()
-        {
-            // Arrange
-            Bootstrapper.Start();
-
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-            var wasCalled = false;
-
-            // Act
-            using (unitOfWork.Start())
-            {
-                unitOfWork.InvokeBeforeCommit = () => wasCalled = true;
-
-                unitOfWork.Commit();
-            }
-
-            // Assert
-            Assert.That(wasCalled.Equals(true));
-        }
-
-        [Test]
-        public void InvokeAfterCommitAction()
-        {
-            // Arrange
-            Bootstrapper.Start();
-
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-            var wasCalled = false;
-
-            // Act
-            using (unitOfWork.Start())
-            {
-                unitOfWork.InvokeAfterCommit = () => wasCalled = true;
-
-                unitOfWork.Commit();
-            }
-
-            // Assert
-            Assert.That(wasCalled.Equals(true));
-        }
-
-        [Test]
-        public void InvokeOnCommitExceptionAction()
-        {
-            // Arrange
-            Bootstrapper.Start();
-
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-            var castedUnitOfWork = unitOfWork as UnitOfWork;
-
-            var wasCalled = false;
-
-            // Act
-            using (castedUnitOfWork.Start())
-            {
-                castedUnitOfWork.InvokeOnCommitException = () => wasCalled = true;
-
-                castedUnitOfWork.CurrentSession.Close();
-
-                try
-                {
-                    castedUnitOfWork.Commit();
-                }
-                catch (System.Exception ex)
-                {
-                    Assert.That(ex.IsNotNull());
-                }
-            }
-
-            // Assert
-            Assert.That(wasCalled.Equals(true));
-        }
-
-        [Test]
-        public void InvokeOnRollbackAction()
-        {
-            // Arrange
-            Bootstrapper.Start();
-
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-
-            var wasCalled = false;
-
-            // Act
-            using (unitOfWork.Start())
-            {
-                unitOfWork.InvokeOnRollback = () => wasCalled = true;
-
-                unitOfWork.Rollback();
-            }
-
-            // Assert
-            Assert.That(wasCalled.Equals(true));
-        }
-
         /// <summary>
         /// Tests that Commit increments and decrements the nest level appropriately.
         /// </summary>
         /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
         [TestCase(UnitOfWorkBatchMode.Singular)]
         [TestCase(UnitOfWorkBatchMode.Nested)]
+        [Category("RequiresDatabase")]
         public void IncrementAndDecrementNestLevelWhenStartingMultipleUnitsOfWork(UnitOfWorkBatchMode unitOfWorkBatchMode)
         {
             // Arrange
@@ -175,31 +66,115 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
-        /// <summary>
-        /// Parent test method.
-        /// </summary>
-        /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
-        private void ParentMethod()
+        [Test]
+        [Category("RequiresDatabase")]
+        public void InvokeAfterCommitAction()
         {
-            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
-            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
-            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+            // Arrange
+            Bootstrapper.Start();
 
-            // Assert
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
             using (unitOfWork.Start())
             {
-                Guard.Will.ThrowException("The unit of work did not start!").When(unitOfWork.IsStarted.IsFalse());
+                unitOfWork.InvokeAfterCommit = () => wasCalled = true;
 
-                Guard.Will.ThrowException("Expected nest level 1 but was {0}".FormattedWith(unitOfWork.NestLevel)).When(!unitOfWork.NestLevel.Equals(1));
-
-                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
-
-                this.ChildMethod();
+                unitOfWork.Commit();
             }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        [Category("RequiresDatabase")]
+        public void InvokeBeforeCommitAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                unitOfWork.InvokeBeforeCommit = () => wasCalled = true;
+
+                unitOfWork.Commit();
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        [Category("RequiresDatabase")]
+        public void InvokeOnCommitExceptionAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var castedUnitOfWork = unitOfWork as UnitOfWork;
+
+            var wasCalled = false;
+
+            // Act
+            using (castedUnitOfWork.Start())
+            {
+                castedUnitOfWork.InvokeOnCommitException = () => wasCalled = true;
+
+                castedUnitOfWork.CurrentSession.Close();
+
+                try
+                {
+                    castedUnitOfWork.Commit();
+                }
+                catch (System.Exception ex)
+                {
+                    Assert.That(ex.IsNotNull());
+                }
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
+        }
+
+        [Test]
+        [Category("RequiresDatabase")]
+        public void InvokeOnRollbackAction()
+        {
+            // Arrange
+            Bootstrapper.Start();
+
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+
+            var wasCalled = false;
+
+            // Act
+            using (unitOfWork.Start())
+            {
+                unitOfWork.InvokeOnRollback = () => wasCalled = true;
+
+                unitOfWork.Rollback();
+            }
+
+            // Assert
+            Assert.That(wasCalled.Equals(true));
         }
 
         /// <summary>
@@ -223,6 +198,27 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.UnitOfWorkTests
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Parent test method.
+        /// </summary>
+        /// <param name="unitOfWorkBatchMode">The unit of work batch mode.</param>
+        private void ParentMethod()
+        {
+            var unitOfWorkFactory = Bootstrapper.AmbientContainer.GetInstance<IUnitOfWorkFactory>();
+            var unitOfWork = unitOfWorkFactory.CreateUnitOfWork();
+            var repository = Bootstrapper.AmbientContainer.GetInstance<Repository<TestModel>>();
+
+            // Assert
+            using (unitOfWork.Start())
+            {
+                Guard.Will.ThrowException("The unit of work did not start!").When(unitOfWork.IsStarted.IsFalse());
+
+                Guard.Will.ThrowException("Expected nest level 1 but was {0}".FormattedWith(unitOfWork.NestLevel)).When(!unitOfWork.NestLevel.Equals(1));
+
+                var foundModel = repository.Find.All.Fetch(x => x.TestChildren).ToList();
+
+                this.ChildMethod();
+            }
+        }
     }
 }

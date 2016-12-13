@@ -66,7 +66,7 @@ XCOPY %TARGET_DIR%%TARGET_NAME%.* %PROJECT_DIR%\bin
 :CreateNugetPackage
 ECHO Creating NuGet Package...
 ECHO Creating NuGet Package... >> %NUGET_LOG_FILE%
-%NUGET_PATH% pack %PROJECT_DIR%%TARGET_NAME%.csproj -Verbose -Exclude **\CustomDictionary.xml;**\*.CodeAnalysisLog.xml -BasePath %TARGET_DIR% -OutputDirectory %TARGET_DIR% >> %NUGET_LOG_FILE%
+%NUGET_PATH% pack %PROJECT_DIR%%TARGET_NAME%.csproj -Symbols -Verbose -Exclude **\CustomDictionary.xml;**\*.CodeAnalysisLog.xml -BasePath %TARGET_DIR% -OutputDirectory %TARGET_DIR% >> %NUGET_LOG_FILE%
 
 ECHO. >> %NUGET_LOG_FILE%
 ECHO [Copy To NuGet Packages Folder]-------------------------------------------- >> %NUGET_LOG_FILE%

@@ -1,7 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RandomValueProvider.cs" company="Lead Pipe Software">
-//     Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using LeadPipe.Net.Extensions;
@@ -85,8 +84,6 @@ namespace LeadPipe.Net
     /// </summary>
     public static class RandomValueProvider
     {
-        #region Constants and Fields
-
         /// <summary>
         /// The last names.
         /// </summary>
@@ -213,10 +210,6 @@ namespace LeadPipe.Net
                 {
             "com", "org", "edu", "gov", "co.uk", "net", "io"
         };
-
-        #endregion Constants and Fields
-
-        #region Public Methods
 
         /// <summary>
         /// Gets a string of lorem ipsum.
@@ -600,7 +593,5 @@ namespace LeadPipe.Net
                 yield return values[rand.Next(size)];
             }
         }
-
-        #endregion Public Methods
     }
 }

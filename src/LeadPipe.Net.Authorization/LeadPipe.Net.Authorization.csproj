@@ -59,9 +59,17 @@
     <Compile Include="AuthorizationRequest.cs" />
     <Compile Include="AuthorizationRequestLogEntry.cs" />
     <Compile Include="Authorizer.cs" />
+    <Compile Include="Commands\RemoveUserCommand.cs" />
+    <Compile Include="Commands\RemoveAdministratorCommand.cs" />
+    <Compile Include="Commands\AddAdministratorCommand.cs" />
+    <Compile Include="Commands\ApplicationCommand.cs" />
+    <Compile Include="Commands\AddUserCommand.cs" />
+    <Compile Include="DebugAuthorizationLogger.cs" />
+    <Compile Include="IAuthorizationLogger.cs" />
     <Compile Include="IAuthorizationProvider.cs" />
     <Compile Include="IAuthorizer.cs" />
     <Compile Include="LeadPipeNetAccessDeniedException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserGrant.cs" />
@@ -84,6 +92,7 @@
   <ItemGroup>
     <None Include="LeadPipe.Net.Authorization.nuspec" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT %25ComputerName%25 == LAPIS GOTO end

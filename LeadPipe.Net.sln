@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net", "src\LeadPipe.Net\LeadPipe.Net.csproj", "{07EAABC8-D86D-4B6B-B153-77EE0E5526A5}"
 EndProject
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Tests", "src\L
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{7A8F5386-E4C8-4F0F-9847-C78A7F0F93E8}"
 	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 		LICENSE = LICENSE
 		README.md = README.md
@@ -46,6 +46,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.CommonObjects", "src\LeadPipe.Net.CommonObjects\LeadPipe.Net.CommonObjects.csproj", "{07EAABC8-D86D-4B6B-B123-77EFFF5526A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.CommonObjects.Tests", "src\LeadPipe.Net.CommonObjects.Tests\LeadPipe.Net.CommonObjects.Tests.csproj", "{75199CFA-9E01-4BA5-B364-B415F547F31C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Slack", "src\LeadPipe.Net.Slack\LeadPipe.Net.Slack.csproj", "{1F0561F2-4D1E-4DCC-BD02-5C39DDD6E6DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadPipe.Net.Slack.Tests", "src\LeadPipe.Net.Slack.Tests\LeadPipe.Net.Slack.Tests.csproj", "{FCE0373D-E666-402E-9E5E-8BCCB087263B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +129,14 @@ Global
 		{75199CFA-9E01-4BA5-B364-B415F547F31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75199CFA-9E01-4BA5-B364-B415F547F31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75199CFA-9E01-4BA5-B364-B415F547F31C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F0561F2-4D1E-4DCC-BD02-5C39DDD6E6DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0561F2-4D1E-4DCC-BD02-5C39DDD6E6DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0561F2-4D1E-4DCC-BD02-5C39DDD6E6DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0561F2-4D1E-4DCC-BD02-5C39DDD6E6DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCE0373D-E666-402E-9E5E-8BCCB087263B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE0373D-E666-402E-9E5E-8BCCB087263B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE0373D-E666-402E-9E5E-8BCCB087263B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE0373D-E666-402E-9E5E-8BCCB087263B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ObjectExtensions.cs" company="Lead Pipe Software">
-//   Copyright (c) Lead Pipe Software All rights reserved.
-// </copyright>
+// Copyright (c) Lead Pipe Software. All rights reserved.
+// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
@@ -18,15 +17,13 @@ namespace LeadPipe.Net.Extensions
     /// </summary>
     public static class ObjectExtensions
     {
-        #region Public Methods and Operators
-        
         /// <summary>
         /// Gets a property name.
         /// </summary>
         public static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
-		{
-    	    return (propertyExpression.Body as MemberExpression).Member.Name;
-		}
+        {
+            return (propertyExpression.Body as MemberExpression).Member.Name;
+        }
 
         /// <summary>
         /// Gets a property value.
@@ -40,19 +37,6 @@ namespace LeadPipe.Net.Extensions
         }
 
         /// <summary>
-        /// Determines whether the specified object is not the default value.
-        /// </summary>
-        /// <typeparam name="T">The type of the object to check.</typeparam>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified object is not the default value; otherwise, <c>false</c>.
-        /// </returns>
-	    public static bool IsNotDefaultValue<T>(this T obj)
-        {
-            return !EqualityComparer<T>.Default.Equals(obj, default(T));
-        }
-
-        /// <summary>
         /// Determines whether the specified object is the default value.
         /// </summary>
         /// <typeparam name="T">The type of the object to check.</typeparam>
@@ -63,6 +47,19 @@ namespace LeadPipe.Net.Extensions
         public static bool IsDefaultValue<T>(this T obj)
         {
             return EqualityComparer<T>.Default.Equals(obj, default(T));
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is not the default value.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to check.</typeparam>
+        /// <param name="obj">The object to check.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified object is not the default value; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsNotDefaultValue<T>(this T obj)
+        {
+            return !EqualityComparer<T>.Default.Equals(obj, default(T));
         }
 
         /// <summary>
@@ -142,26 +139,5 @@ namespace LeadPipe.Net.Extensions
 
             fi.SetValue(obj, value);
         }
-
-        /// <summary>
-        /// Returns the object as a dictionary of properties and values.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <returns>A dictionary of properties and values.</returns>
-        public static IDictionary<string, object> ToDictionary(this object obj)
-        {
-            IDictionary<string, object> result = new Dictionary<string, object>();
-
-            var properties = TypeDescriptor.GetProperties(obj);
-
-            foreach (PropertyDescriptor property in properties)
-            {
-                result.Add(property.Name, property.GetValue(obj));
-            }
-
-            return result;
-        }
-
-        #endregion
     }
 }

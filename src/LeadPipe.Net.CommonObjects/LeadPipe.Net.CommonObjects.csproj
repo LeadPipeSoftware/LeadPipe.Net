@@ -50,6 +50,7 @@
     <Compile Include="CommonObjects\PhoneNumber.cs" />
     <Compile Include="CommonObjects\UnitedStates.cs" />
     <Compile Include="CommonObjects\Address.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LeadPipe.Net.CommonObjects.nuspec" />
