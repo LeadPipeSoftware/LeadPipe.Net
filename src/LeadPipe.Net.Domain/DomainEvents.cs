@@ -85,5 +85,31 @@ namespace LeadPipe.Net.Domain
             // Stuff the list back into local data...
             Local.Data[DomainEventActionsKey] = actions;
         }
+
+        /// <summary>
+        /// Unregisters the specified callback action for a given domain event.
+        /// </summary>
+        /// <typeparam name="T">The domain event.</typeparam>
+        /// <param name="callbackAction">The callback action.</param>
+        public static void Unregister<T>(Action<T> callbackAction) where T : IDomainEvent
+        {
+            // If we don't already have actions in local data then create a new list...
+            if (Local.Data[DomainEventActionsKey] == null)
+            {
+                Local.Data[DomainEventActionsKey] = new List<Delegate>();
+            }
+
+            // Pull the actions out as a list of delegates...
+            var actions = Local.Data[DomainEventActionsKey] as List<Delegate>;
+
+            // If the cast was successful then add the new callback action...
+            if (actions != null)
+            {
+                actions.Remove(callbackAction);
+            }
+
+            // Stuff the list back into local data...
+            Local.Data[DomainEventActionsKey] = actions;
+        }
     }
 }
