@@ -62,6 +62,7 @@
     <Compile Include="DomainEventingTests\RegisterShould.cs" />
     <Compile Include="DomainEventingTests\TestDomainEvent.cs" />
     <Compile Include="DomainEventingTests\TestEntity.cs" />
+    <Compile Include="DomainEventingTests\UnregisterShould.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
