@@ -135,6 +135,7 @@
     <Compile Include="StringExtensionsTests\GetOccurrencesShould.cs" />
     <Compile Include="StringExtensionsTests\IsAlphanumericShould.cs" />
     <Compile Include="StringExtensionsTests\IsExtendedCharacterShould.cs" />
+    <Compile Include="StringExtensionsTests\IsCurrencyShould.cs" />
     <Compile Include="StringExtensionsTests\IsValidSocialSecurityNumberShould.cs" />
     <Compile Include="StringExtensionsTests\IsValidEmailAddressShould.cs" />
     <Compile Include="StringExtensionsTests\IsNumericShould.cs" />

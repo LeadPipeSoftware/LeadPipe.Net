@@ -283,6 +283,23 @@ namespace LeadPipe.Net.Extensions
         }
 
         /// <summary>
+        /// Determines whether a string represents currency.
+        /// </summary>
+        /// <param name="stringToCheck">The string to check.</param>
+        /// <param name="cultureName">The culture info name.</param>
+        /// <returns>
+        /// <c>true</c> if the string represents currency; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsCurrency(this string stringToCheck, string cultureName = "en-US")
+        {
+            float numberOut;
+
+            var isValid = float.TryParse(stringToCheck, NumberStyles.Currency, CultureInfo.GetCultureInfo(cultureName), out numberOut);
+
+            return isValid;
+        }
+
+        /// <summary>
         /// Determines whether a string contains only extended characters.
         /// </summary>
         /// <param name="stringToCheck">The string to check.</param>
