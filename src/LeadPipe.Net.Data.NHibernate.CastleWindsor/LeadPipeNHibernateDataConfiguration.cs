@@ -9,6 +9,7 @@ using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
 using NHibernate;
 using System;
+using LeadPipe.Net.Commands;
 
 namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
 {
@@ -34,6 +35,14 @@ namespace LeadPipe.Net.Data.NHibernate.CastleWindsor
         {
             if (scoped)
             {
+                container.Register(
+                   Component.For(typeof(IClock))
+                       .ImplementedBy(typeof(Clock))
+                       .LifestyleScoped());
+                container.Register(
+                   Component.For(typeof(ICommandMediator))
+                       .ImplementedBy(typeof(CommandMediator))
+                       .LifestyleSingleton());
                 container.Register(
                    Component.For(typeof(ISessionFactoryBuilder))
                        .ImplementedBy(sessionFactoryBuilder)

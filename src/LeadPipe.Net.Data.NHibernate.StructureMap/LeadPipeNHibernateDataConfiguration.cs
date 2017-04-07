@@ -7,6 +7,7 @@ using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
 using StructureMap;
 using System;
+using LeadPipe.Net.Commands;
 
 namespace LeadPipe.Net.Data.NHibernate.StructureMap
 {
@@ -31,6 +32,8 @@ namespace LeadPipe.Net.Data.NHibernate.StructureMap
         {
             container.Configure(c =>
             {
+                c.For(typeof(IClock)).Use(typeof(Clock));
+                c.For(typeof(ICommandMediator)).Singleton().Use(typeof(CommandMediator));
                 c.For(typeof(ISessionFactoryBuilder)).Singleton().Use(sessionFactoryBuilder);
                 c.For(typeof(IDataSessionProvider<>)).Use(typeof(DataSessionProvider));
                 c.For(typeof(IActiveDataSessionManager<>)).Use(typeof(ActiveDataSessionManager));

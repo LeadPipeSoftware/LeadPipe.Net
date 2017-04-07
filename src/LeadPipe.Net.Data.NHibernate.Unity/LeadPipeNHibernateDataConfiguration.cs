@@ -7,6 +7,8 @@ using LeadPipe.Net.Domain;
 using LeadPipe.Net.Extensions;
 using Microsoft.Practices.Unity;
 using System;
+using System.CodeDom;
+using LeadPipe.Net.Commands;
 
 namespace LeadPipe.Net.Data.NHibernate.Unity
 {
@@ -29,6 +31,8 @@ namespace LeadPipe.Net.Data.NHibernate.Unity
         /// <param name="sessionFactoryBuilder">The session factory builder type.</param>
         public static void Initialize(UnityContainer container, Type sessionFactoryBuilder)
         {
+            container.RegisterType(typeof(IClock), typeof(Clock));
+            container.RegisterType(typeof(ICommandMediator), typeof(CommandMediator), new ContainerControlledLifetimeManager());
             container.RegisterType(typeof(ISessionFactoryBuilder), sessionFactoryBuilder, new ContainerControlledLifetimeManager());
             container.RegisterType(typeof(IDataSessionProvider<>), typeof(DataSessionProvider));
             container.RegisterType(typeof(IActiveDataSessionManager<>), typeof(ActiveDataSessionManager));
