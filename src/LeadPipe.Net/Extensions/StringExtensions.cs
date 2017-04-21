@@ -106,6 +106,18 @@ namespace LeadPipe.Net.Extensions
         }
 
         /// <summary>
+        /// Determines if two strings are equal using case-insensitive comparison.
+        /// </summary>
+        /// <param name="text">The text to evaluate.</param>
+        /// <param name="stringToCheck">The string to check.</param>
+        /// <param name="comparison">The type of comparison to use. The default is OrdinalIgnoreCase.</param>
+        /// <returns>True if the strings are equal; otherwise, false.</returns>
+        public static bool EqualsIgnoreCase(this string text, string stringToCheck, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            return text.Equals(stringToCheck, comparison);
+        }
+
+        /// <summary>
         /// Returns the index of the first character that does not match.
         /// </summary>
         /// <param name="value">The value.</param>
