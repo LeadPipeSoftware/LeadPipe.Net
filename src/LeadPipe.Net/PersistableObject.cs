@@ -1,7 +1,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 // Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information.
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
 // --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -173,12 +176,6 @@ namespace LeadPipe.Net
         /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
-            // If we have a surrogate id then return its hash...
-            if (EqualityComparer<TSurrogateIdentity>.Default.Equals(Sid, default(TSurrogateIdentity)) == false)
-            {
-                return Sid.GetHashCode();
-            }
-
             // Cast ourselves as a keyed object...
             var keyedObject = this as IKeyed;
 
@@ -186,6 +183,12 @@ namespace LeadPipe.Net
             if (keyedObject != null && string.IsNullOrEmpty(keyedObject.Key) == false)
             {
                 return keyedObject.Key.GetHashCode();
+            }
+
+            // If we're not transient then return the hash of our surrogate id...
+            if (IsTransient.IsFalse())
+            {
+                return Sid.GetHashCode();
             }
 
             return base.GetHashCode();
