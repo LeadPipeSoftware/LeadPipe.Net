@@ -56,6 +56,7 @@
     <Compile Include="..\..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="PersistableObjectTests\EqualityOperatorShould.cs" />
     <Compile Include="BoolExtensionsTests\IsFalseShould.cs" />
     <Compile Include="BoolExtensionsTests\IsTrueShould.cs" />
     <Compile Include="CombGuidParseShould.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="ObjectExtensionsTests\IsNullShould.cs" />
     <Compile Include="ObjectExtensionsTests\OrElseShould.cs" />
     <Compile Include="ObjectExtensionsTests\ToDictionaryShould.cs" />
+    <Compile Include="PersistableObjectTests\PersistableObjectWithNullableType.cs" />
+    <Compile Include="PersistableObjectTests\IKeyedPersistableObjectWithNullableType.cs" />
     <Compile Include="PollerTests\PollerShould.cs" />
     <Compile Include="RandomValueProviderTests\RandomSocialSecurityNumberShould.cs" />
     <Compile Include="RandomValueProviderTests\RandomPhoneNumberShould.cs" />

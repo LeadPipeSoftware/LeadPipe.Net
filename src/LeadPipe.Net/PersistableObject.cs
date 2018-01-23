@@ -1,9 +1,34 @@
 // --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved.
-// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
 // --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Diagnostics;
+using LeadPipe.Net.Extensions;
 
 namespace LeadPipe.Net
 {
@@ -11,11 +36,9 @@ namespace LeadPipe.Net
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
-    /// The abstract base persistable object.
+    ///   The abstract base persistable object.
     /// </summary>
-    /// <typeparam name="TSurrogateIdentity">
-    /// The type of the surrogate identity.
-    /// </typeparam>
+    /// <typeparam name="TSurrogateIdentity">The type of the surrogate identity.</typeparam>
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
         Justification = "Reviewed. Suppression is OK here because we're merely building off a base type.")]
     public abstract class PersistableObject<TSurrogateIdentity> : IPersistable<TSurrogateIdentity, int>,
@@ -34,73 +57,59 @@ namespace LeadPipe.Net
          */
 
         /// <summary>
-        /// Gets or sets the identity that created the object.
+        ///   Gets or sets the identity that created the object.
         /// </summary>
         public virtual string CreatedBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time the instance was created.
+        ///   Gets or sets the date and time the instance was created.
         /// </summary>
         public virtual DateTime CreatedOn { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is transient (no surrogate id has been set).
+        ///   Gets a value indicating whether this instance is transient (no surrogate id has been set).
         /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is transient; otherwise, <c>false</c>.
-        /// </value>
-        public virtual bool IsTransient
-        {
-            get
-            {
-                return Equals(this.Sid, default(TSurrogateIdentity));
-            }
-        }
+        /// <value><c>true</c> if this instance is transient; otherwise, <c>false</c>.</value>
+        public virtual bool IsTransient => this.Sid.IsNull() || Equals(this.Sid, default(TSurrogateIdentity));
 
         /// <summary>
-        /// Gets or sets the persistence version.
+        ///   Gets or sets the persistence version.
         /// </summary>
         public virtual int PersistenceVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the surrogate (persistence) id.
+        ///   Gets or sets the surrogate (persistence) id.
         /// </summary>
-        /// <value>
-        /// The surrogate id.
-        /// </value>
+        /// <value>The surrogate id.</value>
         public virtual TSurrogateIdentity Sid { get; set; }
 
         /// <summary>
-        /// Gets or sets the identity that last updated the instance.
+        ///   Gets or sets the identity that last updated the instance.
         /// </summary>
         public virtual string UpdatedBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time the instance was last updated.
+        ///   Gets or sets the date and time the instance was last updated.
         /// </summary>
         public virtual DateTime? UpdatedOn { get; set; }
 
         /// <summary>
-        /// Implements the operator !=.
+        ///   Implements the operator !=.
         /// </summary>
         /// <param name="persistableObject1">The persistableObject1.</param>
         /// <param name="persistableObject2">The persistableObject2.</param>
-        /// <returns>
-        /// The result of the operator.
-        /// </returns>
+        /// <returns>The result of the operator.</returns>
         public static bool operator !=(PersistableObject<TSurrogateIdentity> persistableObject1, PersistableObject<TSurrogateIdentity> persistableObject2)
         {
             return !(persistableObject1 == persistableObject2);
         }
 
         /// <summary>
-        /// Implements the operator ==.
+        ///   Implements the operator ==.
         /// </summary>
         /// <param name="persistableObject1">The persistableObject1.</param>
         /// <param name="persistableObject2">The persistableObject2.</param>
-        /// <returns>
-        /// The result of the operator.
-        /// </returns>
+        /// <returns>The result of the operator.</returns>
         public static bool operator ==(PersistableObject<TSurrogateIdentity> persistableObject1, PersistableObject<TSurrogateIdentity> persistableObject2)
         {
             object obj1 = persistableObject1;
@@ -118,43 +127,48 @@ namespace LeadPipe.Net
                 return false;
             }
 
-            // If both objects have a surrogate id then compare those...
-            if (persistableObject1.Sid.Equals(default(TSurrogateIdentity)) == false && persistableObject2.Sid.Equals(default(TSurrogateIdentity)) == false)
+            // Try to compare by IKeyed...
+            var keyedObject1 = persistableObject1 as IKeyed;
+            var keyedObject2 = persistableObject2 as IKeyed;
+
+            if (keyedObject1 != null && keyedObject2 != null)
+            {
+                var compareResult = string.CompareOrdinal(keyedObject1.Key, keyedObject2.Key);
+
+                Console.WriteLine(compareResult);
+                Console.WriteLine(keyedObject1.Key);
+                Console.WriteLine(keyedObject2.Key);
+
+                return compareResult == 0;
+            }
+
+            // If IKeyed didn't work out then if both objects are NOT transient then compare by the Sid (kinda icky)...
+            if (persistableObject1.IsTransient.IsFalse() && persistableObject2.IsTransient.IsFalse())
             {
                 return persistableObject1.Sid.CompareTo(persistableObject2.Sid) == 0;
             }
 
-            // If either object has an empty surrogate id then try to compare the keys...
-            if (persistableObject1.Sid.Equals(default(TSurrogateIdentity)) || persistableObject2.Sid.Equals(default(TSurrogateIdentity)))
-            {
-                var keyedObject1 = persistableObject1 as IKeyed;
-                var keyedObject2 = persistableObject2 as IKeyed;
-
-                if (keyedObject1 != null && keyedObject2 != null)
-                {
-                    return String.Compare(keyedObject1.Key, keyedObject2.Key, StringComparison.Ordinal) == 0;
-                }
-            }
-
             // If the objects are of different types then they are not equal...
+            /*
+             * NOTE: This code is below the IKeyed and Sid checks for a reason; proxies. If two persistable objects do
+             *       not have keys and no sid has been assigned, but one is a proxy then all we can do is throw up our
+             *       hands and say, "Nope, they're not the same".
+             */
             if (persistableObject1.GetType() != persistableObject2.GetType())
             {
-                //// TODO: If two objects are different, but have a sid collision (unlikely) we'll falsely report them as identical. Fix!
                 return false;
             }
 
-            // If we can't compare the surrogate id or the key then all we can do is compare the two objects straight-up...
+            // I give up...
             return obj1 == obj2;
         }
 
         /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
+        ///   Indicates whether the current object is equal to another object of the same type.
         /// </summary>
-        /// <param name="other">
-        /// An object to compare with this object.
-        /// </param>
+        /// <param name="other">An object to compare with this object.</param>
         /// <returns>
-        /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+        ///   true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
         /// </returns>
         public virtual bool Equals(PersistableObject<TSurrogateIdentity> other)
         {
@@ -167,14 +181,10 @@ namespace LeadPipe.Net
         }
 
         /// <summary>
-        /// Compares two persistable objects for equality.
+        ///   Compares two persistable objects for equality.
         /// </summary>
-        /// <param name="persistableObject">
-        /// The persistable object to compare against.
-        /// </param>
-        /// <returns>
-        /// True if the persistable objects are equal.
-        /// </returns>
+        /// <param name="persistableObject">The persistable object to compare against.</param>
+        /// <returns>True if the persistable objects are equal.</returns>
         public override bool Equals(object persistableObject)
         {
             if (persistableObject == null || !(persistableObject is PersistableObject<TSurrogateIdentity>))
@@ -186,11 +196,9 @@ namespace LeadPipe.Net
         }
 
         /// <summary>
-        /// Gets the hash code for the persistable object.
+        ///   Gets the hash code for the persistable object.
         /// </summary>
-        /// <returns>
-        /// The hash code.
-        /// </returns>
+        /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
             // If we have a surrogate id then return its hash...
@@ -212,11 +220,9 @@ namespace LeadPipe.Net
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        ///   Returns a <see cref="System.String"/> that represents this instance.
         /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
+        /// <returns>A <see cref="System.String"/> that represents this instance.</returns>
         public override string ToString()
         {
             // Cast ourselves as a keyed object...

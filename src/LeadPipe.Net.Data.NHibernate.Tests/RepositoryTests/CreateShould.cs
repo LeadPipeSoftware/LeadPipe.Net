@@ -1,7 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved.
-// Licensed under the MIT License. Please see the LICENSE file in the project root for full license information.
-// --------------------------------------------------------------------------------------------------------------------
+// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
+// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
 
 using NUnit.Framework;
 using System.Diagnostics;
@@ -9,13 +8,13 @@ using System.Diagnostics;
 namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 {
     /// <summary>
-    /// The Repository Create method tests.
+    ///   The Repository Create method tests.
     /// </summary>
     [TestFixture]
     public class CreateShould
     {
         /// <summary>
-        /// Tests that All property returns matching objects when using Fetch.
+        ///   Tests that All property returns matching objects when using Fetch.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
@@ -41,7 +40,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         /// <summary>
-        /// Tests that All property returns matching objects when using Fetch.
+        ///   Tests that All property returns matching objects when using Fetch.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
@@ -67,7 +66,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         /// <summary>
-        /// Tests that Create does persist an object if the unit of work is not committed.
+        ///   Tests that Create does persist an object if the unit of work is not committed.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
@@ -101,7 +100,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         /// <summary>
-        /// Tests that Create does persist an object if the unit of work is rolled back.
+        ///   Tests that Create does persist an object if the unit of work is rolled back.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
@@ -158,7 +157,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         /// <summary>
-        /// Tests that Create persists an object.
+        ///   Tests that Create persists an object.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
@@ -192,7 +191,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         /// <summary>
-        /// Tests that Create persists an object with a lazy reference to another mapped object.
+        ///   Tests that Create persists an object with a lazy reference to another mapped object.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
@@ -228,6 +227,8 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
 
                 var foundModel = repository.Find.OneMatchingExpression(x => x.Key.Equals(Key));
 
+                var blarg = string.CompareOrdinal(foundModel.TestChild.Key, testChild.Key);
+
                 Assert.That(foundModel.TestChild == testChild);
 
                 Debug.WriteLine(string.Format("D UnitTest in Local.Data exists: {0}", Local.Data["UnitTest"] == null));
@@ -235,7 +236,7 @@ namespace LeadPipe.Net.Data.NHibernate.Tests.RepositoryTests
         }
 
         /// <summary>
-        /// Tests that Create throws an exception if not in a Unit of Work.
+        ///   Tests that Create throws an exception if not in a Unit of Work.
         /// </summary>
         [Test]
         [Category("RequiresDatabase")]
