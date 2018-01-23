@@ -1,30 +1,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 // Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
-
+// the project root for full license information.
 // --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------------------------------------
-// Copyright (c) Lead Pipe Software. All rights reserved. Licensed under the MIT License. Please see the LICENSE file in
-// the project root for full license information. --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -134,11 +111,6 @@ namespace LeadPipe.Net
             if (keyedObject1 != null && keyedObject2 != null)
             {
                 var compareResult = string.CompareOrdinal(keyedObject1.Key, keyedObject2.Key);
-
-                Console.WriteLine(compareResult);
-                Console.WriteLine(keyedObject1.Key);
-                Console.WriteLine(keyedObject2.Key);
-
                 return compareResult == 0;
             }
 
