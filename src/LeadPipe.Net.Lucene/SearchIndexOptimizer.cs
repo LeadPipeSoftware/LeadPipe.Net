@@ -19,13 +19,13 @@ namespace LeadPipe.Net.Lucene
         /// Optimizes the Lucene index.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="maxFieldLength">Maximum length of the field.</param>
-        public virtual void Optimize(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength)
+        public virtual void Optimize(Version luceneVersion, Directory directory, IndexWriter.MaxFieldLength maxFieldLength)
         {
             var analyzer = new StandardAnalyzer(luceneVersion);
 
-            using (var indexWriter = new IndexWriter(fsDirectory, analyzer, maxFieldLength))
+            using (var indexWriter = new IndexWriter(directory, analyzer, maxFieldLength))
             {
                 analyzer.Close();
 

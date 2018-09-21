@@ -17,10 +17,10 @@ namespace LeadPipe.Net.Lucene
         /// Explains the search score.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="input">The input.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-        string Explain(Version luceneVersion, FSDirectory fsDirectory, string input, int resultId);
+        string Explain(Version luceneVersion, Directory directory, string input, int resultId);
     }
 }

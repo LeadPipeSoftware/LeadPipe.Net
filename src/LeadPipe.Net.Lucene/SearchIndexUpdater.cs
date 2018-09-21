@@ -39,9 +39,9 @@ namespace LeadPipe.Net.Lucene
         /// Updates the index.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="maxFieldLength">Maximum length of the field.</param>
-        public virtual void UpdateIndex(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength)
+        public virtual void UpdateIndex(Version luceneVersion, Directory directory, IndexWriter.MaxFieldLength maxFieldLength)
         {
             /*
              * You can override this method in your own updater to go fetch your search data and
@@ -53,14 +53,14 @@ namespace LeadPipe.Net.Lucene
         /// Updates the index.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="maxFieldLength">Maximum length of the field.</param>
         /// <param name="searchData"></param>
-        public virtual void UpdateIndex(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength, IEnumerable<TSearchData> searchData)
+        public virtual void UpdateIndex(Version luceneVersion, Directory directory, IndexWriter.MaxFieldLength maxFieldLength, IEnumerable<TSearchData> searchData)
         {
             var analyzer = new StandardAnalyzer(luceneVersion);
 
-            using (var indexWriter = new IndexWriter(fsDirectory, analyzer, maxFieldLength))
+            using (var indexWriter = new IndexWriter(directory, analyzer, maxFieldLength))
             {
                 foreach (var searchDataItem in searchData)
                 {
@@ -75,15 +75,15 @@ namespace LeadPipe.Net.Lucene
         /// Updates the index.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="maxFieldLength">Maximum length of the field.</param>
         /// <param name="entities"></param>
-        public virtual void UpdateIndex(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength,
+        public virtual void UpdateIndex(Version luceneVersion, Directory directory, IndexWriter.MaxFieldLength maxFieldLength,
             IEnumerable<TEntity> entities)
         {
             var searchDatas = entities.Select(entity => this.entityToSearchDataTypeConverter.Convert(entity)).ToList();
 
-            this.UpdateIndex(luceneVersion, fsDirectory, maxFieldLength, searchDatas);
+            this.UpdateIndex(luceneVersion, directory, maxFieldLength, searchDatas);
         }
 
         /// <summary>

@@ -41,13 +41,13 @@ namespace LeadPipe.Net.Lucene
         /// Searches Lucene.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="hitLimit">The hit limit.</param>
         /// <param name="input">The input.</param>
         /// <returns></returns>
-        public virtual SearchResult<TSearchData> Search(Version luceneVersion, FSDirectory fsDirectory, int hitLimit, string input)
+        public virtual SearchResult<TSearchData> Search(Version luceneVersion, Directory directory, int hitLimit, string input)
         {
-            return string.IsNullOrEmpty(input) ? new SearchResult<TSearchData>() : this.PerformSearch(luceneVersion, fsDirectory, hitLimit, input);
+            return string.IsNullOrEmpty(input) ? new SearchResult<TSearchData>() : this.PerformSearch(luceneVersion, directory, hitLimit, input);
         }
 
         /// <summary>
@@ -76,11 +76,11 @@ namespace LeadPipe.Net.Lucene
         /// Performs a simple search.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="hitLimit">The hit limit.</param>
         /// <param name="input">The input.</param>
         /// <returns></returns>
-        public virtual SearchResult<TSearchData> SimpleSearch(Version luceneVersion, FSDirectory fsDirectory, int hitLimit, string input)
+        public virtual SearchResult<TSearchData> SimpleSearch(Version luceneVersion, Directory directory, int hitLimit, string input)
         {
             if (string.IsNullOrEmpty(input))
             {
@@ -91,7 +91,7 @@ namespace LeadPipe.Net.Lucene
 
             input = string.Join(" ", terms);
 
-            return this.PerformSearch(luceneVersion, fsDirectory, hitLimit, input);
+            return this.PerformSearch(luceneVersion, directory, hitLimit, input);
         }
 
         /// <summary>
@@ -117,11 +117,11 @@ namespace LeadPipe.Net.Lucene
         /// Performs the search.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The fs directory.</param>
         /// <param name="hitLimit">The hit limit.</param>
         /// <param name="searchQuery">The search query.</param>
         /// <returns></returns>
-        private SearchResult<TSearchData> PerformSearch(Version luceneVersion, FSDirectory fsDirectory, int hitLimit, string searchQuery)
+        private SearchResult<TSearchData> PerformSearch(Version luceneVersion, Directory directory, int hitLimit, string searchQuery)
         {
             var result = new SearchResult<TSearchData>();
 
@@ -134,7 +134,7 @@ namespace LeadPipe.Net.Lucene
 
             fields = searchQuery.Contains(':') ? this.allSearchFields.ToArray() : this.defaultSearchFields.ToArray();
 
-            using (var indexSearcher = new IndexSearcher(fsDirectory, false))
+            using (var indexSearcher = new IndexSearcher(directory, false))
             {
                 var analyzer = new StandardAnalyzer(luceneVersion);
 
