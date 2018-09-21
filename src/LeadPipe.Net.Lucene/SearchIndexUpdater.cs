@@ -93,7 +93,7 @@ namespace LeadPipe.Net.Lucene
         /// <param name="indexWriter">The index writer.</param>
         private static void DeleteEntityFromIndex(TSearchData searchData, IndexWriter indexWriter)
         {
-            var searchQuery = new TermQuery(new Term("Key", searchData.Key));
+            var searchQuery = new TermQuery(new Term("key", searchData.Key));
 
             indexWriter.DeleteDocuments(searchQuery);
         }
