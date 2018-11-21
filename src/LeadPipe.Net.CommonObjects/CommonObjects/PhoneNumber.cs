@@ -42,9 +42,9 @@ namespace LeadPipe.Net.CommonObjects.CommonObjects
 
             if (numbersOnly.Length > 10) throw new ArgumentOutOfRangeException(nameof(phoneNumber), "The NANP does not allow phone numbers with more than ten (10) digits.");
 
-            this.areaCode = numbersOnly.Substring(0, 2);
-            this.exchangeCode = numbersOnly.Substring(3, 5);
-            this.subscriberNumber = numbersOnly.Substring(6, 9);
+            this.areaCode = numbersOnly.Substring(0, 3);
+            this.exchangeCode = numbersOnly.Substring(3, 3);
+            this.subscriberNumber = numbersOnly.Substring(6, 4);
 
             ValidateAreaCode(this.areaCode);
             ValidateExchangeCode(this.exchangeCode);
