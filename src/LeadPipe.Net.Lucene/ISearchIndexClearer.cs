@@ -18,17 +18,17 @@ namespace LeadPipe.Net.Lucene
         /// Clears the entire index.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="maxFieldLength">Maximum length of the field.</param>
-        void ClearIndex(Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength);
+        void ClearIndex(Version luceneVersion, Directory directory, IndexWriter.MaxFieldLength maxFieldLength);
 
         /// <summary>
         /// Clears an item the index.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="maxFieldLength">Maximum length of the field.</param>
-        void ClearIndex(string id, Version luceneVersion, FSDirectory fsDirectory, IndexWriter.MaxFieldLength maxFieldLength);
+        void ClearIndex(string id, Version luceneVersion, Directory directory, IndexWriter.MaxFieldLength maxFieldLength);
     }
 }

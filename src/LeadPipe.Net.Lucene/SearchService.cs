@@ -53,14 +53,14 @@ namespace LeadPipe.Net.Lucene
         }
 
         /// <summary>
-        /// Gets or sets the Lucene file system directory.
+        /// Gets or sets the Lucene directory.
         /// </summary>
         /// <value>
-        /// The Lucene file system directory.
+        /// The Lucene store directory.
         /// </value>
-        public virtual FSDirectory FsDirectory
+        public virtual Directory Directory
         {
-            get { return this.configuration.FsDirectory; }
+            get { return this.configuration.Directory; }
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace LeadPipe.Net.Lucene
         /// </summary>
         public virtual void ClearIndex()
         {
-            this.searchIndexClearer.ClearIndex(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
+            this.searchIndexClearer.ClearIndex(this.LuceneVersion, this.Directory, this.MaxFieldLength);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace LeadPipe.Net.Lucene
         /// <param name="key">The key.</param>
         public virtual void ClearIndex(string key)
         {
-            this.searchIndexClearer.ClearIndex(key, this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
+            this.searchIndexClearer.ClearIndex(key, this.LuceneVersion, this.Directory, this.MaxFieldLength);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace LeadPipe.Net.Lucene
         /// <returns></returns>
         public virtual string Explain(int resultId)
         {
-            return this.searchScoreExplainer.Explain(this.LuceneVersion, this.FsDirectory, this.LastInput, resultId);
+            return this.searchScoreExplainer.Explain(this.LuceneVersion, this.Directory, this.LastInput, resultId);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace LeadPipe.Net.Lucene
         /// </summary>
         public virtual void Optimize()
         {
-            this.searchIndexOptimizer.Optimize(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
+            this.searchIndexOptimizer.Optimize(this.LuceneVersion, this.Directory, this.MaxFieldLength);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace LeadPipe.Net.Lucene
         {
             this.LastInput = input;
 
-            this.LastSearchResult = this.searcher.Search(this.LuceneVersion, this.FsDirectory, this.HitLimit, input);
+            this.LastSearchResult = this.searcher.Search(this.LuceneVersion, this.Directory, this.HitLimit, input);
 
             return this.LastSearchResult;
         }
@@ -209,7 +209,7 @@ namespace LeadPipe.Net.Lucene
         {
             this.LastInput = input;
 
-            this.LastSearchResult = this.searcher.SimpleSearch(this.LuceneVersion, this.FsDirectory, this.HitLimit, input);
+            this.LastSearchResult = this.searcher.SimpleSearch(this.LuceneVersion, this.Directory, this.HitLimit, input);
 
             return this.LastSearchResult;
         }
@@ -219,7 +219,7 @@ namespace LeadPipe.Net.Lucene
         /// </summary>
         public virtual void UpdateIndex()
         {
-            this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength);
+            this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.Directory, this.MaxFieldLength);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace LeadPipe.Net.Lucene
         /// <param name="searchData"></param>
         public virtual void UpdateIndex(IEnumerable<TSearchData> searchData)
         {
-            this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength, searchData);
+            this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.Directory, this.MaxFieldLength, searchData);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace LeadPipe.Net.Lucene
         /// <param name="entities"></param>
         public virtual void UpdateIndex(IEnumerable<TEntity> entities)
         {
-            this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.FsDirectory, this.MaxFieldLength, entities);
+            this.searchIndexUpdater.UpdateIndex(this.LuceneVersion, this.Directory, this.MaxFieldLength, entities);
         }
     }
 }

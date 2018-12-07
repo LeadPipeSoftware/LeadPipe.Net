@@ -15,12 +15,12 @@ namespace LeadPipe.Net.Lucene
     public interface ISearchServiceConfiguration
     {
         /// <summary>
-        /// Gets the fs directory.
+        /// Gets the lucene directory.
         /// </summary>
         /// <value>
         /// The fs directory.
         /// </value>
-        FSDirectory FsDirectory { get; }
+        Directory Directory { get; }
 
         /// <summary>
         /// Gets the hit limit.

@@ -31,24 +31,24 @@ namespace LeadPipe.Net.Lucene
         /// Explains the search score for a result.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="input">The input.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-        public virtual string Explain(Version luceneVersion, FSDirectory fsDirectory, string input, int resultId)
+        public virtual string Explain(Version luceneVersion, Directory directory, string input, int resultId)
         {
-            return string.IsNullOrEmpty(input) ? string.Empty : this.PerformExplain(luceneVersion, fsDirectory, input, resultId);
+            return string.IsNullOrEmpty(input) ? string.Empty : this.PerformExplain(luceneVersion, directory, input, resultId);
         }
 
         /// <summary>
         /// Performs the explanation.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="searchQuery">The search query.</param>
         /// <param name="resultId">The result identifier.</param>
         /// <returns></returns>
-        protected virtual string PerformExplain(Version luceneVersion, FSDirectory fsDirectory, string searchQuery, int resultId)
+        protected virtual string PerformExplain(Version luceneVersion, Directory directory, string searchQuery, int resultId)
         {
             /*
              * The obvious problem here is that we're not using the exact same search as the real one.
@@ -56,7 +56,7 @@ namespace LeadPipe.Net.Lucene
 
             var explanation = string.Empty;
 
-            using (var indexSearcher = new IndexSearcher(fsDirectory, false))
+            using (var indexSearcher = new IndexSearcher(directory, false))
             {
                 var analyzer = new StandardAnalyzer(luceneVersion);
 

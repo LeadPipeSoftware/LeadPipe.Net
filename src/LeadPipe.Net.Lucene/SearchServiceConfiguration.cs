@@ -5,11 +5,14 @@
 
 using LeadPipe.Net.Extensions;
 using Lucene.Net.Index;
-using Lucene.Net.Store;
 using Lucene.Net.Util;
+using Lucene.Net.Store;
 using System.Collections.Generic;
 using System.IO;
-using Directory = System.IO.Directory;
+
+using IoDirectory = System.IO.Directory;
+using LuceneDirectory = Lucene.Net.Store.Directory;
+
 
 namespace LeadPipe.Net.Lucene
 {
@@ -18,7 +21,7 @@ namespace LeadPipe.Net.Lucene
     /// </summary>
     public class SearchServiceConfiguration : ISearchServiceConfiguration
     {
-        private FSDirectory fsDirectory;
+        private LuceneDirectory directory;
         private int hitLimit;
         private string indexFolder;
         private Version luceneVersion;
@@ -50,19 +53,19 @@ namespace LeadPipe.Net.Lucene
 
             this.hitLimit = hitLimit.Equals(EqualityComparer<int>.Default.Equals(hitLimit, default(int))) ? 1000 : hitLimit;
 
-            this.fsDirectory = this.GetDirectory();
+            this.directory = this.GetDirectory();
         }
 
         /// <summary>
-        /// Gets the fs directory.
+        /// Gets the lucene directory.
         /// </summary>
         /// <value>
-        /// The fs directory.
+        /// The lucene directory.
         /// </value>
-        public virtual FSDirectory FsDirectory
+        public virtual LuceneDirectory Directory
         {
-            get { return fsDirectory; }
-            protected set { fsDirectory = value; }
+            get { return directory; }
+            protected set { directory = value; }
         }
 
         /// <summary>
@@ -129,21 +132,21 @@ namespace LeadPipe.Net.Lucene
         /// Gets the directory.
         /// </summary>
         /// <returns></returns>
-        protected virtual FSDirectory GetDirectory()
+        protected virtual LuceneDirectory GetDirectory()
         {
-            if (!Directory.Exists(this.IndexFolder))
+            if (!IoDirectory.Exists(this.IndexFolder))
             {
-                Directory.CreateDirectory(this.IndexFolder);
+                IoDirectory.CreateDirectory(this.IndexFolder);
             }
 
-            if (this.FsDirectory == null)
+            if (this.Directory == null)
             {
-                this.FsDirectory = FSDirectory.Open(new DirectoryInfo(this.IndexFolder));
+                this.Directory = FSDirectory.Open(new DirectoryInfo(this.IndexFolder));
             }
 
-            if (IndexWriter.IsLocked(this.FsDirectory))
+            if (IndexWriter.IsLocked(this.Directory))
             {
-                IndexWriter.Unlock(this.FsDirectory);
+                IndexWriter.Unlock(this.Directory);
             }
 
             if (File.Exists(this.WriteLockSemaphoreFileName))
@@ -151,7 +154,7 @@ namespace LeadPipe.Net.Lucene
                 File.Delete(this.WriteLockSemaphoreFileName);
             }
 
-            return this.FsDirectory;
+            return this.Directory;
         }
     }
 }

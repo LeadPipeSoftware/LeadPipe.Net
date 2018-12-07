@@ -18,11 +18,11 @@ namespace LeadPipe.Net.Lucene
         /// Searches Lucene.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="hitLimit">The hit limit.</param>
         /// <param name="input">The input.</param>
         /// <returns></returns>
-        SearchResult<TSearchData> Search(Version luceneVersion, FSDirectory fsDirectory, int hitLimit, string input);
+        SearchResult<TSearchData> Search(Version luceneVersion, Directory directory, int hitLimit, string input);
 
         /// <summary>
         /// Sets the default search fields.
@@ -40,10 +40,10 @@ namespace LeadPipe.Net.Lucene
         /// Performs a simple search.
         /// </summary>
         /// <param name="luceneVersion">The lucene version.</param>
-        /// <param name="fsDirectory">The fs directory.</param>
+        /// <param name="directory">The lucene directory.</param>
         /// <param name="hitLimit">The hit limit.</param>
         /// <param name="input">The input.</param>
         /// <returns></returns>
-        SearchResult<TSearchData> SimpleSearch(Version luceneVersion, FSDirectory fsDirectory, int hitLimit, string input);
+        SearchResult<TSearchData> SimpleSearch(Version luceneVersion, Directory directory, int hitLimit, string input);
     }
 }
